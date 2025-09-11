@@ -1,0 +1,584 @@
+<!-- الصف الاول الثانوي -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form with Unique Code</title>
+    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@500&display=swap" rel="stylesheet">
+     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+      <link rel="icon" href="images/27aaa2af-994c-4d8a-8221-c5a3674cbb9b-removebg-preview_logo.png" type="image/png">
+
+    <style>
+      body {
+          margin: 0;
+          padding: 0;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          min-height: 100vh;
+          font-family: 'Tajawal', sans-serif;
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      }
+  
+      .main {
+          width: 400px;
+          background: rgba(255, 255, 255, 0.9);
+          border-radius: 20px;
+          box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+          overflow: hidden;
+          padding: 40px;
+      }
+  
+      .signup {
+          position: relative;
+          width: 100%;
+      }
+  
+      label {
+          color: #4a4a4a;
+          font-size: 1.8em;
+          display: block;
+          margin-bottom: 20px;
+          font-weight: bold;
+          text-align: center;
+      }
+  
+      input, select {
+          width: 100%;
+          height: 50px;
+          background: #f5f5f5;
+          margin: 10px 0;
+          padding: 0 15px;
+          border: none;
+          outline: none;
+          border-radius: 10px;
+          font-size: 16px;
+          transition: all 0.3s ease;
+          direction: rtl;
+          text-align: right;
+      }
+  
+      input:focus, select:focus {
+          background: #fff;
+          box-shadow: 0 0 5px rgba(102, 126, 234, 0.5);
+      }
+  
+      button {
+          width: 100%;
+          height: 50px;
+          margin: 20px 0;
+          color: #fff;
+          background: linear-gradient(to right, #667eea, #764ba2);
+          font-size: 1.2em;
+          font-weight: bold;
+          border: none;
+          border-radius: 10px;
+          cursor: pointer;
+          transition: all 0.3s ease;
+      }
+  
+      button:hover {
+          background: linear-gradient(to right, #764ba2, #667eea);
+          transform: translateY(-3px);
+          box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+  
+      .modal {
+          background-color: #fff;
+          border-radius: 15px;
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      }
+  
+      .modal p {
+          font-size: 1.4em;
+          color: #4a4a4a;
+      }
+  
+      .modal button {
+          background: linear-gradient(to right, #667eea, #764ba2);
+          color: #fff;
+          border: none;
+          padding: 12px 25px;
+          border-radius: 8px;
+          font-size: 1em;
+          cursor: pointer;
+          transition: all 0.3s ease;
+      }
+  
+      .modal button:hover {
+          background: linear-gradient(to right, #764ba2, #667eea);
+          transform: translateY(-2px);
+      }
+  
+      #loadingOverlay {
+          background-color: rgba(0, 0, 0, 0.5);
+      }
+  
+      #loadingBox {
+          background-color: #fff;
+          border-radius: 15px;
+          padding: 30px;
+      }
+  
+      #loadingBox p {
+          font-size: 1.2em;
+          color: #4a4a4a;
+      }
+  
+      @media (max-width: 480px) {
+          .main {
+              width: 90%;
+              padding: 30px;
+          }
+      }
+.modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            max-width: 500px;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            z-index: 10000;
+        }
+
+        .modal p {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+
+        .modal button {
+            width: auto;
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+        }
+
+                .loader {
+  width: fit-content;
+  height: fit-content;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.truckWrapper {
+  width: 200px;
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  align-items: center;
+  justify-content: flex-end;
+  overflow-x: hidden;
+}
+
+/* truck upper body */
+.truckBody {
+  width: 130px;
+  height: fit-content;
+  margin-bottom: 6px;
+  animation: motion 1s linear infinite;
+}
+
+/* truck suspension animation */
+@keyframes motion {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(3px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+/* truck's tires */
+.truckTires {
+  width: 130px;
+  height: fit-content;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0px 10px 0px 15px;
+  position: absolute;
+  bottom: 0;
+}
+
+.truckTires svg {
+  width: 24px;
+}
+
+.road {
+  width: 100%;
+  height: 1.5px;
+  background-color: #282828;
+  position: relative;
+  bottom: 0;
+  align-self: flex-end;
+  border-radius: 3px;
+}
+
+.road::before {
+  content: "";
+  position: absolute;
+  width: 20px;
+  height: 100%;
+  background-color: #282828;
+  right: -50%;
+  border-radius: 3px;
+  animation: roadAnimation 1.4s linear infinite;
+  border-left: 10px solid white;
+}
+
+.road::after {
+  content: "";
+  position: absolute;
+  width: 10px;
+  height: 100%;
+  background-color: #282828;
+  right: -65%;
+  border-radius: 3px;
+  animation: roadAnimation 1.4s linear infinite;
+  border-left: 4px solid white;
+}
+
+.lampPost {
+  position: absolute;
+  bottom: 0;
+  right: -90%;
+  height: 90px;
+  animation: roadAnimation 1.4s linear infinite;
+}
+
+@keyframes roadAnimation {
+  0% {
+    transform: translateX(0px);
+  }
+  100% {
+    transform: translateX(-350px);
+  }
+}
+    </style>
+</head>
+<body>
+    <div class="container disable-on-submit">
+        <form id="contact-form" onsubmit="return false;">
+            <div class="main">
+                <div class="signup">
+                    <label for="chk" aria-hidden="true" style="font-size: large;">تسجيل الدخول</label>
+                    <label for="chk" aria-hidden="true" style="font-size: large;">الصف الاول الثانوي</label>
+                    <input type="text" name="الاسم" placeholder="اسم الطالب رباعي" required>
+                    <input type="text" name="رقم الطالب" placeholder="رقم هاتف الطالب" required>
+                    <input type="text" name="رقم ولي الامر" placeholder="رقم ولي هاتف الامر" required>
+                    <input type="password" name="password" placeholder="كلمة المرور" required>
+                    <input type="password" name="confirm_password" placeholder="تأكيد كلمة المرور" required>
+                    <br>
+                    <select name="اسم السنتر" required style="font-size: 18px; padding: 10px; border-radius: 5px; border: 1px solid #ccc; background-color: #f9f9f9;">
+                        <option value="" placeholder="" style="">اختر اسم السنتر</option>
+                        <option value="الاسماعليه حدائق المعادي">الاسماعليه حدائق المعادي</option>
+                        <option value="لرحمه المعادي">الرحمه المعادي</option>
+                        <option value="اشراقه السادس">اشراقه السادس</option>
+                        <option value="سمارت السابع"> سمارت السابع</option>
+                        <option value="اسك الحداشر">اسك الحداشر</option>
+                        <option value="لارا الحصري">لارا الحصري</option>
+                        <option value="الامل السابع">الامل السابع</option>
+                        <option value="الربوة">الربوة</option>
+                        <option value="اشراقه (ابني بيتك السابعة)">اشراقه (ابني بيتك السابعة) </option>
+                        <option value="اشراقة ال (8000 فدان)">اشراقة (ال 800 فدان)</option>
+                        <option value="اشراقه (ابني بيتك المنطقة 12)">اشراقه (ابني بيتك المنطقة 12)</option>
+                        <option value="تيتشر (مول يوتوبيا)">تيتشر (مول يوتوبيا)</option>
+                        <option value="القمة (المنطقة 247 مول الحمد)">القمة (المنطقة 247 مول الحمد)</option>
+                        <option value="انس (كومباوند المخابرات)">انس (كومباوند المخابرات)</option>
+                        <option value="الشمس">الشمس</option>
+                    </select>
+                    <label style="font-size: 1em; color: #4a4a4a; margin-top: 15px;">الباركود:</label>
+<input type="text" name="الكود" id="unique_code" placeholder="سيظهر هنا رقم الباركود بعد المسح">
+<div id="barcode-scanner-wrapper" style="margin-top: 10px;">
+  <div id="reader" style="display: none; width: 100%; height: auto; position: relative;">
+    <div style="
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 80%;
+        height: 60px;
+        transform: translate(-50%, -50%);
+        border: 2px dashed white;
+        border-radius: 10px;
+        z-index: 10;"></div>
+  </div>
+</div>
+
+<!-- Buttons OUTSIDE the hidden reader area -->
+<button type="button" onclick="startScanner()">📷 مسح الباركود</button>
+<br><br>
+<button type="submit" id="submit">تسجيل</button>
+
+                </div>
+                <div class="overlay" id="overlay"></div>
+                <div id="loadingOverlay" style="display: none;">
+                  <div id="loadingBox" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); padding: 20px; background-color: rgba(255, 255, 255, 0.8); border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                    <p>يتم الان ارسال البيانات برجاء الانتظار للحصول على الكود</p>
+                    <div class="truckWrapper">
+                      <div class="truckBody">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 198 93" class="trucksvg">
+                          <path stroke-width="3" stroke="#282828" fill="#F83D3D" d="M135 22.5H177.264C178.295 22.5 179.22 23.133 179.594 24.0939L192.33 56.8443C192.442 57.1332 192.5 57.4404 192.5 57.7504V89C192.5 90.3807 191.381 91.5 190 91.5H135C133.619 91.5 132.5 90.3807 132.5 89V25C132.5 23.6193 133.619 22.5 135 22.5Z"></path>
+                          <path stroke-width="3" stroke="#282828" fill="#7D7C7C" d="M146 33.5H181.741C182.779 33.5 183.709 34.1415 184.078 35.112L190.538 52.112C191.16 53.748 189.951 55.5 188.201 55.5H146C144.619 55.5 143.5 54.3807 143.5 53V36C143.5 34.6193 144.619 33.5 146 33.5Z"></path>
+                          <path stroke-width="2" stroke="#282828" fill="#282828" d="M150 65C150 65.39 149.763 65.8656 149.127 66.2893C148.499 66.7083 147.573 67 146.5 67C145.427 67 144.501 66.7083 143.873 66.2893C143.237 65.8656 143 65.39 143 65C143 64.61 143.237 64.1344 143.873 63.7107C144.501 63.2917 145.427 63 146.5 63C147.573 63 148.499 63.2917 149.127 63.7107C149.763 64.1344 150 64.61 150 65Z"></path>
+                          <rect stroke-width="2" stroke="#282828" fill="#FFFCAB" rx="1" height="7" width="5" y="63" x="187"></rect>
+                          <rect stroke-width="2" stroke="#282828" fill="#282828" rx="1" height="11" width="4" y="81" x="193"></rect>
+                          <rect stroke-width="3" stroke="#282828" fill="#DFDFDF" rx="2.5" height="90" width="121" y="1.5" x="6.5"></rect>
+                          <rect stroke-width="2" stroke="#282828" fill="#DFDFDF" rx="2" height="4" width="6" y="84" x="1"></rect>
+                        </svg>
+                      </div>
+                      <div class="truckTires">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 30 30" class="tiresvg">
+                          <circle stroke-width="3" stroke="#282828" fill="#282828" r="13.5" cy="15" cx="15"></circle>
+                          <circle fill="#DFDFDF" r="7" cy="15" cx="15"></circle>
+                        </svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 30 30" class="tiresvg">
+                          <circle stroke-width="3" stroke="#282828" fill="#282828" r="13.5" cy="15" cx="15"></circle>
+                          <circle fill="#DFDFDF" r="7" cy="15" cx="15"></circle>
+                        </svg>
+                      </div>
+                      <div class="road"></div>
+                      <svg xml:space="preserve" viewBox="0 0 453.459 453.459" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" id="Capa_1" version="1.1" fill="#000000" class="lampPost">
+                        <path d="M252.882,0c-37.781,0-68.686,29.953-70.245,67.358h-6.917v8.954c-26.109,2.163-45.463,10.011-45.463,19.366h9.993 c-1.65,5.146-2.507,10.54-2.507,16.017c0,28.956,23.558,52.514,52.514,52.514c28.956,0,52.514-23.558,52.514-52.514 c0-5.478-0.856-10.872-2.506-16.017h9.992c0-9.354-19.352-17.204-45.463-19.366v-8.954h-6.149C200.189,38.779,223.924,16,252.882,16 c29.952,0,54.32,24.368,54.32,54.32c0,28.774-11.078,37.009-25.105,47.437c-17.444,12.968-37.216,27.667-37.216,78.884v113.914 h-0.797c-5.068,0-9.174,4.108-9.174,9.177c0,2.844,1.293,5.383,3.321,7.066c-3.432,27.933-26.851,95.744-8.226,115.459v11.202h45.75 v-11.202c18.625-19.715-4.794-87.527-8.227-115.459c2.029-1.683,3.322-4.223,3.322-7.066c0-5.068-4.107-9.177-9.176-9.177h-0.795 V196.641c0-43.174,14.942-54.283,30.762-66.043c14.793-10.997,31.559-23.461,31.559-60.277C323.202,31.545,291.656,0,252.882,0z M232.77,111.694c0,23.442-19.071,42.514-42.514,42.514c-23.442,0-42.514-19.072-42.514-42.514c0-5.531,1.078-10.957,3.141-16.017 h78.747C231.693,100.736,232.77,106.162,232.77,111.694z"></path>
+                      </svg>
+                    </div>
+                  </div>
+                </div>               
+                <div class="modal" id="successModal" style="display: none;">
+                    <p id="successMessage"></p>
+                    <button onclick="closeModal()">اغلاق</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    
+    <script>
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbwXVYFdHNKemPh0AmJqaWEEou_ZGDduJpGnH3578E0UayLS7CHT7C51HMAeQkIu-uCcnA/exec';
+        const form = document.getElementById('contact-form');
+        const loadingBox = document.getElementById('loadingBox');
+
+        // function generateUniqueCode() {
+        //     const chars = '123456789';
+        //     let code = '';
+        //     for (let i = 0; i < 5; i++) {
+        //         code += chars.charAt(Math.floor(Math.random() * chars.length));
+        //     }
+        //     return code;
+        // }
+
+        function displayLoadingBox() {
+            document.getElementById('loadingOverlay').style.display = 'block';
+            document.getElementById('overlay').style.display = 'block'; 
+        }
+
+        function hideLoadingBox() {
+            document.getElementById('loadingOverlay').style.display = 'none';
+            document.getElementById('overlay').style.display = 'none'; 
+        }
+
+        // function displaySuccessMessage(uniqueCode) {
+        //     alert("شكرا! لقد تم ارسال بياناتك بنجاح و كووووووودك: " + uniqueCode + ".");
+        //     alert("حفظ الكود مهمتك الشخصيه كودك هو: " + uniqueCode );
+        //     alert("برجاء عدم عمل هذه العملية مرة اخري" );
+        //     if (confirm("Click OK to visit the primary secondary page.")) {
+        //         window.location.href = 'https://yamenxy.github.io/new_goto/';
+        //     }
+        // }
+
+         function displaySuccessMessage(code) {
+            hideLoadingBox();
+            successMessage.textContent = `كودك هو: ${code}`;
+            successModal.style.display = 'block';
+            document.getElementById('overlay').style.display = 'block';
+        }
+
+        function closeModal() {
+            window.location.href = 'https://yamenxy.github.io/new_goto/';
+            successModal.style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
+            form.reset();
+        }
+        
+        function isStrongPassword(password) {
+            const minLength = 5;
+            if (password.length < minLength) {
+                alert("كلمة المرور ضعيفة! يجب أن تحتوي على 5 أحرف على الأقل.");
+                return false;
+            }
+
+            // const uppercaseRegex = /[A-Z]/;
+            // if (!uppercaseRegex.test(password)) {
+            //     alert("كلمة المرور ضعيفة! يجب أن تحتوي على حروف كبيره.");
+            //     return false;
+            // }
+
+            // const lowercaseRegex = /[a-z]/;
+            // if (!lowercaseRegex.test(password)) {
+            //     alert("كلمة المرور ضعيفة! يجب أن تحتوي علي حروف صغيره.");
+            //     return false;
+            // }
+
+            // const numberRegex = /[0-9]/;
+            // if (!numberRegex.test(password)) {
+            //     alert("كلمة المرور ضعيفة! يجب أن تحتوي على ارقام.");
+            //     return false;
+            // }
+
+            return true;
+        }
+
+               form.addEventListener('submit', e => {
+    e.preventDefault();
+    let isValid = true;
+
+    const name = form.elements['الاسم'].value.trim();
+    const studentNumber = form.elements['رقم الطالب'].value.trim();
+    const guardianNumber = form.elements['رقم ولي الامر'].value.trim();
+    const password = form.elements['password'].value.trim();
+    const confirmPassword = form.elements['confirm_password'].value.trim();
+
+    if (!isValidArabic(name)) {
+        isValid = false;
+        alert("ادخل الاسم باللغه العربيه!");
+    }
+
+    if (password !== confirmPassword) {
+        isValid = false;
+        alert("كلمات المرور غير متطابقة!");
+    }
+
+                      if (studentNumber === guardianNumber) {
+        isValid = false;
+        alert("لا يمكن ان تكون الارقام متطابقة!");
+    }
+
+    const wordsCount = name.split(" ").length;
+    if (name.includes("عبد") && wordsCount < 5) { 
+        isValid = false;
+        alert("الرجاء إدخال الاسم رباعي!");
+    } else if (name.includes("منه الله") && wordsCount < 5) {
+        isValid = false;
+        alert("الرجاء إدخال الاسم رباعي!");
+    } else if (!name.includes("عبد") && wordsCount < 4) {
+        isValid = false;
+        alert("الرجاء إدخال الاسم رباعي!");
+    } else if (!name.includes("منه الله") && wordsCount < 4) {
+        isValid = false;
+        alert("الرجاء إدخال الاسم رباعي!");
+    }
+
+    if (!isValidNumber(studentNumber)) {
+        isValid = false;
+        alert("ادخل رقم الطالب صحيح!");
+    }
+
+    if (!isValidNumber(guardianNumber)) {
+        isValid = false;
+        alert("ادخل رقم ولي الامر صحيح!");
+    }
+
+    if (!isStrongPassword(password)) {
+        isValid = false;
+    }
+
+    if (isValid) {
+        displayLoadingBox();
+        const uniqueCode = document.getElementById('unique_code').value;
+if (!uniqueCode) {
+    alert("لم يتم مسح الباركود بعد! برجاء مسحه أولاً.");
+    hideLoadingBox();
+    return;
+}
+
+
+        // Prepend a single quote to the numbers
+        const modifiedStudentNumber = "+2" + studentNumber;
+        const modifiedGuardianNumber = "+2" + guardianNumber;
+
+        // Create a new FormData object with the modified numbers
+        const formData = new FormData(form);
+        formData.set('رقم الطالب', modifiedStudentNumber);
+        formData.set('رقم ولي الامر', modifiedGuardianNumber);
+
+        fetch(scriptURL, { method: 'POST', body: formData })
+            .then(response => response.json())
+            .then(response => {
+    hideLoadingBox();
+    if (response.result === 'success') {
+        displaySuccessMessage(uniqueCode); // This should use the scanned one
+    } else if (response.result === 'error') {
+        alert(response.message);
+    }
+})
+
+            .catch(error => {
+                console.error('Error!', error.message);
+                hideLoadingBox();
+            });
+    }
+
+    return false;
+});
+        function isValidNumber(number) {
+            const validPrefixes = ['010', '011', '012', '015'];
+            return /^\d{11}$/.test(number) && validPrefixes.includes(number.substring(0, 3));
+        }
+
+        function isValidArabic(text) {
+            const arabicRegex = /[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF\uFB50-\uFDFF\uFE70-\uFEFF]/;
+            return arabicRegex.test(text);
+        }
+    </script>
+<script src="https://unpkg.com/html5-qrcode"></script>
+<script>
+    let scannerInstance;
+
+    function startScanner() {
+        document.getElementById("reader").style.display = "block";
+        const reader = new Html5Qrcode("reader");
+
+        reader.start(
+  { facingMode: "environment" },
+  {
+    fps: 10,
+    qrbox: { width: 300, height: 150 },
+    aspectRatio: 1.5,
+    disableFlip: false
+  },
+  
+            (decodedText, decodedResult) => {
+                console.log(`Code scanned: ${decodedText}`);
+                document.getElementById("unique_code").value = decodedText;
+                reader.stop().then(() => {
+                    console.log("Scanner stopped");
+                    document.getElementById("reader").style.display = "none";
+                }).catch(err => {
+                    console.error("Failed to stop scanner", err);
+                });
+            },
+            (errorMessage) => {
+                // optional error logging
+            }
+        ).catch(err => {
+            console.error("Error starting scanner", err);
+            alert("تعذر فتح الكاميرا. تحقق من الأذونات.");
+        });
+
+        scannerInstance = reader;
+    }
+</script>
+
+
+
+</body>
+</html>
