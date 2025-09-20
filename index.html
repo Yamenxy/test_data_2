@@ -275,6 +275,7 @@
                     <label for="chk" aria-hidden="true" style="font-size: large;">تسجيل الدخول</label>
                     <label for="chk" aria-hidden="true" style="font-size: large;">الصف الثاني الثانوي</label>
                     <input type="text" name="الاسم" placeholder="اسم الطالب رباعي" required>
+                    <input type="email" name="email" placeholder="البريد الإلكتروني" required>
                     <input type="text" name="رقم الطالب" placeholder="رقم هاتف الطالب" required>
                     <input type="text" name="رقم ولي الامر" placeholder="رقم ولي هاتف الامر" required>
                     <input type="password" name="password" placeholder="كلمة المرور" required>
@@ -437,6 +438,11 @@
             return true;
         }
 
+        function isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+            }
+
                form.addEventListener('submit', e => {
     e.preventDefault();
     let isValid = true;
@@ -446,6 +452,7 @@
     const guardianNumber = form.elements['رقم ولي الامر'].value.trim();
     const password = form.elements['password'].value.trim();
     const confirmPassword = form.elements['confirm_password'].value.trim();
+    const email = form.elements['email'].value.trim();
 
     if (!isValidArabic(name)) {
         isValid = false;
@@ -490,6 +497,11 @@
     if (!isStrongPassword(password)) {
         isValid = false;
     }
+
+    if (!isValidEmail(email)) {
+        isValid = false;
+        alert("الرجاء إدخال بريد إلكتروني صحيح!");
+    }   
 
     if (isValid) {
         displayLoadingBox();
