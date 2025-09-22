@@ -287,7 +287,7 @@
                         <option value="لرحمه المعادي">الرحمه المعادي</option>
                         <option value="اشراقه السادس">اشراقه السادس</option>
                         <option value="سمارت السابع"> سمارت السابع</option>
-                        <option value="اسك الحداشر">اسك الحداشر</option>
+                        <option value="اشراقة الحداشر">اشراقة الحداشر</option>
                         <option value="لارا الحصري">لارا الحصري</option>
                         <option value="الامل السابع">الامل السابع</option>
                         <option value="الربوة">الربوة</option>
@@ -300,7 +300,7 @@
                         <option value="الشمس">الشمس</option>
                     </select>
                     <label style="font-size: 1em; color: #4a4a4a; margin-top: 15px;">الباركود:</label>
-<input type="text" name="الكود" id="unique_code" placeholder="سيظهر هنا رقم الباركود بعد المسح">
+<input type="text" name="الكود" id="unique_code"  placeholder="سيظهر هنا رقم الباركود بعد المسح">
 <div id="barcode-scanner-wrapper" style="margin-top: 10px;">
   <div id="reader" style="display: none; width: 100%; height: auto; position: relative;">
     <div style="
@@ -362,9 +362,75 @@
             </div>
         </form>
     </div>
+
+
+   <script src="https://unpkg.com/html5-qrcode"></script>
+<script>
+    let reader;
+    let lastScanned = "";
+    let confirmations = 0;
+    const REQUIRED_CONFIRMATIONS = 3; // number of times the same code must appear
+
+    function startScanner() {
+        document.getElementById("reader").style.display = "block";
+
+        if (reader) {
+            reader.stop().then(() => {
+                initScanner();
+            });
+        } else {
+            initScanner();
+        }
+    }
+
+    function initScanner() {
+        reader = new Html5Qrcode("reader");
+
+        reader.start(
+            { facingMode: "environment" },
+            {
+                fps: 10,
+                qrbox: { width: 300, height: 150 },
+                aspectRatio: 1.5,
+                disableFlip: false
+            },
+            (decodedText, decodedResult) => {
+                console.log("Scanned:", decodedText);
+
+                // ✅ Accept only numeric barcodes (5 digits)
+                if (!/^\d{5}$/.test(decodedText)) return;
+
+                if (decodedText === lastScanned) {
+                    confirmations++;
+                } else {
+                    lastScanned = decodedText;
+                    confirmations = 1;
+                }
+
+                // ✅ Confirm after REQUIRED_CONFIRMATIONS times
+                if (confirmations >= REQUIRED_CONFIRMATIONS) {
+                    document.getElementById("unique_code").value = decodedText;
+
+                    // Stop scanner to avoid multiple inputs
+                    reader.stop().then(() => {
+                        document.getElementById("reader").style.display = "none";
+                        console.log("Scanner stopped after successful read.");
+                    }).catch(err => console.error("Stop error:", err));
+                }
+            },
+            (errorMessage) => {
+                // Suppress scan errors
+                // console.log("Scanning error:", errorMessage);
+            }
+        ).catch(err => {
+            console.error("Camera start failed:", err);
+        });
+    }
+</script>
+
     
     <script>
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbwXVYFdHNKemPh0AmJqaWEEou_ZGDduJpGnH3578E0UayLS7CHT7C51HMAeQkIu-uCcnA/exec';
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbxIQLOozUChnNs9Q4OS7AHrFiPG4Dk1xJ83XaeeTTHbfJYdUazodn0Pr6lcUOfY_pWdTw/exec';
         const form = document.getElementById('contact-form');
         const loadingBox = document.getElementById('loadingBox');
 
@@ -404,7 +470,7 @@
         }
 
         function closeModal() {
-            // window.location.href = 'https://yamenxy.github.io/new_goto/';
+            window.location.href = 'https://yamenxy.github.io/new_goto_2/';
             successModal.style.display = 'none';
             document.getElementById('overlay').style.display = 'none';
             form.reset();
@@ -443,10 +509,30 @@
             return emailRegex.test(email);
             }
 
+        function validateBarcode(unique_code) {
+    if (unique_code.length < 5) {
+        alert("⚠️ من فضلك امسح الباركود مرة اخري الكود يبدو انه قصير.");
+        hideLoadingBox();
+        return false;
+    } 
+    else if (unique_code.length > 5) {
+        alert("⚠️ من فضلك امسح الباركود مرة اخري الكود يبدو انه طويل.");
+        hideLoadingBox();
+        return false;
+    } 
+    else if (!/^\d+$/.test(unique_code)) {
+        alert("⚠️ الكود يجب أن يحتوي على أرقام فقط.");
+        hideLoadingBox();
+        return false;
+    }
+    return true; // ✅ valid barcode
+}
+
                form.addEventListener('submit', e => {
     e.preventDefault();
     let isValid = true;
 
+    const unique_code = form.elements['الكود'].value.trim();
     const name = form.elements['الاسم'].value.trim();
     const studentNumber = form.elements['رقم الطالب'].value.trim();
     const guardianNumber = form.elements['رقم ولي الامر'].value.trim();
@@ -503,24 +589,35 @@
         alert("الرجاء إدخال بريد إلكتروني صحيح!");
     }   
 
-    if (isValid) {
-        displayLoadingBox();
-        const uniqueCode = document.getElementById('unique_code').value;
-if (!uniqueCode) {
-    alert("لم يتم مسح الباركود بعد! برجاء مسحه أولاً.");
-    hideLoadingBox();
-    return;
-}
+    if (!validateBarcode(unique_code)) {
+    isValid = false; 
+    }
 
+     if (isValid) {
+    displayLoadingBox();
+    const uniqueCode = document.getElementById('unique_code').value;
+    if (!uniqueCode) {
+        alert("⚠️ من فضلك امسح الباركود أولاً قبل متابعة التسجيل.");
+        hideLoadingBox();
+        return;
+    }
 
-        // Prepend a single quote to the numbers
-        const modifiedStudentNumber = "+2" + studentNumber;
-        const modifiedGuardianNumber = "+2" + guardianNumber;
+    // Prepend +2 to phone numbers
+    const modifiedStudentNumber = "+2" + studentNumber;
+    const modifiedGuardianNumber = "+2" + guardianNumber;
 
-        // Create a new FormData object with the modified numbers
-        const formData = new FormData(form);
-        formData.set('رقم الطالب', modifiedStudentNumber);
-        formData.set('رقم ولي الامر', modifiedGuardianNumber);
+    // ✅ Fix password if starts with 0
+    let modifiedPassword = password;
+    if (modifiedPassword.startsWith("0")) {
+        modifiedPassword = "'" + modifiedPassword;
+    }
+
+    // Create a new FormData object with modifications
+    const formData = new FormData(form);
+    formData.set('رقم الطالب', modifiedStudentNumber);
+    formData.set('رقم ولي الامر', modifiedGuardianNumber);
+    formData.set('password', modifiedPassword);
+    formData.set('confirm_password', modifiedPassword);
 
         fetch(scriptURL, { method: 'POST', body: formData })
             .then(response => response.json())
@@ -555,42 +652,45 @@ if (!uniqueCode) {
 <script>
     let scannerInstance;
 
-    function startScanner() {
-        document.getElementById("reader").style.display = "block";
-        const reader = new Html5Qrcode("reader");
+        function startScanner() {
+    document.getElementById("reader").style.display = "block";
+    const reader = new Html5Qrcode("reader");
 
-        reader.start(
-  { facingMode: "environment" },
-  {
-    fps: 10,
-    qrbox: { width: 300, height: 150 },
-    aspectRatio: 1.5,
-    disableFlip: false
-  },
-  
-            (decodedText, decodedResult) => {
-                console.log(`Code scanned: ${decodedText}`);
-                document.getElementById("unique_code").value = decodedText;
-                reader.stop().then(() => {
-                    console.log("Scanner stopped");
-                    document.getElementById("reader").style.display = "none";
-                }).catch(err => {
-                    console.error("Failed to stop scanner", err);
-                });
-            },
-            (errorMessage) => {
-                // optional error logging
-            }
-        ).catch(err => {
-            console.error("Error starting scanner", err);
-            alert("تعذر فتح الكاميرا. تحقق من الأذونات.");
-        });
+    reader.start(
+      { facingMode: "environment" },
+      {
+        fps: 10,
+        qrbox: { width: 300, height: 150 },
+        aspectRatio: 1.5,
+        disableFlip: false
+      },
 
-        scannerInstance = reader;
-    }
+      (decodedText, decodedResult) => {
+          console.log(`Code scanned: ${decodedText}`);
+
+          // ✅ Allow only numbers
+          if (/^\d+$/.test(decodedText)) {
+              document.getElementById("unique_code").value = decodedText;
+              reader.stop().then(() => {
+                  console.log("Scanner stopped");
+                  document.getElementById("reader").style.display = "none";
+              });
+          } else {
+              alert("❌ الكود يجب أن يكون أرقام فقط");
+              // Scanner stays active until valid number is scanned
+          }
+      }
+    )
+}
 </script>
 
 
 
 </body>
 </html>
+
+
+
+
+
+
