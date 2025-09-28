@@ -275,7 +275,7 @@
                     <label for="chk" aria-hidden="true" style="font-size: large;">تسجيل الدخول</label>
                     <label for="chk" aria-hidden="true" style="font-size: large;">الصف الثاني الثانوي</label>
                     <input type="text" name="الاسم" placeholder="اسم الطالب رباعي" required>
-                    <input type="email" name="email" placeholder="البريد الإلكتروني" required>
+                    <!-- <input type="email" name="email" placeholder="البريد الإلكتروني" required> -->
                     <input type="text" name="رقم الطالب" placeholder="رقم هاتف الطالب" required>
                     <input type="text" name="رقم ولي الامر" placeholder="رقم ولي هاتف الامر" required>
                     <input type="password" name="password" placeholder="كلمة المرور" required>
@@ -300,7 +300,17 @@
                         <option value="الشمس">الشمس</option>
                     </select>
                     <label style="font-size: 1em; color: #4a4a4a; margin-top: 15px;">الباركود:</label>
-<input type="text" name="الكود" id="unique_code"  placeholder="سيظهر هنا رقم الباركود بعد المسح">
+<input 
+    type="text" 
+    name="الكود" 
+    id="unique_code" 
+    placeholder="سيظهر هنا رقم الباركود بعد المسح"
+    inputmode="numeric" 
+    pattern="\d{5}" 
+    maxlength="5" 
+    minlength="5"
+    title="الباركود يجب أن يكون 5 أرقام فقط">
+                    
 <div id="barcode-scanner-wrapper" style="margin-top: 10px;">
   <div id="reader" style="display: none; width: 100%; height: auto; position: relative;">
     <div style="
@@ -504,10 +514,10 @@
             return true;
         }
 
-        function isValidEmail(email) {
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            return emailRegex.test(email);
-            }
+        // function isValidEmail(email) {
+        //     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        //     return emailRegex.test(email);
+        //     }
 
         function validateBarcode(unique_code) {
     if (unique_code.length < 5) {
@@ -531,14 +541,14 @@
                form.addEventListener('submit', e => {
     e.preventDefault();
     let isValid = true;
-
+                   
     const unique_code = form.elements['الكود'].value.trim();
     const name = form.elements['الاسم'].value.trim();
     const studentNumber = form.elements['رقم الطالب'].value.trim();
     const guardianNumber = form.elements['رقم ولي الامر'].value.trim();
     const password = form.elements['password'].value.trim();
     const confirmPassword = form.elements['confirm_password'].value.trim();
-    const email = form.elements['email'].value.trim();
+    // const email = form.elements['email'].value.trim();
 
     if (!isValidArabic(name)) {
         isValid = false;
@@ -584,11 +594,10 @@
         isValid = false;
     }
 
-    if (!isValidEmail(email)) {
-        isValid = false;
-        alert("الرجاء إدخال بريد إلكتروني صحيح!");
-    }   
-
+    // if (!isValidEmail(email)) {
+    //     isValid = false;
+    //     alert("الرجاء إدخال بريد إلكتروني صحيح!");
+    // }   
     if (!validateBarcode(unique_code)) {
     isValid = false; 
     }
@@ -688,9 +697,3 @@
 
 </body>
 </html>
-
-
-
-
-
-
