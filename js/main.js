@@ -53,6 +53,14 @@
     try {
       const loader = document.getElementById('loader');
       if (loader) loader.style.display = 'none';
+      // If the user visits profile page but has no profile yet, send them to register page
+      try {
+        const user = window.getLoggedInUser && window.getLoggedInUser();
+        const path = window.location.pathname || '';
+        if (path.endsWith('profile.html') && user && !user.profileCompleted) {
+          window.location.href = 'register.html';
+        }
+      } catch (e) {}
     } catch (e) {}
   });
 
