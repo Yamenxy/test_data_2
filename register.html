@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register - Mr. Ahmed Mohie Physics</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Poppins:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- Loader -->
+  <div id="loader">
+    <div class="loader-content">
+      <div class="atom-loader"><div class="electron"></div><div class="electron"></div><div class="electron"></div><div class="nucleus"></div></div>
+      <p data-en="Loading..." data-ar="جاري التحميل...">Loading...</p>
+    </div>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="navbar scrolled" id="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="logo"><i class="fas fa-atom"></i><span data-en="Mr. Ahmed Mohie" data-ar="أ. أحمد محي">Mr. Ahmed Mohie</span></a>
+      <div style="margin-left:12px; font-weight:700; direction:rtl; color:var(--primary);">الصف الاول الثانوي</div>
+      <div class="nav-links" id="navLinks">
+        <a href="index.html" class="nav-link" data-en="Home" data-ar="الرئيسية">Home</a>
+        <a href="index.html#about" class="nav-link" data-en="About" data-ar="من نحن">About</a>
+        <a href="index.html#team" class="nav-link" data-en="Team" data-ar="الفريق">Team</a>
+        <span class="nav-auth" id="navAuth"></span>
+        <a href="homework.html" class="nav-link nav-btn" data-en="Homework" data-ar="الواجب"><i class="fas fa-book-open"></i> <span data-en="Homework" data-ar="الواجب">Homework</span></a>
+        <a href="sections.html" class="nav-link nav-btn btn-secondary" data-en="Sections" data-ar="الحصص"><i class="fas fa-play-circle"></i> <span data-en="Sections" data-ar="الحصص">Sections</span></a>
+      </div>
+      <div class="nav-actions">
+        <button class="lang-toggle" id="langToggle" onclick="toggleLanguage()"><i class="fas fa-globe"></i><span id="langText">عربي</span></button>
+        <button class="menu-toggle" id="menuToggle" onclick="toggleMenu()"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Hero -->
+  <div class="page-hero">
+    <div>
+      <h1 data-en="Student Registration" data-ar="تسجيل الطالب">Student Registration</h1>
+      <div style="font-weight:700; margin-top:6px; direction:rtl; color:var(--primary);">الصف الاول الثانوي</div>
+      <p data-en="Register to access homework videos and section recordings" data-ar="سجل للوصول لفيديوهات الواجب والحصص المسجلة">Register to access homework videos and section recordings</p>
+    </div>
+  </div>
+
+  <!-- Registration Form -->
+  <section class="form-section">
+    <div class="container">
+      <div class="form-card">
+        <div id="regAlert"></div>
+
+        <form id="registerForm" autocomplete="off">
+          <!-- Student Code (Scan Only) -->
+          <div class="form-group">
+            <label><i class="fas fa-id-badge"></i> <span data-en="Student Code" data-ar="كود الطالب">Student Code</span></label>
+            <div class="scan-code-wrapper">
+              <input type="text" class="form-control" id="studentCode" placeholder="Enter student code / ادخل كود الطالب" required>
+              <small class="field-hint" style="color: var(--primary); margin-top: 6px; display:block;"><i class="fas fa-info-circle"></i> <span data-en="Enter your student code manually" data-ar="أدخل كود الطالب يدوياً">Enter your student code manually</span></small>
+            </div>
+            <div class="form-error" id="codeError" data-en="Please enter your code" data-ar="يرجى إدخال الكود">Please enter your code</div>
+          </div>
+
+          <!-- Student Name (Arabic, 4 parts min) -->
+          <div class="form-group">
+            <label><i class="fas fa-user"></i> <span data-en="Full Name (Arabic, 4 parts)" data-ar="الاسم الرباعي بالعربي">Full Name (Arabic, 4 parts)</span></label>
+            <input type="text" class="form-control" id="studentName" placeholder="مثال: يامن ياسر حسن سيد" dir="rtl" required>
+            <small class="field-hint"><i class="fas fa-info-circle"></i> <span data-en="Enter your full name in Arabic (at least 4 parts)" data-ar="أدخل اسمك الرباعي باللغة العربية">Enter your full name in Arabic (at least 4 parts)</span></small>
+            <div class="form-error" id="nameError" data-en="Full Arabic name required (4 parts minimum)" data-ar="الاسم الرباعي بالعربي مطلوب">Full Arabic name required (4 parts minimum)</div>
+          </div>
+
+          <!-- Student Phone -->
+          <div class="form-group">
+            <label><i class="fas fa-phone"></i> <span data-en="Student Phone" data-ar="رقم الطالب">Student Phone</span></label>
+            <input type="tel" class="form-control" id="studentPhone" placeholder="01XXXXXXXXX" required>
+            <div class="form-error" id="phoneError" data-en="Valid Egyptian phone required (01XXXXXXXXX)" data-ar="رقم مصري صحيح مطلوب (01XXXXXXXXX)">Valid Egyptian phone required</div>
+          </div>
+
+          <!-- Parent Phone -->
+          <div class="form-group">
+            <label><i class="fas fa-phone-alt"></i> <span data-en="Parent's Phone" data-ar="رقم ولي الأمر">Parent's Phone</span></label>
+            <input type="tel" class="form-control" id="parentPhone" placeholder="01XXXXXXXXX" required>
+            <div class="form-error" id="parentPhoneError" data-en="Valid parent phone required (01XXXXXXXXX)" data-ar="رقم ولي الأمر صحيح مطلوب (01XXXXXXXXX)">Valid parent phone required</div>
+          </div>
+
+          <!-- Center Select -->
+          <div class="form-group">
+            <label><i class="fas fa-map-marker-alt"></i> <span data-en="Center" data-ar="السنتر">Center</span></label>
+            <select class="form-control" id="center" required>
+              <option value="" disabled selected data-en="Select your center" data-ar="اختر السنتر">Select your center / اختر السنتر</option>
+                        <option value="الاسماعليه حدائق المعادي">الاسماعليه حدائق المعادي</option>
+                        <option value="لرحمه المعادي">الرحمه المعادي</option>
+                        <option value="اشراقه السادس">اشراقه السادس</option>
+                        <option value="سمارت السابع"> سمارت السابع</option>
+                        <option value="اشراقة الحداشر">اشراقة الحداشر</option>
+                        <option value="لارا الحصري">لارا الحصري</option>
+                        <option value="الامل السابع">الامل السابع</option>
+                        <option value="الربوة">الربوة</option>
+                        <option value="اشراقه (ابني بيتك السابعة)">اشراقه (ابني بيتك السابعة) </option>
+                        <option value="اشراقة ال (8000 فدان)">اشراقة (ال 800 فدان)</option>
+                        <option value="اشراقه (ابني بيتك المنطقة 12)">اشراقه (ابني بيتك المنطقة 12)</option>
+                        <option value="تيتشرز (مول يوتوبيا)">تيتشرز (مول يوتوبيا)</option>
+                        <option value="تيتشرز (حدائق الاهرام)">تيتشرز (حدائق الاهرام)</option>
+                        <option value="القمة (المنطقة 247 مول الحمد)">القمة (المنطقة 247 مول الحمد)</option>
+                        <option value="انس (كومباوند المخابرات)">انس (كومباوند المخابرات)</option>
+                        <option value="الشمس">الشمس</option>
+                        <option value="رويال هرم سيتي">رويال هرم سيتي</option>
+            </select>
+            <div class="form-error" id="centerError" data-en="Please select a center" data-ar="يرجى اختيار السنتر">Please select a center</div>
+          </div>
+
+          <!-- Password -->
+          <div class="form-group">
+            <label><i class="fas fa-lock"></i> <span data-en="Password" data-ar="كلمة المرور">Password</span></label>
+            <input type="password" class="form-control" id="password" placeholder="Min 6 characters / 6 أحرف على الأقل" required>
+            <div class="form-error" id="passwordError" data-en="Password must be at least 6 characters" data-ar="كلمة المرور يجب أن تكون 6 أحرف على الأقل">Password must be at least 6 characters</div>
+          </div>
+
+          <!-- Confirm Password -->
+          <div class="form-group">
+            <label><i class="fas fa-lock"></i> <span data-en="Confirm Password" data-ar="تأكيد كلمة المرور">Confirm Password</span></label>
+            <input type="password" class="form-control" id="confirmPassword" placeholder="Re-enter password / أعد إدخال كلمة المرور" required>
+            <div class="form-error" id="confirmError" data-en="Passwords do not match" data-ar="كلمتا المرور غير متطابقتين">Passwords do not match</div>
+          </div>
+
+          <!-- Submit -->
+          <button type="submit" class="btn btn-primary btn-lg" style="width: 100%; margin-top: 10px;" id="submitBtn">
+            <i class="fas fa-user-plus"></i>
+            <span data-en="Register" data-ar="تسجيل">Register</span>
+          </button>
+        </form>
+
+        <div class="form-footer">
+          <p data-en="Already have an account?" data-ar="لديك حساب بالفعل؟">Already have an account?</p>
+          <a href="login.html" class="btn btn-outline" style="width: 100%;">
+            <i class="fas fa-sign-in-alt"></i>
+            <span data-en="Login" data-ar="دخول">Login</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <h3><i class="fas fa-atom"></i> <span data-en="Mr. Ahmed Mohie" data-ar="أ. أحمد محي">Mr. Ahmed Mohie</span></h3>
+          <p data-en="Physics Teacher - Making Physics Simple & Fun" data-ar="مدرس فيزياء - نجعل الفيزياء بسيطة وممتعة">Physics Teacher - Making Physics Simple & Fun</p>
+        </div>
+        <div class="footer-links">
+          <a href="index.html" data-en="Home" data-ar="الرئيسية">Home</a>
+          <a href="register.html" data-en="Register" data-ar="التسجيل">Register</a>
+          <a href="homework.html" data-en="Homework" data-ar="الواجب">Homework</a>
+          <a href="sections.html" data-en="Sections" data-ar="الحصص">Sections</a>
+        </div>
+        <div class="footer-social">
+          <a href="https://api.whatsapp.com/send/?phone=%2B201288449598" class="social-link whatsapp" target="_blank"><i class="fab fa-whatsapp"></i></a>
+          <a href="https://www.facebook.com/share/aLnUsKV1Sk315EAJ/?mibextid=qi2Omg" class="social-link facebook" target="_blank"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://www.instagram.com/ahmedmohie97" class="social-link instagram" target="_blank"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Mr. Ahmed Mohie. <span data-en="All rights reserved." data-ar="جميع الحقوق محفوظة.">All rights reserved.</span></p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@ericblade/quagga2@1.8.4/dist/quagga.min.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/register.js"></script>
+</body>
+</html>
