@@ -8,9 +8,10 @@ let _lastDetectedCount = 0;
 let _lastDetectedTime = 0;
 
 document.addEventListener('DOMContentLoaded', () => {
-  // If already logged in, redirect to profile
+  // If already logged in and profile exists, redirect to profile.
+  // Otherwise stay on this registration page so the user can register students.
   const user = getLoggedInUser();
-  if (user) {
+  if (user && user.profileCompleted) {
     window.location.href = 'profile.html';
     return;
   }
@@ -315,8 +316,15 @@ async function handleRegistration(e) {
         form.reset();
         const codeEl = document.getElementById('studentCode');
         if (codeEl) codeEl.focus();
-        // Remove any auto-login state (we are keeping the page local-only for multiple registrations)
-        try { localStorage.removeItem('loggedInUser'); } catch (e) {}
+        // If a loggedInUser object exists, mark profileCompleted so future visits
+        // to `profile.html` will go there instead of showing a missing profile.
+        try {
+          const existing = getLoggedInUser();
+          if (existing) {
+            existing.profileCompleted = true;
+            localStorage.setItem('loggedInUser', JSON.stringify(existing));
+          }
+        } catch (e) {}
       } catch (e) {}
     }
   } catch (err) {
