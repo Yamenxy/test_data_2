@@ -8,13 +8,8 @@ let _lastDetectedCount = 0;
 let _lastDetectedTime = 0;
 
 document.addEventListener('DOMContentLoaded', () => {
-  // If already logged in and profile exists, redirect to profile.
-  // Otherwise stay on this registration page so the user can register students.
-  const user = getLoggedInUser();
-  if (user && user.profileCompleted) {
-    window.location.href = 'profile.html';
-    return;
-  }
+  // Always keep the user on this registration page.
+  // Do not redirect to `profile.html` from here under any login state.
 
   // Prevent typing in the code field — scan only
   const codeInput = document.getElementById('studentCode');
