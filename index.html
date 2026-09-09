@@ -1,701 +1,2496 @@
-<!-- الصف الثاني الثانوي -->
+### `register.html`
+
+```html
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Form with Unique Code</title>
-    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@500&display=swap" rel="stylesheet">
-     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
-      <link rel="icon" href="images/27aaa2af-994c-4d8a-8221-c5a3674cbb9b-removebg-preview_logo.png" type="image/png">
+  <meta charset="UTF-8">
 
-    <style>
-      body {
-          margin: 0;
-          padding: 0;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          min-height: 100vh;
-          font-family: 'Tajawal', sans-serif;
-          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      }
-  
-      .main {
-          width: 400px;
-          background: rgba(255, 255, 255, 0.9);
-          border-radius: 20px;
-          box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-          overflow: hidden;
-          padding: 40px;
-      }
-  
-      .signup {
-          position: relative;
-          width: 100%;
-      }
-  
-      label {
-          color: #4a4a4a;
-          font-size: 1.8em;
-          display: block;
-          margin-bottom: 20px;
-          font-weight: bold;
-          text-align: center;
-      }
-  
-      input, select {
-          width: 100%;
-          height: 50px;
-          background: #f5f5f5;
-          margin: 10px 0;
-          padding: 0 15px;
-          border: none;
-          outline: none;
-          border-radius: 10px;
-          font-size: 16px;
-          transition: all 0.3s ease;
-          direction: rtl;
-          text-align: right;
-      }
-  
-      input:focus, select:focus {
-          background: #fff;
-          box-shadow: 0 0 5px rgba(102, 126, 234, 0.5);
-      }
-  
-      button {
-          width: 100%;
-          height: 50px;
-          margin: 20px 0;
-          color: #fff;
-          background: linear-gradient(to right, #667eea, #764ba2);
-          font-size: 1.2em;
-          font-weight: bold;
-          border: none;
-          border-radius: 10px;
-          cursor: pointer;
-          transition: all 0.3s ease;
-      }
-  
-      button:hover {
-          background: linear-gradient(to right, #764ba2, #667eea);
-          transform: translateY(-3px);
-          box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-      }
-  
-      .modal {
-          background-color: #fff;
-          border-radius: 15px;
-          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-      }
-  
-      .modal p {
-          font-size: 1.4em;
-          color: #4a4a4a;
-      }
-  
-      .modal button {
-          background: linear-gradient(to right, #667eea, #764ba2);
-          color: #fff;
-          border: none;
-          padding: 12px 25px;
-          border-radius: 8px;
-          font-size: 1em;
-          cursor: pointer;
-          transition: all 0.3s ease;
-      }
-  
-      .modal button:hover {
-          background: linear-gradient(to right, #764ba2, #667eea);
-          transform: translateY(-2px);
-      }
-  
-      #loadingOverlay {
-          background-color: rgba(0, 0, 0, 0.5);
-      }
-  
-      #loadingBox {
-          background-color: #fff;
-          border-radius: 15px;
-          padding: 30px;
-      }
-  
-      #loadingBox p {
-          font-size: 1.2em;
-          color: #4a4a4a;
-      }
-  
-      @media (max-width: 480px) {
-          .main {
-              width: 90%;
-              padding: 30px;
-          }
-      }
-.modal {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 80%;
-            max-width: 500px;
-            background-color: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-            text-align: center;
-            z-index: 10000;
-        }
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
-        .modal p {
-            font-size: 1.2em;
-            margin-bottom: 20px;
-        }
+  <title>Register - Mr. Ahmed Mohie Physics</title>
 
-        .modal button {
-            width: auto;
-            padding: 10px 20px;
-            font-size: 1em;
-            cursor: pointer;
-        }
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+  >
 
-                .loader {
-  width: fit-content;
-  height: fit-content;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Poppins:wght@300;400;500;600;700;900&display=swap"
+    rel="stylesheet"
+  >
 
-.truckWrapper {
-  width: 200px;
-  height: 100px;
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  align-items: center;
-  justify-content: flex-end;
-  overflow-x: hidden;
-}
-
-/* truck upper body */
-.truckBody {
-  width: 130px;
-  height: fit-content;
-  margin-bottom: 6px;
-  animation: motion 1s linear infinite;
-}
-
-/* truck suspension animation */
-@keyframes motion {
-  0% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(3px);
-  }
-  100% {
-    transform: translateY(0px);
-  }
-}
-
-/* truck's tires */
-.truckTires {
-  width: 130px;
-  height: fit-content;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0px 10px 0px 15px;
-  position: absolute;
-  bottom: 0;
-}
-
-.truckTires svg {
-  width: 24px;
-}
-
-.road {
-  width: 100%;
-  height: 1.5px;
-  background-color: #282828;
-  position: relative;
-  bottom: 0;
-  align-self: flex-end;
-  border-radius: 3px;
-}
-
-.road::before {
-  content: "";
-  position: absolute;
-  width: 20px;
-  height: 100%;
-  background-color: #282828;
-  right: -50%;
-  border-radius: 3px;
-  animation: roadAnimation 1.4s linear infinite;
-  border-left: 10px solid white;
-}
-
-.road::after {
-  content: "";
-  position: absolute;
-  width: 10px;
-  height: 100%;
-  background-color: #282828;
-  right: -65%;
-  border-radius: 3px;
-  animation: roadAnimation 1.4s linear infinite;
-  border-left: 4px solid white;
-}
-
-.lampPost {
-  position: absolute;
-  bottom: 0;
-  right: -90%;
-  height: 90px;
-  animation: roadAnimation 1.4s linear infinite;
-}
-
-@keyframes roadAnimation {
-  0% {
-    transform: translateX(0px);
-  }
-  100% {
-    transform: translateX(-350px);
-  }
-}
-    </style>
+  <link rel="stylesheet" href="css/style.css">
 </head>
+
+
 <body>
-    <div class="container disable-on-submit">
-        <form id="contact-form" onsubmit="return false;">
-            <div class="main">
-                <div class="signup">
-                    <label for="chk" aria-hidden="true" style="font-size: large;">تسجيل الدخول</label>
-                    <label for="chk" aria-hidden="true" style="font-size: large;">الصف الثاني الثانوي</label>
-                    <input type="text" name="الاسم" placeholder="اسم الطالب رباعي" required>
-                    <!-- <input type="email" name="email" placeholder="البريد الإلكتروني" required> -->
-                    <input type="text" name="رقم الطالب" placeholder="رقم هاتف الطالب" required>
-                    <input type="text" name="رقم ولي الامر" placeholder="رقم ولي هاتف الامر" required>
-                    <input type="password" name="password" placeholder="كلمة المرور" required>
-                    <input type="password" name="confirm_password" placeholder="تأكيد كلمة المرور" required>
-                    <br>
-                    <select name="اسم السنتر" required style="font-size: 18px; padding: 10px; border-radius: 5px; border: 1px solid #ccc; background-color: #f9f9f9;">
-                        <option value="" placeholder="" style="">اختر اسم السنتر</option>
-                        <option value="الاسماعليه حدائق المعادي">الاسماعليه حدائق المعادي</option>
-                        <option value="لرحمه المعادي">الرحمه المعادي</option>
-                        <option value="اشراقه السادس">اشراقه السادس</option>
-                        <option value="سمارت السابع"> سمارت السابع</option>
-                        <option value="اشراقة الحداشر">اشراقة الحداشر</option>
-                        <option value="لارا الحصري">لارا الحصري</option>
-                        <option value="الامل السابع">الامل السابع</option>
-                        <option value="الربوة">الربوة</option>
-                        <option value="تيتشرز حدائق الاهرام">تيتشرز حدائق الاهرام</option>
-                        <option value="رويال اكادمي">رويال اكادمي</option>
-                        <option value="اشراقه (ابني بيتك السابعة)">اشراقه (ابني بيتك السابعة) </option>
-                        <option value="اشراقة ال (8000 فدان)">اشراقة (ال 800 فدان)</option>
-                        <option value="اشراقه (ابني بيتك المنطقة 12)">اشراقه (ابني بيتك المنطقة 12)</option>
-                        <option value="تيتشر (مول يوتوبيا)">تيتشر (مول يوتوبيا)</option>
-                        <option value="القمة (المنطقة 247 مول الحمد)">القمة (المنطقة 247 مول الحمد)</option>
-                        <option value="انس (كومباوند المخابرات)">انس (كومباوند المخابرات)</option>
-                        <option value="الشمس">الشمس</option>
-                    </select>
-                    <label style="font-size: 1em; color: #4a4a4a; margin-top: 15px;">الباركود:</label>
-<input 
-    type="text" 
-    name="الكود" 
-    id="unique_code" 
-    placeholder="سيظهر هنا رقم الباركود بعد المسح"
-    inputmode="numeric" 
-    pattern="\d{5}" 
-    maxlength="5" 
-    minlength="5"
-    title="الباركود يجب أن يكون 5 أرقام فقط">
-                    
-<div id="barcode-scanner-wrapper" style="margin-top: 10px;">
-  <div id="reader" style="display: none; width: 100%; height: auto; position: relative;">
-    <div style="
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 80%;
-        height: 60px;
-        transform: translate(-50%, -50%);
-        border: 2px dashed white;
-        border-radius: 10px;
-        z-index: 10;"></div>
-  </div>
-</div>
 
-<!-- Buttons OUTSIDE the hidden reader area -->
-<button type="button" onclick="startScanner()">📷 مسح الباركود</button>
-<br><br>
-<button type="submit" id="submit">تسجيل</button>
+  <!-- ==================== Loader ==================== -->
 
-                </div>
-                <div class="overlay" id="overlay"></div>
-                <div id="loadingOverlay" style="display: none;">
-                  <div id="loadingBox" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); padding: 20px; background-color: rgba(255, 255, 255, 0.8); border-radius: 10px; display: flex; align-items: center; justify-content: center;">
-                    <p>يتم الان ارسال البيانات برجاء الانتظار للحصول على الكود</p>
-                    <div class="truckWrapper">
-                      <div class="truckBody">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 198 93" class="trucksvg">
-                          <path stroke-width="3" stroke="#282828" fill="#F83D3D" d="M135 22.5H177.264C178.295 22.5 179.22 23.133 179.594 24.0939L192.33 56.8443C192.442 57.1332 192.5 57.4404 192.5 57.7504V89C192.5 90.3807 191.381 91.5 190 91.5H135C133.619 91.5 132.5 90.3807 132.5 89V25C132.5 23.6193 133.619 22.5 135 22.5Z"></path>
-                          <path stroke-width="3" stroke="#282828" fill="#7D7C7C" d="M146 33.5H181.741C182.779 33.5 183.709 34.1415 184.078 35.112L190.538 52.112C191.16 53.748 189.951 55.5 188.201 55.5H146C144.619 55.5 143.5 54.3807 143.5 53V36C143.5 34.6193 144.619 33.5 146 33.5Z"></path>
-                          <path stroke-width="2" stroke="#282828" fill="#282828" d="M150 65C150 65.39 149.763 65.8656 149.127 66.2893C148.499 66.7083 147.573 67 146.5 67C145.427 67 144.501 66.7083 143.873 66.2893C143.237 65.8656 143 65.39 143 65C143 64.61 143.237 64.1344 143.873 63.7107C144.501 63.2917 145.427 63 146.5 63C147.573 63 148.499 63.2917 149.127 63.7107C149.763 64.1344 150 64.61 150 65Z"></path>
-                          <rect stroke-width="2" stroke="#282828" fill="#FFFCAB" rx="1" height="7" width="5" y="63" x="187"></rect>
-                          <rect stroke-width="2" stroke="#282828" fill="#282828" rx="1" height="11" width="4" y="81" x="193"></rect>
-                          <rect stroke-width="3" stroke="#282828" fill="#DFDFDF" rx="2.5" height="90" width="121" y="1.5" x="6.5"></rect>
-                          <rect stroke-width="2" stroke="#282828" fill="#DFDFDF" rx="2" height="4" width="6" y="84" x="1"></rect>
-                        </svg>
-                      </div>
-                      <div class="truckTires">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 30 30" class="tiresvg">
-                          <circle stroke-width="3" stroke="#282828" fill="#282828" r="13.5" cy="15" cx="15"></circle>
-                          <circle fill="#DFDFDF" r="7" cy="15" cx="15"></circle>
-                        </svg>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 30 30" class="tiresvg">
-                          <circle stroke-width="3" stroke="#282828" fill="#282828" r="13.5" cy="15" cx="15"></circle>
-                          <circle fill="#DFDFDF" r="7" cy="15" cx="15"></circle>
-                        </svg>
-                      </div>
-                      <div class="road"></div>
-                      <svg xml:space="preserve" viewBox="0 0 453.459 453.459" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" id="Capa_1" version="1.1" fill="#000000" class="lampPost">
-                        <path d="M252.882,0c-37.781,0-68.686,29.953-70.245,67.358h-6.917v8.954c-26.109,2.163-45.463,10.011-45.463,19.366h9.993 c-1.65,5.146-2.507,10.54-2.507,16.017c0,28.956,23.558,52.514,52.514,52.514c28.956,0,52.514-23.558,52.514-52.514 c0-5.478-0.856-10.872-2.506-16.017h9.992c0-9.354-19.352-17.204-45.463-19.366v-8.954h-6.149C200.189,38.779,223.924,16,252.882,16 c29.952,0,54.32,24.368,54.32,54.32c0,28.774-11.078,37.009-25.105,47.437c-17.444,12.968-37.216,27.667-37.216,78.884v113.914 h-0.797c-5.068,0-9.174,4.108-9.174,9.177c0,2.844,1.293,5.383,3.321,7.066c-3.432,27.933-26.851,95.744-8.226,115.459v11.202h45.75 v-11.202c18.625-19.715-4.794-87.527-8.227-115.459c2.029-1.683,3.322-4.223,3.322-7.066c0-5.068-4.107-9.177-9.176-9.177h-0.795 V196.641c0-43.174,14.942-54.283,30.762-66.043c14.793-10.997,31.559-23.461,31.559-60.277C323.202,31.545,291.656,0,252.882,0z M232.77,111.694c0,23.442-19.071,42.514-42.514,42.514c-23.442,0-42.514-19.072-42.514-42.514c0-5.531,1.078-10.957,3.141-16.017 h78.747C231.693,100.736,232.77,106.162,232.77,111.694z"></path>
-                      </svg>
-                    </div>
-                  </div>
-                </div>               
-                <div class="modal" id="successModal" style="display: none;">
-                    <p id="successMessage"></p>
-                    <button onclick="closeModal()">اغلاق</button>
-                </div>
-            </div>
-        </form>
+  <div id="loader">
+
+    <div class="loader-content">
+
+      <div class="atom-loader">
+
+        <div class="electron"></div>
+        <div class="electron"></div>
+        <div class="electron"></div>
+
+        <div class="nucleus"></div>
+
+      </div>
+
+      <p
+        data-en="Loading..."
+        data-ar="جاري التحميل..."
+      >
+        Loading...
+      </p>
+
     </div>
 
-
-   <script src="https://unpkg.com/html5-qrcode"></script>
-<script>
-    let reader;
-    let lastScanned = "";
-    let confirmations = 0;
-    const REQUIRED_CONFIRMATIONS = 3; // number of times the same code must appear
-
-    function startScanner() {
-        document.getElementById("reader").style.display = "block";
-
-        if (reader) {
-            reader.stop().then(() => {
-                initScanner();
-            });
-        } else {
-            initScanner();
-        }
-    }
-
-    function initScanner() {
-        reader = new Html5Qrcode("reader");
-
-        reader.start(
-            { facingMode: "environment" },
-            {
-                fps: 10,
-                qrbox: { width: 300, height: 150 },
-                aspectRatio: 1.5,
-                disableFlip: false
-            },
-            (decodedText, decodedResult) => {
-                console.log("Scanned:", decodedText);
-
-                // ✅ Accept only numeric barcodes (5 digits)
-                if (!/^\d{5}$/.test(decodedText)) return;
-
-                if (decodedText === lastScanned) {
-                    confirmations++;
-                } else {
-                    lastScanned = decodedText;
-                    confirmations = 1;
-                }
-
-                // ✅ Confirm after REQUIRED_CONFIRMATIONS times
-                if (confirmations >= REQUIRED_CONFIRMATIONS) {
-                    document.getElementById("unique_code").value = decodedText;
-
-                    // Stop scanner to avoid multiple inputs
-                    reader.stop().then(() => {
-                        document.getElementById("reader").style.display = "none";
-                        console.log("Scanner stopped after successful read.");
-                    }).catch(err => console.error("Stop error:", err));
-                }
-            },
-            (errorMessage) => {
-                // Suppress scan errors
-                // console.log("Scanning error:", errorMessage);
-            }
-        ).catch(err => {
-            console.error("Camera start failed:", err);
-        });
-    }
-</script>
-
-    
-    <script>
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbxIQLOozUChnNs9Q4OS7AHrFiPG4Dk1xJ83XaeeTTHbfJYdUazodn0Pr6lcUOfY_pWdTw/exec';
-        const form = document.getElementById('contact-form');
-        const loadingBox = document.getElementById('loadingBox');
-
-        // function generateUniqueCode() {
-        //     const chars = '123456789';
-        //     let code = '';
-        //     for (let i = 0; i < 5; i++) {
-        //         code += chars.charAt(Math.floor(Math.random() * chars.length));
-        //     }
-        //     return code;
-        // }
-
-        function displayLoadingBox() {
-            document.getElementById('loadingOverlay').style.display = 'block';
-            document.getElementById('overlay').style.display = 'block'; 
-        }
-
-        function hideLoadingBox() {
-            document.getElementById('loadingOverlay').style.display = 'none';
-            document.getElementById('overlay').style.display = 'none'; 
-        }
-
-        // function displaySuccessMessage(uniqueCode) {
-        //     alert("شكرا! لقد تم ارسال بياناتك بنجاح و كووووووودك: " + uniqueCode + ".");
-        //     alert("حفظ الكود مهمتك الشخصيه كودك هو: " + uniqueCode );
-        //     alert("برجاء عدم عمل هذه العملية مرة اخري" );
-        //     if (confirm("Click OK to visit the primary secondary page.")) {
-        //         window.location.href = 'https://yamenxy.github.io/new_goto/';
-        //     }
-        // }
-
-         function displaySuccessMessage(code) {
-            hideLoadingBox();
-            successMessage.textContent = `كودك هو: ${code}`;
-            successModal.style.display = 'block';
-            document.getElementById('overlay').style.display = 'block';
-        }
-
-        function closeModal() {
-            // window.location.href = 'https://yamenxy.github.io/new_goto_2/';
-            successModal.style.display = 'none';
-            document.getElementById('overlay').style.display = 'none';
-            form.reset();
-        }
-        
-        function isStrongPassword(password) {
-            const minLength = 5;
-            if (password.length < minLength) {
-                alert("كلمة المرور ضعيفة! يجب أن تحتوي على 5 أحرف على الأقل.");
-                return false;
-            }
-
-            // const uppercaseRegex = /[A-Z]/;
-            // if (!uppercaseRegex.test(password)) {
-            //     alert("كلمة المرور ضعيفة! يجب أن تحتوي على حروف كبيره.");
-            //     return false;
-            // }
-
-            // const lowercaseRegex = /[a-z]/;
-            // if (!lowercaseRegex.test(password)) {
-            //     alert("كلمة المرور ضعيفة! يجب أن تحتوي علي حروف صغيره.");
-            //     return false;
-            // }
-
-            // const numberRegex = /[0-9]/;
-            // if (!numberRegex.test(password)) {
-            //     alert("كلمة المرور ضعيفة! يجب أن تحتوي على ارقام.");
-            //     return false;
-            // }
-
-            return true;
-        }
-
-        // function isValidEmail(email) {
-        //     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        //     return emailRegex.test(email);
-        //     }
-
-        function validateBarcode(unique_code) {
-    if (unique_code.length < 5) {
-        alert("⚠️ من فضلك امسح الباركود مرة اخري الكود يبدو انه قصير.");
-        hideLoadingBox();
-        return false;
-    } 
-    else if (unique_code.length > 5) {
-        alert("⚠️ من فضلك امسح الباركود مرة اخري الكود يبدو انه طويل.");
-        hideLoadingBox();
-        return false;
-    } 
-    else if (!/^\d+$/.test(unique_code)) {
-        alert("⚠️ الكود يجب أن يحتوي على أرقام فقط.");
-        hideLoadingBox();
-        return false;
-    }
-    return true; // ✅ valid barcode
-}
-
-               form.addEventListener('submit', e => {
-    e.preventDefault();
-    let isValid = true;
-                   
-    const unique_code = form.elements['الكود'].value.trim();
-    const name = form.elements['الاسم'].value.trim();
-    const studentNumber = form.elements['رقم الطالب'].value.trim();
-    const guardianNumber = form.elements['رقم ولي الامر'].value.trim();
-    const password = form.elements['password'].value.trim();
-    const confirmPassword = form.elements['confirm_password'].value.trim();
-    // const email = form.elements['email'].value.trim();
-
-    if (!isValidArabic(name)) {
-        isValid = false;
-        alert("ادخل الاسم باللغه العربيه!");
-    }
-
-    if (password !== confirmPassword) {
-        isValid = false;
-        alert("كلمات المرور غير متطابقة!");
-    }
-
-                      if (studentNumber === guardianNumber) {
-        isValid = false;
-        alert("لا يمكن ان تكون الارقام متطابقة!");
-    }
-
-    const wordsCount = name.split(" ").length;
-    if (name.includes("عبد") && wordsCount < 5) { 
-        isValid = false;
-        alert("الرجاء إدخال الاسم رباعي!");
-    } else if (name.includes("منه الله") && wordsCount < 5) {
-        isValid = false;
-        alert("الرجاء إدخال الاسم رباعي!");
-    } else if (!name.includes("عبد") && wordsCount < 4) {
-        isValid = false;
-        alert("الرجاء إدخال الاسم رباعي!");
-    } else if (!name.includes("منه الله") && wordsCount < 4) {
-        isValid = false;
-        alert("الرجاء إدخال الاسم رباعي!");
-    }
-
-    if (!isValidNumber(studentNumber)) {
-        isValid = false;
-        alert("ادخل رقم الطالب صحيح!");
-    }
-
-    if (!isValidNumber(guardianNumber)) {
-        isValid = false;
-        alert("ادخل رقم ولي الامر صحيح!");
-    }
-
-    if (!isStrongPassword(password)) {
-        isValid = false;
-    }
-
-    // if (!isValidEmail(email)) {
-    //     isValid = false;
-    //     alert("الرجاء إدخال بريد إلكتروني صحيح!");
-    // }   
-    if (!validateBarcode(unique_code)) {
-    isValid = false; 
-    }
-
-     if (isValid) {
-    displayLoadingBox();
-    const uniqueCode = document.getElementById('unique_code').value;
-    if (!uniqueCode) {
-        alert("⚠️ من فضلك امسح الباركود أولاً قبل متابعة التسجيل.");
-        hideLoadingBox();
-        return;
-    }
-
-    // Prepend +2 to phone numbers
-    const modifiedStudentNumber = "+2" + studentNumber;
-    const modifiedGuardianNumber = "+2" + guardianNumber;
-
-    // ✅ Fix password if starts with 0
-    let modifiedPassword = password;
-    if (modifiedPassword.startsWith("0")) {
-        modifiedPassword = "'" + modifiedPassword;
-    }
-
-    // Create a new FormData object with modifications
-    const formData = new FormData(form);
-    formData.set('رقم الطالب', modifiedStudentNumber);
-    formData.set('رقم ولي الامر', modifiedGuardianNumber);
-    formData.set('password', modifiedPassword);
-    formData.set('confirm_password', modifiedPassword);
-
-        fetch(scriptURL, { method: 'POST', body: formData })
-            .then(response => response.json())
-            .then(response => {
-    hideLoadingBox();
-    if (response.result === 'success') {
-        displaySuccessMessage(uniqueCode); // This should use the scanned one
-    } else if (response.result === 'error') {
-        alert(response.message);
-    }
-})
-
-            .catch(error => {
-                console.error('Error!', error.message);
-                hideLoadingBox();
-            });
-    }
-
-    return false;
-});
-        function isValidNumber(number) {
-            const validPrefixes = ['010', '011', '012', '015'];
-            return /^\d{11}$/.test(number) && validPrefixes.includes(number.substring(0, 3));
-        }
-
-        function isValidArabic(text) {
-            const arabicRegex = /[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF\uFB50-\uFDFF\uFE70-\uFEFF]/;
-            return arabicRegex.test(text);
-        }
-    </script>
-<script src="https://unpkg.com/html5-qrcode"></script>
-<script>
-    let scannerInstance;
-
-        function startScanner() {
-    document.getElementById("reader").style.display = "block";
-    const reader = new Html5Qrcode("reader");
-
-    reader.start(
-      { facingMode: "environment" },
-      {
-        fps: 10,
-        qrbox: { width: 300, height: 150 },
-        aspectRatio: 1.5,
-        disableFlip: false
-      },
-
-      (decodedText, decodedResult) => {
-          console.log(`Code scanned: ${decodedText}`);
-
-          // ✅ Allow only numbers
-          if (/^\d+$/.test(decodedText)) {
-              document.getElementById("unique_code").value = decodedText;
-              reader.stop().then(() => {
-                  console.log("Scanner stopped");
-                  document.getElementById("reader").style.display = "none";
-              });
-          } else {
-              alert("❌ الكود يجب أن يكون أرقام فقط");
-              // Scanner stays active until valid number is scanned
-          }
-      }
-    )
-}
-</script>
+  </div>
 
 
+  <!-- ==================== Navbar ==================== -->
+
+  <nav
+    class="navbar scrolled"
+    id="navbar"
+  >
+
+    <div class="nav-container">
+
+      <a
+        href="index.html"
+        class="logo"
+      >
+
+        <i class="fas fa-atom"></i>
+
+        <span
+          data-en="Mr. Ahmed Mohie"
+          data-ar="أ. أحمد محي"
+        >
+          Mr. Ahmed Mohie
+        </span>
+
+      </a>
+
+
+      <div
+        style="
+          margin-left:12px;
+          font-weight:700;
+          direction:rtl;
+          color:var(--primary);
+        "
+      >
+        الصف الثاني الثانوي
+      </div>
+
+
+      <div
+        class="nav-links"
+        id="navLinks"
+      >
+
+        <a
+          href="index.html"
+          class="nav-link"
+          data-en="Home"
+          data-ar="الرئيسية"
+        >
+          Home
+        </a>
+
+
+        <a
+          href="index.html#about"
+          class="nav-link"
+          data-en="About"
+          data-ar="من نحن"
+        >
+          About
+        </a>
+
+
+        <a
+          href="index.html#team"
+          class="nav-link"
+          data-en="Team"
+          data-ar="الفريق"
+        >
+          Team
+        </a>
+
+
+        <span
+          class="nav-auth"
+          id="navAuth"
+        ></span>
+
+      </div>
+
+
+      <div class="nav-actions">
+
+        <button
+          class="lang-toggle"
+          id="langToggle"
+          onclick="toggleLanguage()"
+        >
+
+          <i class="fas fa-globe"></i>
+
+          <span id="langText">
+            عربي
+          </span>
+
+        </button>
+
+
+        <button
+          class="menu-toggle"
+          id="menuToggle"
+          onclick="toggleMenu()"
+        >
+
+          <span></span>
+          <span></span>
+          <span></span>
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </nav>
+
+
+
+  <!-- ==================== Page Hero ==================== -->
+
+  <div class="page-hero">
+
+    <div>
+
+      <h1
+        data-en="Student Registration"
+        data-ar="تسجيل الطالب"
+      >
+        Student Registration
+      </h1>
+
+
+      <div
+        style="
+          font-weight:700;
+          margin-top:6px;
+          direction:rtl;
+          color:var(--primary);
+        "
+      >
+        الصف الثاني الثانوي
+      </div>
+
+
+      <p
+        data-en="Register to access homework videos and section recordings"
+        data-ar="سجل للوصول لفيديوهات الواجب والحصص المسجلة"
+      >
+        Register to access homework videos and section recordings
+      </p>
+
+    </div>
+
+  </div>
+
+
+
+  <!-- ==================== Registration Form ==================== -->
+
+  <section class="form-section">
+
+    <div class="container">
+
+      <div class="form-card">
+
+
+        <!-- Alert -->
+
+        <div id="regAlert"></div>
+
+
+
+        <form
+          id="registerForm"
+          autocomplete="off"
+        >
+
+
+          <!-- ==================== Student Code ==================== -->
+
+          <div class="form-group">
+
+            <label>
+
+              <i class="fas fa-id-badge"></i>
+
+              <span
+                data-en="Student Code"
+                data-ar="كود الطالب"
+              >
+                Student Code
+              </span>
+
+            </label>
+
+
+            <div class="scan-code-wrapper">
+
+
+              <!-- Student Code Input -->
+
+              <input
+                type="text"
+                class="form-control"
+                id="studentCode"
+                placeholder="Enter code or scan barcode / اكتب الكود أو امسح الباركود"
+                inputmode="numeric"
+                autocomplete="off"
+                maxlength="5"
+                required
+              >
+
+
+              <!-- Scanner Buttons -->
+
+              <div class="scanner-controls">
+
+
+                <button
+                  type="button"
+                  class="btn btn-outline"
+                  id="startScanBtn"
+                >
+
+                  <i class="fas fa-barcode"></i>
+
+                  <span
+                    data-en="Scan Barcode"
+                    data-ar="مسح الباركود"
+                  >
+                    Scan Barcode
+                  </span>
+
+                </button>
+
+
+                <button
+                  type="button"
+                  class="btn btn-danger"
+                  id="stopScanBtn"
+                  style="display:none;"
+                >
+
+                  <i class="fas fa-stop"></i>
+
+                  <span
+                    data-en="Stop"
+                    data-ar="إيقاف"
+                  >
+                    Stop
+                  </span>
+
+                </button>
+
+              </div>
+
+
+
+              <!-- Scanner Area -->
+
+              <div
+                id="scannerArea"
+                style="
+                  display:none;
+                  margin-top:10px;
+                  border-radius:12px;
+                  overflow:hidden;
+                  position:relative;
+                "
+              ></div>
+
+
+
+              <!-- Hint -->
+
+              <small
+                class="scan-hint"
+                style="
+                  color:var(--primary);
+                  margin-top:6px;
+                  display:block;
+                "
+              >
+
+                <i class="fas fa-info-circle"></i>
+
+                <span
+                  data-en="Enter the code manually or scan the barcode"
+                  data-ar="يمكنك كتابة الكود يدويًا أو مسح الباركود"
+                >
+                  Enter the code manually or scan the barcode
+                </span>
+
+              </small>
+
+            </div>
+
+
+
+            <div
+              class="form-error"
+              id="codeError"
+              data-en="Enter a valid student code"
+              data-ar="يرجى إدخال كود طالب صحيح"
+            >
+              Enter a valid student code
+            </div>
+
+          </div>
+
+
+
+          <!-- ==================== Student Name ==================== -->
+
+          <div class="form-group">
+
+            <label>
+
+              <i class="fas fa-user"></i>
+
+              <span
+                data-en="Full Name (Arabic, 4 parts)"
+                data-ar="الاسم الرباعي بالعربي"
+              >
+                Full Name (Arabic, 4 parts)
+              </span>
+
+            </label>
+
+
+            <input
+              type="text"
+              class="form-control"
+              id="studentName"
+              placeholder="مثال: يامن ياسر حسن سيد"
+              dir="rtl"
+              required
+            >
+
+
+            <small class="field-hint">
+
+              <i class="fas fa-info-circle"></i>
+
+              <span
+                data-en="Enter your full name in Arabic (at least 4 parts)"
+                data-ar="أدخل اسمك الرباعي باللغة العربية"
+              >
+                Enter your full name in Arabic (at least 4 parts)
+              </span>
+
+            </small>
+
+
+            <div
+              class="form-error"
+              id="nameError"
+              data-en="Full Arabic name required (4 parts minimum)"
+              data-ar="الاسم الرباعي بالعربي مطلوب"
+            >
+              Full Arabic name required (4 parts minimum)
+            </div>
+
+          </div>
+
+
+
+          <!-- ==================== Student Phone ==================== -->
+
+          <div class="form-group">
+
+            <label>
+
+              <i class="fas fa-phone"></i>
+
+              <span
+                data-en="Student Phone"
+                data-ar="رقم الطالب"
+              >
+                Student Phone
+              </span>
+
+            </label>
+
+
+            <input
+              type="tel"
+              class="form-control"
+              id="studentPhone"
+              placeholder="01XXXXXXXXX"
+              inputmode="tel"
+              required
+            >
+
+
+            <div
+              class="form-error"
+              id="phoneError"
+              data-en="Valid Egyptian phone required (01XXXXXXXXX)"
+              data-ar="رقم مصري صحيح مطلوب (01XXXXXXXXX)"
+            >
+              Valid Egyptian phone required
+            </div>
+
+          </div>
+
+
+
+          <!-- ==================== Parent Phone ==================== -->
+
+          <div class="form-group">
+
+            <label>
+
+              <i class="fas fa-phone-alt"></i>
+
+              <span
+                data-en="Parent's Phone"
+                data-ar="رقم ولي الأمر"
+              >
+                Parent's Phone
+              </span>
+
+            </label>
+
+
+            <input
+              type="tel"
+              class="form-control"
+              id="parentPhone"
+              placeholder="01XXXXXXXXX"
+              inputmode="tel"
+              required
+            >
+
+
+            <div
+              class="form-error"
+              id="parentPhoneError"
+              data-en="Valid parent phone required (01XXXXXXXXX)"
+              data-ar="رقم ولي الأمر صحيح مطلوب (01XXXXXXXXX)"
+            >
+              Valid parent phone required
+            </div>
+
+          </div>
+
+
+
+          <!-- ==================== Center ==================== -->
+
+          <div class="form-group">
+
+            <label>
+
+              <i class="fas fa-map-marker-alt"></i>
+
+              <span
+                data-en="Center"
+                data-ar="السنتر"
+              >
+                Center
+              </span>
+
+            </label>
+
+
+            <select
+              class="form-control"
+              id="center"
+              required
+            >
+
+              <option
+                value=""
+                disabled
+                selected
+                data-en="Select your center"
+                data-ar="اختر السنتر"
+              >
+                Select your center / اختر السنتر
+              </option>
+
+
+              <option value="الاسماعليه حدائق المعادي">
+                الاسماعليه حدائق المعادي
+              </option>
+
+              <option value="لرحمه المعادي">
+                الرحمه المعادي
+              </option>
+
+              <option value="اشراقه السادس">
+                اشراقه السادس
+              </option>
+
+              <option value="سمارت السابع">
+                سمارت السابع
+              </option>
+
+              <option value="اشراقة الحداشر">
+                اشراقة الحداشر
+              </option>
+
+              <option value="لارا الحصري">
+                لارا الحصري
+              </option>
+
+              <option value="الامل السابع">
+                الامل السابع
+              </option>
+
+              <option value="الربوة">
+                الربوة
+              </option>
+
+              <option value="اشراقه (ابني بيتك السابعة)">
+                اشراقه (ابني بيتك السابعة)
+              </option>
+
+              <option value="اشراقة (ال 800 فدان)">
+                اشراقة (ال 800 فدان)
+              </option>
+
+              <option value="اشراقه (ابني بيتك المنطقة 12)">
+                اشراقه (ابني بيتك المنطقة 12)
+              </option>
+
+              <option value="تيتشرز (مول يوتوبيا)">
+                تيتشرز (مول يوتوبيا)
+              </option>
+
+              <option value="تيتشرز (حدائق الاهرام)">
+                تيتشرز (حدائق الاهرام)
+              </option>
+
+              <option value="القمة (المنطقة 247 مول الحمد)">
+                القمة (المنطقة 247 مول الحمد)
+              </option>
+
+              <option value="انس (كومباوند المخابرات)">
+                انس (كومباوند المخابرات)
+              </option>
+
+              <option value="الشمس">
+                الشمس
+              </option>
+
+              <option value="اكسبرس">
+                اكسبرس
+              </option>
+
+              <option value="رويال 1185">
+                رويال 1185
+              </option>
+
+              <option value="رويال السادس">
+                رويال السادس
+              </option>
+
+              <option value="كابيتال الحي السابع">
+                كابيتال الحي السابع
+              </option>
+
+              <option value="رويال هرم سيتي">
+                رويال هرم سيتي
+              </option>
+
+            </select>
+
+
+            <div
+              class="form-error"
+              id="centerError"
+              data-en="Please select a center"
+              data-ar="يرجى اختيار السنتر"
+            >
+              Please select a center
+            </div>
+
+          </div>
+
+
+
+          <!-- ==================== Password ==================== -->
+
+          <div class="form-group">
+
+            <label>
+
+              <i class="fas fa-lock"></i>
+
+              <span
+                data-en="Password"
+                data-ar="كلمة المرور"
+              >
+                Password
+              </span>
+
+            </label>
+
+
+            <input
+              type="password"
+              class="form-control"
+              id="password"
+              placeholder="Min 6 characters / 6 أحرف على الأقل"
+              required
+            >
+
+
+            <div
+              class="form-error"
+              id="passwordError"
+              data-en="Password must be at least 6 characters"
+              data-ar="كلمة المرور يجب أن تكون 6 أحرف على الأقل"
+            >
+              Password must be at least 6 characters
+            </div>
+
+          </div>
+
+
+
+          <!-- ==================== Confirm Password ==================== -->
+
+          <div class="form-group">
+
+            <label>
+
+              <i class="fas fa-lock"></i>
+
+              <span
+                data-en="Confirm Password"
+                data-ar="تأكيد كلمة المرور"
+              >
+                Confirm Password
+              </span>
+
+            </label>
+
+
+            <input
+              type="password"
+              class="form-control"
+              id="confirmPassword"
+              placeholder="Re-enter password / أعد إدخال كلمة المرور"
+              required
+            >
+
+
+            <div
+              class="form-error"
+              id="confirmError"
+              data-en="Passwords do not match"
+              data-ar="كلمتا المرور غير متطابقتين"
+            >
+              Passwords do not match
+            </div>
+
+          </div>
+
+
+
+          <!-- ==================== Submit ==================== -->
+
+          <button
+            type="submit"
+            class="btn btn-primary btn-lg"
+            style="width:100%; margin-top:10px;"
+            id="submitBtn"
+          >
+
+            <i class="fas fa-user-plus"></i>
+
+            <span
+              data-en="Register"
+              data-ar="تسجيل"
+            >
+              Register
+            </span>
+
+          </button>
+
+        </form>
+
+
+
+        <!-- ==================== Login Footer ==================== -->
+
+        <div class="form-footer">
+
+          <p
+            data-en="Already have an account?"
+            data-ar="لديك حساب بالفعل؟"
+          >
+            Already have an account?
+          </p>
+
+
+          <a
+            href="login.html"
+            class="btn btn-outline"
+            style="width:100%;"
+          >
+
+            <i class="fas fa-sign-in-alt"></i>
+
+            <span
+              data-en="Login"
+              data-ar="دخول"
+            >
+              Login
+            </span>
+
+          </a>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+
+  <!-- ==================== Footer ==================== -->
+
+  <footer class="footer">
+
+    <div class="container">
+
+      <div class="footer-content">
+
+
+        <div class="footer-brand">
+
+          <h3>
+
+            <i class="fas fa-atom"></i>
+
+            <span
+              data-en="Mr. Ahmed Mohie"
+              data-ar="أ. أحمد محي"
+            >
+              Mr. Ahmed Mohie
+            </span>
+
+          </h3>
+
+
+          <p
+            data-en="Physics Teacher - Making Physics Simple & Fun"
+            data-ar="مدرس فيزياء - نجعل الفيزياء بسيطة وممتعة"
+          >
+            Physics Teacher - Making Physics Simple & Fun
+          </p>
+
+        </div>
+
+
+
+        <div class="footer-links">
+
+          <a
+            href="index.html"
+            data-en="Home"
+            data-ar="الرئيسية"
+          >
+            Home
+          </a>
+
+
+          <a
+            href="register.html"
+            data-en="Register"
+            data-ar="التسجيل"
+          >
+            Register
+          </a>
+
+        </div>
+
+
+
+        <div class="footer-social">
+
+          <a
+            href="https://api.whatsapp.com/send/?phone=%2B201288449598"
+            class="social-link whatsapp"
+            target="_blank"
+          >
+            <i class="fab fa-whatsapp"></i>
+          </a>
+
+
+          <a
+            href="https://www.facebook.com/share/aLnUsKV1Sk315EAJ/?mibextid=qi2Omg"
+            class="social-link facebook"
+            target="_blank"
+          >
+            <i class="fab fa-facebook-f"></i>
+          </a>
+
+
+          <a
+            href="https://www.instagram.com/ahmedmohie97"
+            class="social-link instagram"
+            target="_blank"
+          >
+            <i class="fab fa-instagram"></i>
+          </a>
+
+        </div>
+
+      </div>
+
+
+
+      <div class="footer-bottom">
+
+        <p>
+
+          &copy; 2026 Mr. Ahmed Mohie.
+
+          <span
+            data-en="All rights reserved."
+            data-ar="جميع الحقوق محفوظة."
+          >
+            All rights reserved.
+          </span>
+
+        </p>
+
+      </div>
+
+    </div>
+
+  </footer>
+
+
+
+  <!-- ==================== Scripts ==================== -->
+
+  <script
+    src="https://cdn.jsdelivr.net/npm/@ericblade/quagga2@1.8.4/dist/quagga.min.js"
+  ></script>
+
+  <script src="js/main.js"></script>
+
+  <script src="js/register.js"></script>
 
 </body>
+
 </html>
+
+<script
+/* =========================================================
+   Registration Page JS
+   ========================================================= */
+
+const REGISTER_API =
+  'https://script.google.com/macros/s/AKfycbyc1ARUyRvini8qeLxYDi1uSZlq3fDR_mQCecq50PJcuZZLvZ337pLPGgS7Qgw3cBQjrA/exec';
+
+
+let scannerRunning = false;
+
+
+/* =========================================================
+   Page Initialization
+   ========================================================= */
+
+document.addEventListener('DOMContentLoaded', () => {
+
+  /* -----------------------------------------
+     If already logged in → profile
+     ----------------------------------------- */
+
+  const user = getLoggedInUser();
+
+  if (user) {
+    window.location.href = 'profile.html';
+    return;
+  }
+
+
+  /* -----------------------------------------
+     Student Code Input
+     ----------------------------------------- */
+
+  const codeInput =
+    document.getElementById('studentCode');
+
+
+  if (codeInput) {
+
+    codeInput.addEventListener('input', function () {
+
+      /*
+       * Allow numbers only
+       */
+
+      this.value =
+        this.value.replace(/\D/g, '');
+
+
+      /*
+       * Maximum 5 digits
+       */
+
+      if (this.value.length > 5) {
+
+        this.value =
+          this.value.substring(0, 5);
+
+      }
+
+    });
+
+  }
+
+
+  /* -----------------------------------------
+     Scanner Buttons
+     ----------------------------------------- */
+
+  const startBtn =
+    document.getElementById('startScanBtn');
+
+  const stopBtn =
+    document.getElementById('stopScanBtn');
+
+
+  if (startBtn) {
+
+    startBtn.addEventListener(
+      'click',
+      startScanner
+    );
+
+  }
+
+
+  if (stopBtn) {
+
+    stopBtn.addEventListener(
+      'click',
+      stopScanner
+    );
+
+  }
+
+
+  /* -----------------------------------------
+     Registration Form
+     ----------------------------------------- */
+
+  const form =
+    document.getElementById('registerForm');
+
+
+  if (form) {
+
+    form.addEventListener(
+      'submit',
+      handleRegistration
+    );
+
+  }
+
+});
+
+
+
+/* =========================================================
+   Barcode Scanner
+   ========================================================= */
+
+function startScanner() {
+
+  const scannerEl =
+    document.getElementById('scannerArea');
+
+  const startBtn =
+    document.getElementById('startScanBtn');
+
+  const stopBtn =
+    document.getElementById('stopScanBtn');
+
+
+  if (
+    !scannerEl ||
+    !startBtn ||
+    !stopBtn
+  ) {
+
+    console.error(
+      'Scanner elements not found'
+    );
+
+    return;
+
+  }
+
+
+  /* -----------------------------------------
+     Check Quagga
+     ----------------------------------------- */
+
+  if (typeof Quagga === 'undefined') {
+
+    console.error(
+      'Quagga is not loaded'
+    );
+
+    showToast(
+      'Scanner library not loaded',
+      'error'
+    );
+
+    return;
+
+  }
+
+
+  /* -----------------------------------------
+     Show scanner
+     ----------------------------------------- */
+
+  scannerEl.style.display = 'block';
+
+  startBtn.style.display = 'none';
+
+  stopBtn.style.display = 'inline-flex';
+
+
+  /* -----------------------------------------
+     Stop previous scanner
+     ----------------------------------------- */
+
+  try {
+
+    if (scannerRunning) {
+
+      Quagga.stop();
+
+      scannerRunning = false;
+
+    }
+
+  } catch (error) {
+
+    console.warn(
+      'Could not stop previous scanner:',
+      error
+    );
+
+  }
+
+
+  /* -----------------------------------------
+     Remove old detection handler
+     ----------------------------------------- */
+
+  try {
+
+    if (
+      typeof Quagga.offDetected ===
+      'function'
+    ) {
+
+      Quagga.offDetected();
+
+    }
+
+  } catch (error) {
+
+    console.warn(
+      'Could not remove old handler:',
+      error
+    );
+
+  }
+
+
+  /* -----------------------------------------
+     Barcode Detection
+     ----------------------------------------- */
+
+  const onDetectedHandler =
+    (result) => {
+
+      try {
+
+        if (
+          !result ||
+          !result.codeResult
+        ) {
+
+          return;
+
+        }
+
+
+        const code =
+          result.codeResult.code;
+
+
+        if (!code) {
+
+          return;
+
+        }
+
+
+        console.log(
+          'Barcode detected:',
+          code
+        );
+
+
+        /* -----------------------------------------
+           Numbers only
+           ----------------------------------------- */
+
+        if (!/^\d+$/.test(code)) {
+
+          showToast(
+            'كود غير صالح',
+            'error'
+          );
+
+          return;
+
+        }
+
+
+        /* -----------------------------------------
+           Exactly 5 digits
+           ----------------------------------------- */
+
+        if (!/^\d{5}$/.test(code)) {
+
+          showToast(
+            'كود غير صالح - يجب أن يكون 5 أرقام',
+            'error'
+          );
+
+          return;
+
+        }
+
+
+        const numericCode =
+          parseInt(code, 10);
+
+
+        /* -----------------------------------------
+           Accept only 30000 - 32000
+           ----------------------------------------- */
+
+        if (
+          numericCode < 30000 ||
+          numericCode > 32000
+        ) {
+
+          showToast(
+            'كود غير صالح',
+            'error'
+          );
+
+          return;
+
+        }
+
+
+        /* -----------------------------------------
+           Put code into input
+           ----------------------------------------- */
+
+        const codeInput =
+          document.getElementById(
+            'studentCode'
+          );
+
+
+        if (codeInput) {
+
+          codeInput.value = code;
+
+        }
+
+
+        /* -----------------------------------------
+           Stop scanner
+           ----------------------------------------- */
+
+        stopScanner();
+
+
+        showToast(
+          'تم مسح الكود: ' + code,
+          'success'
+        );
+
+
+        console.log(
+          'Valid barcode:',
+          code
+        );
+
+      } catch (error) {
+
+        console.error(
+          'Barcode detection error:',
+          error
+        );
+
+      }
+
+    };
+
+
+  /* -----------------------------------------
+     Register detection handler
+     ----------------------------------------- */
+
+  Quagga.onDetected(
+    onDetectedHandler
+  );
+
+
+  /* -----------------------------------------
+     Quagga Configuration
+     ----------------------------------------- */
+
+  const config = {
+
+    inputStream: {
+
+      name: 'Live',
+
+      type: 'LiveStream',
+
+      target: scannerEl,
+
+      constraints: {
+
+        facingMode: 'environment',
+
+        width: {
+          ideal: 640
+        },
+
+        height: {
+          ideal: 480
+        }
+
+      }
+
+    },
+
+
+    locator: {
+
+      patchSize: 'medium',
+
+      halfSample: true
+
+    },
+
+
+    numOfWorkers:
+      Math.min(
+        navigator.hardwareConcurrency || 2,
+        4
+      ),
+
+
+    decoder: {
+
+      readers: [
+
+        'code_128_reader',
+
+        'ean_reader',
+
+        'ean_8_reader',
+
+        'code_39_reader',
+
+        'upc_reader',
+
+        'i2of5_reader'
+
+      ]
+
+    },
+
+
+    locate: true
+
+  };
+
+
+  /* -----------------------------------------
+     Initialize Quagga
+     ----------------------------------------- */
+
+  Quagga.init(
+    config,
+    function (err) {
+
+      if (err) {
+
+        console.error(
+          'Quagga initialization error:',
+          err
+        );
+
+
+        showToast(
+          'تعذر تشغيل الكاميرا: ' +
+          (err.message || 'Camera error'),
+          'error'
+        );
+
+
+        stopScanner();
+
+        return;
+
+      }
+
+
+      console.log(
+        'Quagga initialized successfully'
+      );
+
+
+      try {
+
+        Quagga.start();
+
+        scannerRunning = true;
+
+
+        console.log(
+          'Scanner started'
+        );
+
+      } catch (error) {
+
+        console.error(
+          'Quagga start error:',
+          error
+        );
+
+
+        showToast(
+          'تعذر تشغيل الماسح',
+          'error'
+        );
+
+
+        stopScanner();
+
+      }
+
+    }
+  );
+
+}
+
+
+
+/* =========================================================
+   Stop Scanner
+   ========================================================= */
+
+function stopScanner() {
+
+  if (
+    typeof Quagga !==
+    'undefined'
+  ) {
+
+    try {
+
+      if (scannerRunning) {
+
+        Quagga.stop();
+
+      }
+
+
+      if (
+        typeof Quagga.offDetected ===
+        'function'
+      ) {
+
+        Quagga.offDetected();
+
+      }
+
+    } catch (error) {
+
+      console.warn(
+        'Error stopping scanner:',
+        error
+      );
+
+    }
+
+  }
+
+
+  scannerRunning = false;
+
+
+  const scannerEl =
+    document.getElementById(
+      'scannerArea'
+    );
+
+  const startBtn =
+    document.getElementById(
+      'startScanBtn'
+    );
+
+  const stopBtn =
+    document.getElementById(
+      'stopScanBtn'
+    );
+
+
+  if (scannerEl) {
+
+    scannerEl.style.display = 'none';
+
+    scannerEl.innerHTML = '';
+
+  }
+
+
+  if (startBtn) {
+
+    startBtn.style.display =
+      'inline-flex';
+
+  }
+
+
+  if (stopBtn) {
+
+    stopBtn.style.display = 'none';
+
+  }
+
+}
+
+
+
+/* =========================================================
+   Arabic Name Validation
+   ========================================================= */
+
+function isArabicName(name) {
+
+  return /^[\u0600-\u06FF\u0750-\u077F\uFB50-\uFDFF\uFE70-\uFEFF\s]+$/
+    .test(name);
+
+}
+
+
+
+function validateFullName(name) {
+
+  const parts =
+    name
+      .trim()
+      .split(/\s+/)
+      .filter(
+        p => p.length > 0
+      );
+
+
+  /* At least 4 parts */
+
+  if (parts.length < 4) {
+
+    return {
+      valid: false,
+      reason: 'short'
+    };
+
+  }
+
+
+  /* Arabic only */
+
+  if (!isArabicName(name)) {
+
+    return {
+      valid: false,
+      reason: 'notArabic'
+    };
+
+  }
+
+
+  /* Each part at least 2 chars */
+
+  if (
+    parts.some(
+      p => p.length < 2
+    )
+  ) {
+
+    return {
+      valid: false,
+      reason: 'partTooShort'
+    };
+
+  }
+
+
+  return {
+    valid: true
+  };
+
+}
+
+
+
+/* =========================================================
+   Phone Validation
+   ========================================================= */
+
+function validatePhone(phone) {
+
+  const s =
+    String(phone || '')
+      .replace(/\D/g, '');
+
+
+  /*
+   * Remove country code 20
+   */
+
+  const local =
+    s
+      .replace(/^20/, '')
+      .replace(/^0+/, '');
+
+
+  /*
+   * Egyptian mobile:
+   * 1XXXXXXXXX
+   */
+
+  return /^1[0-9]{9}$/.test(
+    local
+  );
+
+}
+
+
+
+/* =========================================================
+   Format Phone to +20
+   ========================================================= */
+
+function formatToPlus20(phone) {
+
+  let s =
+    String(phone || '')
+      .replace(/\D/g, '');
+
+
+  /*
+   * Remove leading zeros
+   */
+
+  s = s.replace(/^0+/, '');
+
+
+  /*
+   * Remove country code
+   * if already provided
+   */
+
+  s = s.replace(/^20/, '');
+
+
+  return '+20' + s;
+
+}
+
+
+
+/* =========================================================
+   Registration Handler
+   ========================================================= */
+
+async function handleRegistration(e) {
+
+  e.preventDefault();
+
+
+  const form = e.target;
+
+
+  const alertEl =
+    document.getElementById(
+      'regAlert'
+    );
+
+
+  const submitBtn =
+    document.getElementById(
+      'submitBtn'
+    );
+
+
+  /* -----------------------------------------
+     Get Values
+     ----------------------------------------- */
+
+  const studentCode =
+    document
+      .getElementById('studentCode')
+      .value
+      .trim();
+
+
+  const studentName =
+    document
+      .getElementById('studentName')
+      .value
+      .trim();
+
+
+  const studentPhone =
+    document
+      .getElementById('studentPhone')
+      .value
+      .trim();
+
+
+  const parentPhone =
+    document
+      .getElementById('parentPhone')
+      .value
+      .trim();
+
+
+  const center =
+    document
+      .getElementById('center')
+      .value;
+
+
+  const password =
+    document
+      .getElementById('password')
+      .value;
+
+
+  const confirmPassword =
+    document
+      .getElementById('confirmPassword')
+      .value;
+
+
+
+  /* -----------------------------------------
+     Clear previous errors
+     ----------------------------------------- */
+
+  alertEl.innerHTML = '';
+
+
+
+  /* =====================================================
+     Validate Student Code
+     ===================================================== */
+
+
+  /*
+   * Code is required
+   */
+
+  if (!studentCode) {
+
+    alertEl.innerHTML = `
+
+      <div class="alert alert-error">
+
+        <i class="fas fa-exclamation-circle"></i>
+
+        <span
+          data-en="Please enter or scan your barcode first"
+          data-ar="يرجى كتابة أو مسح الباركود أولاً"
+        >
+          Please enter or scan your barcode first
+        </span>
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+
+  /*
+   * Exactly 5 numbers
+   */
+
+  if (!/^\d{5}$/.test(studentCode)) {
+
+    alertEl.innerHTML = `
+
+      <div class="alert alert-error">
+
+        <i class="fas fa-exclamation-circle"></i>
+
+        <span
+          data-en="Student code must be exactly 5 digits"
+          data-ar="كود الطالب يجب أن يكون 5 أرقام بالضبط"
+        >
+          Student code must be exactly 5 digits
+        </span>
+
+      </div>
+
+    `;
+
+
+    document
+      .getElementById('studentCode')
+      .focus();
+
+
+    return;
+
+  }
+
+
+
+  /*
+   * Code range
+   * 30000 - 32000
+   */
+
+  const numericCode =
+    parseInt(
+      studentCode,
+      10
+    );
+
+
+  if (
+    numericCode < 30000 ||
+    numericCode > 32000
+  ) {
+
+    alertEl.innerHTML = `
+
+      <div class="alert alert-error">
+
+        <i class="fas fa-exclamation-circle"></i>
+
+        <span
+          data-en="Invalid student code. Code must be between 30000 and 32000."
+          data-ar="كود الطالب غير صالح. يجب أن يكون الكود من 30000 إلى 32000."
+        >
+          Invalid student code.
+        </span>
+
+      </div>
+
+    `;
+
+
+    document
+      .getElementById('studentCode')
+      .value = '';
+
+
+    document
+      .getElementById('studentCode')
+      .focus();
+
+
+    return;
+
+  }
+
+
+
+  /* =====================================================
+     Validate Name
+     ===================================================== */
+
+  const nameCheck =
+    validateFullName(
+      studentName
+    );
+
+
+  if (!nameCheck.valid) {
+
+    let msg = '';
+
+
+    if (
+      nameCheck.reason ===
+      'notArabic'
+    ) {
+
+      msg = `
+
+        <span
+          data-en="Name must be in Arabic only"
+          data-ar="الاسم يجب أن يكون بالعربي فقط"
+        >
+          الاسم يجب أن يكون بالعربي فقط
+        </span>
+
+      `;
+
+    }
+
+    else if (
+      nameCheck.reason ===
+      'short'
+    ) {
+
+      msg = `
+
+        <span
+          data-en="Enter your full 4-part name"
+          data-ar="أدخل اسمك الرباعي (4 أجزاء على الأقل)"
+        >
+          أدخل اسمك الرباعي (4 أجزاء على الأقل)
+        </span>
+
+      `;
+
+    }
+
+    else {
+
+      msg = `
+
+        <span
+          data-en="Each name part must be at least 2 letters"
+          data-ar="كل جزء من الاسم يجب أن يكون حرفين على الأقل"
+        >
+          كل جزء من الاسم يجب أن يكون حرفين على الأقل
+        </span>
+
+      `;
+
+    }
+
+
+    alertEl.innerHTML = `
+
+      <div class="alert alert-error">
+
+        <i class="fas fa-exclamation-circle"></i>
+
+        ${msg}
+
+      </div>
+
+    `;
+
+
+    document
+      .getElementById('studentName')
+      .focus();
+
+
+    return;
+
+  }
+
+
+
+  /* =====================================================
+     Validate Required Fields
+     ===================================================== */
+
+  if (
+    !studentName ||
+    !studentPhone ||
+    !parentPhone ||
+    !center ||
+    !password
+  ) {
+
+    alertEl.innerHTML = `
+
+      <div class="alert alert-error">
+
+        <i class="fas fa-exclamation-circle"></i>
+
+        <span
+          data-en="Please fill all fields"
+          data-ar="يرجى ملء جميع الحقول"
+        >
+          Please fill all fields
+        </span>
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+
+  /* =====================================================
+     Validate Student Phone
+     ===================================================== */
+
+  if (!validatePhone(studentPhone)) {
+
+    alertEl.innerHTML = `
+
+      <div class="alert alert-error">
+
+        <i class="fas fa-exclamation-circle"></i>
+
+        <span
+          data-en="Invalid student phone (01XXXXXXXXX)"
+          data-ar="رقم الطالب غير صحيح (01XXXXXXXXX)"
+        >
+          Invalid student phone
+        </span>
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+
+  /* =====================================================
+     Validate Parent Phone
+     ===================================================== */
+
+  if (!validatePhone(parentPhone)) {
+
+    alertEl.innerHTML = `
+
+      <div class="alert alert-error">
+
+        <i class="fas fa-exclamation-circle"></i>
+
+        <span
+          data-en="Invalid parent phone (01XXXXXXXXX)"
+          data-ar="رقم ولي الأمر غير صحيح (01XXXXXXXXX)"
+        >
+          Invalid parent phone
+        </span>
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+
+  /* =====================================================
+     Format Phones
+     ===================================================== */
+
+  const formattedStudentPhone =
+    formatToPlus20(
+      studentPhone
+    );
+
+
+  const formattedParentPhone =
+    formatToPlus20(
+      parentPhone
+    );
+
+
+
+  /* =====================================================
+     Student / Parent Phone Difference
+     ===================================================== */
+
+  if (
+    formattedStudentPhone ===
+    formattedParentPhone
+  ) {
+
+    alertEl.innerHTML = `
+
+      <div class="alert alert-error">
+
+        <i class="fas fa-exclamation-circle"></i>
+
+        <span
+          data-en="Student phone and parent phone must be different"
+          data-ar="رقم الطالب ورقم ولي الأمر يجب أن يكونا مختلفين"
+        >
+          Student phone and parent phone must be different
+        </span>
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+
+  /* =====================================================
+     Password Validation
+     ===================================================== */
+
+  if (password.length < 6) {
+
+    alertEl.innerHTML = `
+
+      <div class="alert alert-error">
+
+        <i class="fas fa-exclamation-circle"></i>
+
+        <span
+          data-en="Password must be at least 6 characters"
+          data-ar="كلمة المرور يجب أن تكون 6 أحرف على الأقل"
+        >
+          Password must be at least 6 characters
+        </span>
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+
+  if (
+    password !==
+    confirmPassword
+  ) {
+
+    alertEl.innerHTML = `
+
+      <div class="alert alert-error">
+
+        <i class="fas fa-exclamation-circle"></i>
+
+        <span
+          data-en="Passwords do not match"
+          data-ar="كلمتا المرور غير متطابقتين"
+        >
+          Passwords do not match
+        </span>
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+
+  /* =====================================================
+     Submit
+     ===================================================== */
+
+  submitBtn.disabled = true;
+
+
+  submitBtn.innerHTML = `
+
+    <i class="fas fa-spinner fa-spin"></i>
+
+    <span
+      data-en="Registering..."
+      data-ar="جاري التسجيل..."
+    >
+      Registering...
+    </span>
+
+  `;
+
+
+
+  /* =====================================================
+     Form Data
+     ===================================================== */
+
+  const formData =
+    new FormData();
+
+
+  formData.append(
+    'studentCode',
+    studentCode
+  );
+
+
+  formData.append(
+    'studentName',
+    studentName
+  );
+
+
+  formData.append(
+    'phone',
+    formattedStudentPhone
+  );
+
+
+  formData.append(
+    'parentPhone',
+    formattedParentPhone
+  );
+
+
+  formData.append(
+    'center',
+    center
+  );
+
+
+  formData.append(
+    'password',
+    password
+  );
+
+
+
+  /* =====================================================
+     Send Registration
+     ===================================================== */
+
+  try {
+
+    const response =
+      await fetch(
+        REGISTER_API,
+        {
+          method: 'POST',
+          body: formData,
+          credentials: 'omit',
+          redirect: 'follow'
+        }
+      );
+
+
+
+    /* -----------------------------------------
+       Read response
+       ----------------------------------------- */
+
+    let data;
+
+
+    try {
+
+      data =
+        await response.json();
+
+    }
+
+    catch (parseErr) {
+
+      /*
+       * If POST response cannot be parsed,
+       * verify registration using login.
+       */
+
+      try {
+
+        const verifyResp =
+          await fetch(
+            `${REGISTER_API}?action=login&code=${encodeURIComponent(studentCode)}&password=${encodeURIComponent(password)}`
+          );
+
+
+        const verifyData =
+          await verifyResp.json();
+
+
+        if (
+          verifyData.status ===
+          'success'
+        ) {
+
+          data = {
+            status: 'success'
+          };
+
+        }
+
+        else {
+
+          data = {
+
+            status: 'error',
+
+            message:
+              'حدث خطأ أثناء التسجيل. حاول مرة أخرى / Registration error. Please try again.'
+
+          };
+
+        }
+
+      }
+
+      catch (verifyErr) {
+
+        data = {
+
+          status: 'error',
+
+          message:
+            'حدث خطأ أثناء التسجيل. حاول مرة أخرى / Registration error. Please try again.'
+
+        };
+
+      }
+
+    }
+
+
+
+    /* =================================================
+       Registration Failed
+       ================================================= */
+
+    if (
+      data.status ===
+      'error'
+    ) {
+
+      alertEl.innerHTML = `
+
+        <div class="alert alert-error">
+
+          <i class="fas fa-exclamation-circle"></i>
+
+          ${
+            data.message ||
+            'Registration failed'
+          }
+
+        </div>
+
+      `;
+
+
+      alertEl.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center'
+      });
+
+
+      return;
+
+    }
+
+
+
+    /* =================================================
+       Registration Successful
+       ================================================= */
+
+    alertEl.innerHTML = `
+
+      <div class="alert alert-success">
+
+        <i class="fas fa-check-circle"></i>
+
+        <span
+          data-en="Registration successful!"
+          data-ar="تم التسجيل بنجاح!"
+        >
+          Registration successful!
+        </span>
+
+      </div>
+
+    `;
+
+
+    showToast(
+      'تم التسجيل بنجاح!',
+      'success'
+    );
+
+
+
+    /* =================================================
+       Auto Login
+       ================================================= */
+
+    try {
+
+      const loginResp =
+        await fetch(
+          `${REGISTER_API}?action=login&code=${encodeURIComponent(studentCode)}&password=${encodeURIComponent(password)}`
+        );
+
+
+      const loginData =
+        await loginResp.json();
+
+
+      if (
+        loginData.status ===
+          'success' &&
+        loginData.data
+      ) {
+
+        localStorage.setItem(
+          'loggedInUser',
+          JSON.stringify(
+            loginData.data
+          )
+        );
+
+      }
+
+    }
+
+    catch (loginError) {
+
+      console.warn(
+        'Auto-login failed:',
+        loginError
+      );
+
+    }
+
+
+
+    /* =================================================
+       Redirect to Profile
+       ================================================= */
+
+    setTimeout(() => {
+
+      window.location.href =
+        'profile.html';
+
+    }, 1500);
+
+
+  }
+
+  catch (err) {
+
+    console.error(
+      'Registration error:',
+      err
+    );
+
+
+    alertEl.innerHTML = `
+
+      <div class="alert alert-error">
+
+        <i class="fas fa-exclamation-circle"></i>
+
+        <span
+          data-en="Registration failed. Please try again."
+          data-ar="فشل التسجيل. حاول مرة أخرى."
+        >
+          فشل التسجيل. حاول مرة أخرى.
+        </span>
+
+      </div>
+
+    `;
+
+
+    alertEl.scrollIntoView({
+      behavior: 'smooth',
+      block: 'center'
+    });
+
+  }
+
+  finally {
+
+    submitBtn.disabled = false;
+
+
+    submitBtn.innerHTML = `
+
+      <i class="fas fa-user-plus"></i>
+
+      <span
+        data-en="Register"
+        data-ar="تسجيل"
+      >
+        Register
+      </span>
+
+    `;
+
+  }
+
+}
+    ></script>
