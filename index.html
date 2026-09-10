@@ -1,2493 +1,3184 @@
-!DOCTYPE html>
+```html
+<!DOCTYPE html>
 <html lang="en" dir="ltr">
 
 <head>
-  <meta charset="UTF-8">
+    <meta charset="UTF-8">
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Register - Mr. Ahmed Mohie Physics</title>
+    <title>Register - Mr. Ahmed Mohie Physics</title>
 
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-  >
+    <!-- Font Awesome -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    >
 
-  <link
-    href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Poppins:wght@300;400;500;600;700;900&display=swap"
-    rel="stylesheet"
-  >
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Poppins:wght@300;400;500;600;700;900&display=swap"
+        rel="stylesheet"
+    >
 
-  <link rel="stylesheet" href="css/style.css">
+    <!-- Quagga Barcode Scanner -->
+    <script src="https://cdn.jsdelivr.net/npm/@ericblade/quagga2@1.8.4/dist/quagga.min.js"></script>
+
+    <style>
+
+        /* =========================================================
+           VARIABLES
+           ========================================================= */
+
+        :root {
+            --primary: #00bcd4;
+            --primary-dark: #0097a7;
+            --secondary: #2196f3;
+            --dark: #07111f;
+            --dark-card: #0d1b2a;
+            --text: #ffffff;
+            --muted: #aebdcc;
+            --danger: #f44336;
+            --success: #00c853;
+            --border: rgba(255,255,255,0.10);
+        }
+
+
+        /* =========================================================
+           RESET
+           ========================================================= */
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+
+        body {
+            font-family: "Poppins", "Cairo", sans-serif;
+            background:
+                radial-gradient(
+                    circle at top,
+                    #102a43 0%,
+                    #07111f 45%,
+                    #030811 100%
+                );
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+
+        button,
+        input,
+        select {
+            font-family: inherit;
+        }
+
+
+        .container {
+            width: min(1100px, 92%);
+            margin: auto;
+        }
+
+
+        /* =========================================================
+           LOADER
+           ========================================================= */
+
+        #loader {
+            position: fixed;
+            inset: 0;
+            background: #030811;
+            z-index: 99999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity .5s ease;
+        }
+
+
+        #loader.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+
+        .loader-content {
+            text-align: center;
+        }
+
+
+        .loader-content p {
+            margin-top: 25px;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+
+        .atom-loader {
+            width: 80px;
+            height: 80px;
+            position: relative;
+            margin: auto;
+        }
+
+
+        .nucleus {
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background: var(--primary);
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 25px var(--primary);
+        }
+
+
+        .electron {
+            position: absolute;
+            width: 100%;
+            height: 35px;
+            border: 2px solid var(--primary);
+            border-radius: 50%;
+            top: 22px;
+            left: 0;
+            animation: rotateAtom 2s linear infinite;
+        }
+
+
+        .electron:nth-child(2) {
+            transform: rotate(60deg);
+        }
+
+
+        .electron:nth-child(3) {
+            transform: rotate(120deg);
+        }
+
+
+        @keyframes rotateAtom {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+
+        /* =========================================================
+           NAVBAR
+           ========================================================= */
+
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(3, 8, 17, .94);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--border);
+        }
+
+
+        .nav-container {
+            width: min(1200px, 94%);
+            margin: auto;
+            min-height: 75px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 18px;
+            font-weight: 800;
+            white-space: nowrap;
+        }
+
+
+        .logo i {
+            color: var(--primary);
+            font-size: 25px;
+        }
+
+
+        .grade-label {
+            margin-left: 12px;
+            font-weight: 700;
+            direction: rtl;
+            color: var(--primary);
+            white-space: nowrap;
+        }
+
+
+        .nav-links {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: 22px;
+        }
+
+
+        .nav-link {
+            color: #dce7f2;
+            transition: .2s;
+        }
+
+
+        .nav-link:hover {
+            color: var(--primary);
+        }
+
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+
+        .lang-toggle,
+        .menu-toggle {
+            border: 1px solid var(--border);
+            background: rgba(255,255,255,.05);
+            color: white;
+            cursor: pointer;
+            border-radius: 10px;
+        }
+
+
+        .lang-toggle {
+            padding: 9px 13px;
+        }
+
+
+        .menu-toggle {
+            display: none;
+            width: 42px;
+            height: 40px;
+            padding: 7px;
+        }
+
+
+        .menu-toggle span {
+            display: block;
+            height: 2px;
+            background: white;
+            margin: 5px 0;
+        }
+
+
+        /* =========================================================
+           HERO
+           ========================================================= */
+
+        .page-hero {
+            padding: 75px 20px;
+            text-align: center;
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(0,188,212,.14),
+                    rgba(33,150,243,.05)
+                );
+            border-bottom: 1px solid var(--border);
+        }
+
+
+        .page-hero h1 {
+            font-size: clamp(32px, 5vw, 52px);
+            margin-bottom: 8px;
+        }
+
+
+        .page-hero .grade {
+            color: var(--primary);
+            font-weight: 800;
+            direction: rtl;
+        }
+
+
+        .page-hero p {
+            color: var(--muted);
+            margin-top: 10px;
+        }
+
+
+        /* =========================================================
+           FORM
+           ========================================================= */
+
+        .form-section {
+            padding: 60px 0;
+        }
+
+
+        .form-card {
+            width: min(700px, 100%);
+            margin: auto;
+            background: rgba(13,27,42,.92);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 35px;
+            box-shadow: 0 25px 70px rgba(0,0,0,.3);
+        }
+
+
+        .form-group {
+            margin-bottom: 23px;
+        }
+
+
+        .form-group label {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            margin-bottom: 9px;
+            font-weight: 700;
+        }
+
+
+        .form-group label i {
+            color: var(--primary);
+        }
+
+
+        .form-control {
+            width: 100%;
+            border: 1px solid rgba(255,255,255,.13);
+            background: rgba(255,255,255,.06);
+            color: white;
+            padding: 14px 15px;
+            border-radius: 11px;
+            outline: none;
+            transition: .2s;
+            font-size: 15px;
+        }
+
+
+        .form-control:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(0,188,212,.12);
+        }
+
+
+        select.form-control option {
+            background: #0d1b2a;
+            color: white;
+        }
+
+
+        .form-error {
+            display: none;
+            color: #ff7770;
+            font-size: 13px;
+            margin-top: 7px;
+        }
+
+
+        .field-hint,
+        .scan-hint {
+            color: var(--muted);
+            font-size: 12px;
+            margin-top: 7px;
+            display: block;
+        }
+
+
+        .scan-code-wrapper {
+            position: relative;
+        }
+
+
+        .scanner-controls {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+
+
+        .btn {
+            border: none;
+            border-radius: 10px;
+            padding: 12px 18px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-weight: 700;
+            transition: .2s;
+        }
+
+
+        .btn:hover {
+            transform: translateY(-1px);
+        }
+
+
+        .btn:disabled {
+            opacity: .6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+
+        .btn-primary {
+            background: linear-gradient(
+                135deg,
+                var(--primary),
+                var(--secondary)
+            );
+            color: white;
+        }
+
+
+        .btn-outline {
+            background: transparent;
+            color: white;
+            border: 1px solid var(--primary);
+        }
+
+
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+        }
+
+
+        .btn-lg {
+            padding: 15px 20px;
+            font-size: 16px;
+        }
+
+
+        /* =========================================================
+           SCANNER
+           ========================================================= */
+
+        #scannerArea {
+            display: none;
+            margin-top: 12px;
+            border-radius: 14px;
+            overflow: hidden;
+            position: relative;
+            background: #000;
+            min-height: 250px;
+        }
+
+
+        #scannerArea video {
+            width: 100% !important;
+            height: auto !important;
+            display: block;
+        }
+
+
+        #scannerArea canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+
+        .scanner-overlay {
+            position: absolute;
+            z-index: 10;
+            left: 50%;
+            top: 50%;
+            width: 80%;
+            height: 100px;
+            transform: translate(-50%, -50%);
+            border: 2px solid var(--primary);
+            border-radius: 10px;
+            pointer-events: none;
+            box-shadow: 0 0 20px rgba(0,188,212,.3);
+        }
+
+
+        /* =========================================================
+           ALERT
+           ========================================================= */
+
+        #regAlert {
+            margin-bottom: 15px;
+        }
+
+
+        .alert {
+            padding: 14px 16px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            line-height: 1.6;
+        }
+
+
+        .alert-error {
+            background: rgba(244,67,54,.12);
+            border: 1px solid rgba(244,67,54,.3);
+            color: #ffaaa4;
+        }
+
+
+        .alert-success {
+            background: rgba(0,200,83,.12);
+            border: 1px solid rgba(0,200,83,.3);
+            color: #75ffac;
+        }
+
+
+        /* =========================================================
+           FOOTER
+           ========================================================= */
+
+        .footer {
+            border-top: 1px solid var(--border);
+            padding: 40px 0 20px;
+            background: rgba(0,0,0,.2);
+        }
+
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+
+        .footer-brand h3 {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+        }
+
+
+        .footer-brand i {
+            color: var(--primary);
+        }
+
+
+        .footer-brand p {
+            color: var(--muted);
+            margin-top: 7px;
+            font-size: 13px;
+        }
+
+
+        .footer-links {
+            display: flex;
+            gap: 20px;
+        }
+
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+
+        .footer-social {
+            display: flex;
+            gap: 10px;
+        }
+
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgba(255,255,255,.07);
+            transition: .2s;
+        }
+
+
+        .social-link:hover {
+            transform: translateY(-3px);
+            background: var(--primary);
+        }
+
+
+        .footer-bottom {
+            border-top: 1px solid var(--border);
+            margin-top: 30px;
+            padding-top: 20px;
+            text-align: center;
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+
+        /* =========================================================
+           TOAST
+           ========================================================= */
+
+        #toastContainer {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            z-index: 99999;
+        }
+
+
+        .toast {
+            min-width: 250px;
+            max-width: 350px;
+            padding: 14px 18px;
+            border-radius: 10px;
+            margin-top: 10px;
+            color: white;
+            box-shadow: 0 10px 30px rgba(0,0,0,.35);
+            animation: toastIn .3s ease;
+        }
+
+
+        .toast-success {
+            background: #087f46;
+        }
+
+
+        .toast-error {
+            background: #a92118;
+        }
+
+
+        @keyframes toastIn {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+
+        /* =========================================================
+           MOBILE
+           ========================================================= */
+
+        @media (max-width: 800px) {
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                left: 3%;
+                right: 3%;
+                top: 70px;
+                background: #0d1b2a;
+                border: 1px solid var(--border);
+                border-radius: 12px;
+                padding: 15px;
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+
+            .nav-links.active {
+                display: flex;
+            }
+
+
+            .nav-link {
+                padding: 10px;
+            }
+
+
+            .menu-toggle {
+                display: block;
+            }
+
+
+            .grade-label {
+                display: none;
+            }
+
+
+            .form-card {
+                padding: 23px 18px;
+            }
+
+
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+
+            .footer-brand h3 {
+                justify-content: center;
+            }
+
+        }
+
+
+        /* =========================================================
+           RTL
+           ========================================================= */
+
+        body.rtl {
+            font-family: "Cairo", sans-serif;
+        }
+
+
+        body.rtl .nav-links {
+            margin-left: 0;
+            margin-right: auto;
+        }
+
+
+        body.rtl #toastContainer {
+            right: auto;
+            left: 20px;
+        }
+
+    </style>
+
 </head>
 
 
 <body>
 
-  <!-- ==================== Loader ==================== -->
+    <!-- =========================================================
+         LOADER
+         ========================================================= -->
 
-  <div id="loader">
+    <div id="loader">
 
-    <div class="loader-content">
+        <div class="loader-content">
 
-      <div class="atom-loader">
+            <div class="atom-loader">
 
-        <div class="electron"></div>
-        <div class="electron"></div>
-        <div class="electron"></div>
+                <div class="electron"></div>
+                <div class="electron"></div>
+                <div class="electron"></div>
 
-        <div class="nucleus"></div>
+                <div class="nucleus"></div>
 
-      </div>
+            </div>
 
-      <p
-        data-en="Loading..."
-        data-ar="جاري التحميل..."
-      >
-        Loading...
-      </p>
+            <p id="loaderText">
+                Loading...
+            </p>
 
-    </div>
-
-  </div>
-
-
-  <!-- ==================== Navbar ==================== -->
-
-  <nav
-    class="navbar scrolled"
-    id="navbar"
-  >
-
-    <div class="nav-container">
-
-      <a
-        href="index.html"
-        class="logo"
-      >
-
-        <i class="fas fa-atom"></i>
-
-        <span
-          data-en="Mr. Ahmed Mohie"
-          data-ar="أ. أحمد محي"
-        >
-          Mr. Ahmed Mohie
-        </span>
-
-      </a>
-
-
-      <div
-        style="
-          margin-left:12px;
-          font-weight:700;
-          direction:rtl;
-          color:var(--primary);
-        "
-      >
-        الصف الثاني الثانوي
-      </div>
-
-
-      <div
-        class="nav-links"
-        id="navLinks"
-      >
-
-        <a
-          href="index.html"
-          class="nav-link"
-          data-en="Home"
-          data-ar="الرئيسية"
-        >
-          Home
-        </a>
-
-
-        <a
-          href="index.html#about"
-          class="nav-link"
-          data-en="About"
-          data-ar="من نحن"
-        >
-          About
-        </a>
-
-
-        <a
-          href="index.html#team"
-          class="nav-link"
-          data-en="Team"
-          data-ar="الفريق"
-        >
-          Team
-        </a>
-
-
-        <span
-          class="nav-auth"
-          id="navAuth"
-        ></span>
-
-      </div>
-
-
-      <div class="nav-actions">
-
-        <button
-          class="lang-toggle"
-          id="langToggle"
-          onclick="toggleLanguage()"
-        >
-
-          <i class="fas fa-globe"></i>
-
-          <span id="langText">
-            عربي
-          </span>
-
-        </button>
-
-
-        <button
-          class="menu-toggle"
-          id="menuToggle"
-          onclick="toggleMenu()"
-        >
-
-          <span></span>
-          <span></span>
-          <span></span>
-
-        </button>
-
-      </div>
+        </div>
 
     </div>
 
-  </nav>
 
+    <!-- =========================================================
+         NAVBAR
+         ========================================================= -->
 
+    <nav class="navbar">
 
-  <!-- ==================== Page Hero ==================== -->
+        <div class="nav-container">
 
-  <div class="page-hero">
+            <a href="index.html" class="logo">
 
-    <div>
-
-      <h1
-        data-en="Student Registration"
-        data-ar="تسجيل الطالب"
-      >
-        Student Registration
-      </h1>
-
-
-      <div
-        style="
-          font-weight:700;
-          margin-top:6px;
-          direction:rtl;
-          color:var(--primary);
-        "
-      >
-        الصف الثاني الثانوي
-      </div>
-
-
-      <p
-        data-en="Register to access homework videos and section recordings"
-        data-ar="سجل للوصول لفيديوهات الواجب والحصص المسجلة"
-      >
-        Register to access homework videos and section recordings
-      </p>
-
-    </div>
-
-  </div>
-
-
-
-  <!-- ==================== Registration Form ==================== -->
-
-  <section class="form-section">
-
-    <div class="container">
-
-      <div class="form-card">
-
-
-        <!-- Alert -->
-
-        <div id="regAlert"></div>
-
-
-
-        <form
-          id="registerForm"
-          autocomplete="off"
-        >
-
-
-          <!-- ==================== Student Code ==================== -->
-
-          <div class="form-group">
-
-            <label>
-
-              <i class="fas fa-id-badge"></i>
-
-              <span
-                data-en="Student Code"
-                data-ar="كود الطالب"
-              >
-                Student Code
-              </span>
-
-            </label>
-
-
-            <div class="scan-code-wrapper">
-
-
-              <!-- Student Code Input -->
-
-              <input
-                type="text"
-                class="form-control"
-                id="studentCode"
-                placeholder="Enter code or scan barcode / اكتب الكود أو امسح الباركود"
-                inputmode="numeric"
-                autocomplete="off"
-                maxlength="5"
-                required
-              >
-
-
-              <!-- Scanner Buttons -->
-
-              <div class="scanner-controls">
-
-
-                <button
-                  type="button"
-                  class="btn btn-outline"
-                  id="startScanBtn"
-                >
-
-                  <i class="fas fa-barcode"></i>
-
-                  <span
-                    data-en="Scan Barcode"
-                    data-ar="مسح الباركود"
-                  >
-                    Scan Barcode
-                  </span>
-
-                </button>
-
-
-                <button
-                  type="button"
-                  class="btn btn-danger"
-                  id="stopScanBtn"
-                  style="display:none;"
-                >
-
-                  <i class="fas fa-stop"></i>
-
-                  <span
-                    data-en="Stop"
-                    data-ar="إيقاف"
-                  >
-                    Stop
-                  </span>
-
-                </button>
-
-              </div>
-
-
-
-              <!-- Scanner Area -->
-
-              <div
-                id="scannerArea"
-                style="
-                  display:none;
-                  margin-top:10px;
-                  border-radius:12px;
-                  overflow:hidden;
-                  position:relative;
-                "
-              ></div>
-
-
-
-              <!-- Hint -->
-
-              <small
-                class="scan-hint"
-                style="
-                  color:var(--primary);
-                  margin-top:6px;
-                  display:block;
-                "
-              >
-
-                <i class="fas fa-info-circle"></i>
+                <i class="fas fa-atom"></i>
 
                 <span
-                  data-en="Enter the code manually or scan the barcode"
-                  data-ar="يمكنك كتابة الكود يدويًا أو مسح الباركود"
+                    data-en="Mr. Ahmed Mohie"
+                    data-ar="أ. أحمد محي"
                 >
-                  Enter the code manually or scan the barcode
+                    Mr. Ahmed Mohie
                 </span>
 
-              </small>
+            </a>
+
+
+            <div class="grade-label">
+                الصف الثاني الثانوي
+            </div>
+
+
+            <div class="nav-links" id="navLinks">
+
+                <a
+                    href="index.html"
+                    class="nav-link"
+                    data-en="Home"
+                    data-ar="الرئيسية"
+                >
+                    Home
+                </a>
+
+
+                <a
+                    href="index.html#about"
+                    class="nav-link"
+                    data-en="About"
+                    data-ar="من نحن"
+                >
+                    About
+                </a>
+
+
+                <a
+                    href="index.html#team"
+                    class="nav-link"
+                    data-en="Team"
+                    data-ar="الفريق"
+                >
+                    Team
+                </a>
+
+
+                <a
+                    href="login.html"
+                    class="nav-link"
+                    data-en="Login"
+                    data-ar="دخول"
+                >
+                    Login
+                </a>
 
             </div>
 
 
+            <div class="nav-actions">
 
-            <div
-              class="form-error"
-              id="codeError"
-              data-en="Enter a valid student code"
-              data-ar="يرجى إدخال كود طالب صحيح"
-            >
-              Enter a valid student code
+                <button
+                    class="lang-toggle"
+                    id="langToggle"
+                    type="button"
+                >
+
+                    <i class="fas fa-globe"></i>
+
+                    <span id="langText">
+                        عربي
+                    </span>
+
+                </button>
+
+
+                <button
+                    class="menu-toggle"
+                    id="menuToggle"
+                    type="button"
+                >
+
+                    <span></span>
+                    <span></span>
+                    <span></span>
+
+                </button>
+
             </div>
-
-          </div>
-
-
-
-          <!-- ==================== Student Name ==================== -->
-
-          <div class="form-group">
-
-            <label>
-
-              <i class="fas fa-user"></i>
-
-              <span
-                data-en="Full Name (Arabic, 4 parts)"
-                data-ar="الاسم الرباعي بالعربي"
-              >
-                Full Name (Arabic, 4 parts)
-              </span>
-
-            </label>
-
-
-            <input
-              type="text"
-              class="form-control"
-              id="studentName"
-              placeholder="مثال: يامن ياسر حسن سيد"
-              dir="rtl"
-              required
-            >
-
-
-            <small class="field-hint">
-
-              <i class="fas fa-info-circle"></i>
-
-              <span
-                data-en="Enter your full name in Arabic (at least 4 parts)"
-                data-ar="أدخل اسمك الرباعي باللغة العربية"
-              >
-                Enter your full name in Arabic (at least 4 parts)
-              </span>
-
-            </small>
-
-
-            <div
-              class="form-error"
-              id="nameError"
-              data-en="Full Arabic name required (4 parts minimum)"
-              data-ar="الاسم الرباعي بالعربي مطلوب"
-            >
-              Full Arabic name required (4 parts minimum)
-            </div>
-
-          </div>
-
-
-
-          <!-- ==================== Student Phone ==================== -->
-
-          <div class="form-group">
-
-            <label>
-
-              <i class="fas fa-phone"></i>
-
-              <span
-                data-en="Student Phone"
-                data-ar="رقم الطالب"
-              >
-                Student Phone
-              </span>
-
-            </label>
-
-
-            <input
-              type="tel"
-              class="form-control"
-              id="studentPhone"
-              placeholder="01XXXXXXXXX"
-              inputmode="tel"
-              required
-            >
-
-
-            <div
-              class="form-error"
-              id="phoneError"
-              data-en="Valid Egyptian phone required (01XXXXXXXXX)"
-              data-ar="رقم مصري صحيح مطلوب (01XXXXXXXXX)"
-            >
-              Valid Egyptian phone required
-            </div>
-
-          </div>
-
-
-
-          <!-- ==================== Parent Phone ==================== -->
-
-          <div class="form-group">
-
-            <label>
-
-              <i class="fas fa-phone-alt"></i>
-
-              <span
-                data-en="Parent's Phone"
-                data-ar="رقم ولي الأمر"
-              >
-                Parent's Phone
-              </span>
-
-            </label>
-
-
-            <input
-              type="tel"
-              class="form-control"
-              id="parentPhone"
-              placeholder="01XXXXXXXXX"
-              inputmode="tel"
-              required
-            >
-
-
-            <div
-              class="form-error"
-              id="parentPhoneError"
-              data-en="Valid parent phone required (01XXXXXXXXX)"
-              data-ar="رقم ولي الأمر صحيح مطلوب (01XXXXXXXXX)"
-            >
-              Valid parent phone required
-            </div>
-
-          </div>
-
-
-
-          <!-- ==================== Center ==================== -->
-
-          <div class="form-group">
-
-            <label>
-
-              <i class="fas fa-map-marker-alt"></i>
-
-              <span
-                data-en="Center"
-                data-ar="السنتر"
-              >
-                Center
-              </span>
-
-            </label>
-
-
-            <select
-              class="form-control"
-              id="center"
-              required
-            >
-
-              <option
-                value=""
-                disabled
-                selected
-                data-en="Select your center"
-                data-ar="اختر السنتر"
-              >
-                Select your center / اختر السنتر
-              </option>
-
-
-              <option value="الاسماعليه حدائق المعادي">
-                الاسماعليه حدائق المعادي
-              </option>
-
-              <option value="لرحمه المعادي">
-                الرحمه المعادي
-              </option>
-
-              <option value="اشراقه السادس">
-                اشراقه السادس
-              </option>
-
-              <option value="سمارت السابع">
-                سمارت السابع
-              </option>
-
-              <option value="اشراقة الحداشر">
-                اشراقة الحداشر
-              </option>
-
-              <option value="لارا الحصري">
-                لارا الحصري
-              </option>
-
-              <option value="الامل السابع">
-                الامل السابع
-              </option>
-
-              <option value="الربوة">
-                الربوة
-              </option>
-
-              <option value="اشراقه (ابني بيتك السابعة)">
-                اشراقه (ابني بيتك السابعة)
-              </option>
-
-              <option value="اشراقة (ال 800 فدان)">
-                اشراقة (ال 800 فدان)
-              </option>
-
-              <option value="اشراقه (ابني بيتك المنطقة 12)">
-                اشراقه (ابني بيتك المنطقة 12)
-              </option>
-
-              <option value="تيتشرز (مول يوتوبيا)">
-                تيتشرز (مول يوتوبيا)
-              </option>
-
-              <option value="تيتشرز (حدائق الاهرام)">
-                تيتشرز (حدائق الاهرام)
-              </option>
-
-              <option value="القمة (المنطقة 247 مول الحمد)">
-                القمة (المنطقة 247 مول الحمد)
-              </option>
-
-              <option value="انس (كومباوند المخابرات)">
-                انس (كومباوند المخابرات)
-              </option>
-
-              <option value="الشمس">
-                الشمس
-              </option>
-
-              <option value="اكسبرس">
-                اكسبرس
-              </option>
-
-              <option value="رويال 1185">
-                رويال 1185
-              </option>
-
-              <option value="رويال السادس">
-                رويال السادس
-              </option>
-
-              <option value="كابيتال الحي السابع">
-                كابيتال الحي السابع
-              </option>
-
-              <option value="رويال هرم سيتي">
-                رويال هرم سيتي
-              </option>
-
-            </select>
-
-
-            <div
-              class="form-error"
-              id="centerError"
-              data-en="Please select a center"
-              data-ar="يرجى اختيار السنتر"
-            >
-              Please select a center
-            </div>
-
-          </div>
-
-
-
-          <!-- ==================== Password ==================== -->
-
-          <div class="form-group">
-
-            <label>
-
-              <i class="fas fa-lock"></i>
-
-              <span
-                data-en="Password"
-                data-ar="كلمة المرور"
-              >
-                Password
-              </span>
-
-            </label>
-
-
-            <input
-              type="password"
-              class="form-control"
-              id="password"
-              placeholder="Min 6 characters / 6 أحرف على الأقل"
-              required
-            >
-
-
-            <div
-              class="form-error"
-              id="passwordError"
-              data-en="Password must be at least 6 characters"
-              data-ar="كلمة المرور يجب أن تكون 6 أحرف على الأقل"
-            >
-              Password must be at least 6 characters
-            </div>
-
-          </div>
-
-
-
-          <!-- ==================== Confirm Password ==================== -->
-
-          <div class="form-group">
-
-            <label>
-
-              <i class="fas fa-lock"></i>
-
-              <span
-                data-en="Confirm Password"
-                data-ar="تأكيد كلمة المرور"
-              >
-                Confirm Password
-              </span>
-
-            </label>
-
-
-            <input
-              type="password"
-              class="form-control"
-              id="confirmPassword"
-              placeholder="Re-enter password / أعد إدخال كلمة المرور"
-              required
-            >
-
-
-            <div
-              class="form-error"
-              id="confirmError"
-              data-en="Passwords do not match"
-              data-ar="كلمتا المرور غير متطابقتين"
-            >
-              Passwords do not match
-            </div>
-
-          </div>
-
-
-
-          <!-- ==================== Submit ==================== -->
-
-          <button
-            type="submit"
-            class="btn btn-primary btn-lg"
-            style="width:100%; margin-top:10px;"
-            id="submitBtn"
-          >
-
-            <i class="fas fa-user-plus"></i>
-
-            <span
-              data-en="Register"
-              data-ar="تسجيل"
-            >
-              Register
-            </span>
-
-          </button>
-
-        </form>
-
-
-
-        <!-- ==================== Login Footer ==================== -->
-
-        <div class="form-footer">
-
-          <p
-            data-en="Already have an account?"
-            data-ar="لديك حساب بالفعل؟"
-          >
-            Already have an account?
-          </p>
-
-
-          <a
-            href="login.html"
-            class="btn btn-outline"
-            style="width:100%;"
-          >
-
-            <i class="fas fa-sign-in-alt"></i>
-
-            <span
-              data-en="Login"
-              data-ar="دخول"
-            >
-              Login
-            </span>
-
-          </a>
 
         </div>
 
-      </div>
-
-    </div>
-
-  </section>
+    </nav>
 
 
+    <!-- =========================================================
+         HERO
+         ========================================================= -->
 
-  <!-- ==================== Footer ==================== -->
+    <section class="page-hero">
 
-  <footer class="footer">
+        <div>
 
-    <div class="container">
-
-      <div class="footer-content">
-
-
-        <div class="footer-brand">
-
-          <h3>
-
-            <i class="fas fa-atom"></i>
-
-            <span
-              data-en="Mr. Ahmed Mohie"
-              data-ar="أ. أحمد محي"
+            <h1
+                data-en="Student Registration"
+                data-ar="تسجيل الطالب"
             >
-              Mr. Ahmed Mohie
-            </span>
-
-          </h3>
+                Student Registration
+            </h1>
 
 
-          <p
-            data-en="Physics Teacher - Making Physics Simple & Fun"
-            data-ar="مدرس فيزياء - نجعل الفيزياء بسيطة وممتعة"
-          >
-            Physics Teacher - Making Physics Simple & Fun
-          </p>
-
-        </div>
+            <div class="grade">
+                الصف الثاني الثانوي
+            </div>
 
 
-
-        <div class="footer-links">
-
-          <a
-            href="index.html"
-            data-en="Home"
-            data-ar="الرئيسية"
-          >
-            Home
-          </a>
-
-
-          <a
-            href="register.html"
-            data-en="Register"
-            data-ar="التسجيل"
-          >
-            Register
-          </a>
+            <p
+                data-en="Register to access homework videos and section recordings"
+                data-ar="سجل للوصول لفيديوهات الواجب والحصص المسجلة"
+            >
+                Register to access homework videos and section recordings
+            </p>
 
         </div>
 
+    </section>
 
 
-        <div class="footer-social">
+    <!-- =========================================================
+         REGISTRATION FORM
+         ========================================================= -->
 
-          <a
-            href="https://api.whatsapp.com/send/?phone=%2B201288449598"
-            class="social-link whatsapp"
-            target="_blank"
-          >
-            <i class="fab fa-whatsapp"></i>
-          </a>
+    <section class="form-section">
 
+        <div class="container">
 
-          <a
-            href="https://www.facebook.com/share/aLnUsKV1Sk315EAJ/?mibextid=qi2Omg"
-            class="social-link facebook"
-            target="_blank"
-          >
-            <i class="fab fa-facebook-f"></i>
-          </a>
+            <div class="form-card">
+
+                <div id="regAlert"></div>
 
 
-          <a
-            href="https://www.instagram.com/ahmedmohie97"
-            class="social-link instagram"
-            target="_blank"
-          >
-            <i class="fab fa-instagram"></i>
-          </a>
+                <form
+                    id="registerForm"
+                    autocomplete="off"
+                >
+
+                    <!-- Student Code -->
+
+                    <div class="form-group">
+
+                        <label>
+
+                            <i class="fas fa-id-badge"></i>
+
+                            <span
+                                data-en="Student Code"
+                                data-ar="كود الطالب"
+                            >
+                                Student Code
+                            </span>
+
+                        </label>
+
+
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="studentCode"
+                            placeholder="Enter code or scan barcode / اكتب الكود أو امسح الباركود"
+                            inputmode="numeric"
+                            autocomplete="off"
+                            maxlength="5"
+                            required
+                        >
+
+
+                        <div class="scanner-controls">
+
+                            <button
+                                type="button"
+                                class="btn btn-outline"
+                                id="startScanBtn"
+                            >
+
+                                <i class="fas fa-barcode"></i>
+
+                                <span
+                                    data-en="Scan Barcode"
+                                    data-ar="مسح الباركود"
+                                >
+                                    Scan Barcode
+                                </span>
+
+                            </button>
+
+
+                            <button
+                                type="button"
+                                class="btn btn-danger"
+                                id="stopScanBtn"
+                                style="display:none;"
+                            >
+
+                                <i class="fas fa-stop"></i>
+
+                                <span
+                                    data-en="Stop"
+                                    data-ar="إيقاف"
+                                >
+                                    Stop
+                                </span>
+
+                            </button>
+
+                        </div>
+
+
+                        <div id="scannerArea">
+
+                            <div class="scanner-overlay"></div>
+
+                        </div>
+
+
+                        <small class="scan-hint">
+
+                            <i class="fas fa-info-circle"></i>
+
+                            <span
+                                data-en="Enter the code manually or scan the barcode"
+                                data-ar="يمكنك كتابة الكود يدويًا أو مسح الباركود"
+                            >
+                                Enter the code manually or scan the barcode
+                            </span>
+
+                        </small>
+
+                    </div>
+
+
+                    <!-- Student Name -->
+
+                    <div class="form-group">
+
+                        <label>
+
+                            <i class="fas fa-user"></i>
+
+                            <span
+                                data-en="Full Name (Arabic, 4 parts)"
+                                data-ar="الاسم الرباعي بالعربي"
+                            >
+                                Full Name (Arabic, 4 parts)
+                            </span>
+
+                        </label>
+
+
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="studentName"
+                            placeholder="مثال: يامن ياسر حسن سيد"
+                            dir="rtl"
+                            required
+                        >
+
+
+                        <small class="field-hint">
+
+                            <i class="fas fa-info-circle"></i>
+
+                            <span
+                                data-en="Enter your full name in Arabic (at least 4 parts)"
+                                data-ar="أدخل اسمك الرباعي باللغة العربية"
+                            >
+                                Enter your full name in Arabic (at least 4 parts)
+                            </span>
+
+                        </small>
+
+                    </div>
+
+
+                    <!-- Student Phone -->
+
+                    <div class="form-group">
+
+                        <label>
+
+                            <i class="fas fa-phone"></i>
+
+                            <span
+                                data-en="Student Phone"
+                                data-ar="رقم الطالب"
+                            >
+                                Student Phone
+                            </span>
+
+                        </label>
+
+
+                        <input
+                            type="tel"
+                            class="form-control"
+                            id="studentPhone"
+                            placeholder="01XXXXXXXXX"
+                            inputmode="tel"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- Parent Phone -->
+
+                    <div class="form-group">
+
+                        <label>
+
+                            <i class="fas fa-phone-alt"></i>
+
+                            <span
+                                data-en="Parent's Phone"
+                                data-ar="رقم ولي الأمر"
+                            >
+                                Parent's Phone
+                            </span>
+
+                        </label>
+
+
+                        <input
+                            type="tel"
+                            class="form-control"
+                            id="parentPhone"
+                            placeholder="01XXXXXXXXX"
+                            inputmode="tel"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- Center -->
+
+                    <div class="form-group">
+
+                        <label>
+
+                            <i class="fas fa-map-marker-alt"></i>
+
+                            <span
+                                data-en="Center"
+                                data-ar="السنتر"
+                            >
+                                Center
+                            </span>
+
+                        </label>
+
+
+                        <select
+                            class="form-control"
+                            id="center"
+                            required
+                        >
+
+                            <option
+                                value=""
+                                disabled
+                                selected
+                            >
+                                Select your center / اختر السنتر
+                            </option>
+
+
+                            <option value="الاسماعليه حدائق المعادي">
+                                الاسماعليه حدائق المعادي
+                            </option>
+
+                            <option value="الرحمه المعادي">
+                                الرحمه المعادي
+                            </option>
+
+                            <option value="اشراقه السادس">
+                                اشراقه السادس
+                            </option>
+
+                            <option value="سمارت السابع">
+                                سمارت السابع
+                            </option>
+
+                            <option value="اشراقة الحداشر">
+                                اشراقة الحداشر
+                            </option>
+
+                            <option value="لارا الحصري">
+                                لارا الحصري
+                            </option>
+
+                            <option value="الامل السابع">
+                                الامل السابع
+                            </option>
+
+                            <option value="الربوة">
+                                الربوة
+                            </option>
+
+                            <option value="اشراقه (ابني بيتك السابعة)">
+                                اشراقه (ابني بيتك السابعة)
+                            </option>
+
+                            <option value="اشراقة (ال 800 فدان)">
+                                اشراقة (ال 800 فدان)
+                            </option>
+
+                            <option value="اشراقه (ابني بيتك المنطقة 12)">
+                                اشراقه (ابني بيتك المنطقة 12)
+                            </option>
+
+                            <option value="تيتشرز (مول يوتوبيا)">
+                                تيتشرز (مول يوتوبيا)
+                            </option>
+
+                            <option value="تيتشرز (حدائق الاهرام)">
+                                تيتشرز (حدائق الاهرام)
+                            </option>
+
+                            <option value="القمة (المنطقة 247 مول الحمد)">
+                                القمة (المنطقة 247 مول الحمد)
+                            </option>
+
+                            <option value="انس (كومباوند المخابرات)">
+                                انس (كومباوند المخابرات)
+                            </option>
+
+                            <option value="الشمس">
+                                الشمس
+                            </option>
+
+                            <option value="اكسبرس">
+                                اكسبرس
+                            </option>
+
+                            <option value="رويال 1185">
+                                رويال 1185
+                            </option>
+
+                            <option value="رويال السادس">
+                                رويال السادس
+                            </option>
+
+                            <option value="كابيتال الحي السابع">
+                                كابيتال الحي السابع
+                            </option>
+
+                            <option value="رويال هرم سيتي">
+                                رويال هرم سيتي
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- Password -->
+
+                    <div class="form-group">
+
+                        <label>
+
+                            <i class="fas fa-lock"></i>
+
+                            <span
+                                data-en="Password"
+                                data-ar="كلمة المرور"
+                            >
+                                Password
+                            </span>
+
+                        </label>
+
+
+                        <input
+                            type="password"
+                            class="form-control"
+                            id="password"
+                            placeholder="Min 6 characters / 6 أحرف على الأقل"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- Confirm Password -->
+
+                    <div class="form-group">
+
+                        <label>
+
+                            <i class="fas fa-lock"></i>
+
+                            <span
+                                data-en="Confirm Password"
+                                data-ar="تأكيد كلمة المرور"
+                            >
+                                Confirm Password
+                            </span>
+
+                        </label>
+
+
+                        <input
+                            type="password"
+                            class="form-control"
+                            id="confirmPassword"
+                            placeholder="Re-enter password / أعد إدخال كلمة المرور"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- Submit -->
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary btn-lg"
+                        style="width:100%; margin-top:10px;"
+                        id="submitBtn"
+                    >
+
+                        <i class="fas fa-user-plus"></i>
+
+                        <span
+                            data-en="Register"
+                            data-ar="تسجيل"
+                        >
+                            Register
+                        </span>
+
+                    </button>
+
+                </form>
+
+
+                <!-- Login -->
+
+                <div style="margin-top:25px;text-align:center;">
+
+                    <p
+                        style="color:var(--muted);margin-bottom:10px;"
+                        data-en="Already have an account?"
+                        data-ar="لديك حساب بالفعل؟"
+                    >
+                        Already have an account?
+                    </p>
+
+
+                    <a
+                        href="login.html"
+                        class="btn btn-outline"
+                        style="width:100%;"
+                    >
+
+                        <i class="fas fa-sign-in-alt"></i>
+
+                        <span
+                            data-en="Login"
+                            data-ar="دخول"
+                        >
+                            Login
+                        </span>
+
+                    </a>
+
+                </div>
+
+            </div>
 
         </div>
 
-      </div>
+    </section>
 
 
+    <!-- =========================================================
+         FOOTER
+         ========================================================= -->
 
-      <div class="footer-bottom">
+    <footer class="footer">
 
-        <p>
+        <div class="container">
 
-          &copy; 2026 Mr. Ahmed Mohie.
+            <div class="footer-content">
 
-          <span
-            data-en="All rights reserved."
-            data-ar="جميع الحقوق محفوظة."
-          >
-            All rights reserved.
-          </span>
+                <div class="footer-brand">
 
-        </p>
+                    <h3>
 
-      </div>
+                        <i class="fas fa-atom"></i>
 
-    </div>
+                        <span
+                            data-en="Mr. Ahmed Mohie"
+                            data-ar="أ. أحمد محي"
+                        >
+                            Mr. Ahmed Mohie
+                        </span>
 
-  </footer>
+                    </h3>
 
 
+                    <p
+                        data-en="Physics Teacher - Making Physics Simple & Fun"
+                        data-ar="مدرس فيزياء - نجعل الفيزياء بسيطة وممتعة"
+                    >
+                        Physics Teacher - Making Physics Simple & Fun
+                    </p>
 
-  <!-- ==================== Scripts ==================== -->
+                </div>
 
-  <script
-    src="https://cdn.jsdelivr.net/npm/@ericblade/quagga2@1.8.4/dist/quagga.min.js"
-  ></script>
 
-  <script src="js/main.js"></script>
+                <div class="footer-links">
 
-  <script src="js/register.js"></script>
+                    <a
+                        href="index.html"
+                        data-en="Home"
+                        data-ar="الرئيسية"
+                    >
+                        Home
+                    </a>
+
+
+                    <a
+                        href="register.html"
+                        data-en="Register"
+                        data-ar="التسجيل"
+                    >
+                        Register
+                    </a>
+
+                </div>
+
+
+                <div class="footer-social">
+
+                    <a
+                        href="https://api.whatsapp.com/send/?phone=%2B201288449598"
+                        class="social-link"
+                        target="_blank"
+                        rel="noopener"
+                    >
+                        <i class="fab fa-whatsapp"></i>
+                    </a>
+
+
+                    <a
+                        href="https://www.facebook.com/share/aLnUsKV1Sk315EAJ/?mibextid=qi2Omg"
+                        class="social-link"
+                        target="_blank"
+                        rel="noopener"
+                    >
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+
+
+                    <a
+                        href="https://www.instagram.com/ahmedmohie97"
+                        class="social-link"
+                        target="_blank"
+                        rel="noopener"
+                    >
+                        <i class="fab fa-instagram"></i>
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <div class="footer-bottom">
+
+                <p>
+                    &copy; 2026 Mr. Ahmed Mohie.
+                    <span
+                        data-en="All rights reserved."
+                        data-ar="جميع الحقوق محفوظة."
+                    >
+                        All rights reserved.
+                    </span>
+                </p>
+
+            </div>
+
+        </div>
+
+    </footer>
+
+
+    <!-- Toast -->
+    <div id="toastContainer"></div>
+
+
+    <!-- =========================================================
+         JAVASCRIPT
+         EVERYTHING IS HERE
+         ========================================================= -->
+
+    <script>
+
+        /* =========================================================
+           CONFIGURATION
+           ========================================================= */
+
+        const REGISTER_API =
+            'https://script.google.com/macros/s/AKfycbyc1ARUyRvini8qeLxYDi1uSZlq3fDR_mQCecq50PJcuZZLvZ337pLPGgS7Qgw3cBQjrA/exec';
+
+
+        let scannerRunning = false;
+        let currentLanguage = 'en';
+
+
+        /* =========================================================
+           LOADER
+           ========================================================= */
+
+        window.addEventListener('load', function () {
+
+            setTimeout(function () {
+
+                const loader =
+                    document.getElementById('loader');
+
+                if (loader) {
+                    loader.classList.add('hidden');
+                }
+
+            }, 500);
+
+        });
+
+
+        /* =========================================================
+           LANGUAGE
+           ========================================================= */
+
+        function setLanguage(lang) {
+
+            currentLanguage = lang;
+
+            const html =
+                document.documentElement;
+
+            const body =
+                document.body;
+
+            if (lang === 'ar') {
+
+                html.lang = 'ar';
+                html.dir = 'rtl';
+
+                body.classList.add('rtl');
+
+                document.getElementById('langText').textContent =
+                    'English';
+
+            } else {
+
+                html.lang = 'en';
+                html.dir = 'ltr';
+
+                body.classList.remove('rtl');
+
+                document.getElementById('langText').textContent =
+                    'عربي';
+
+            }
+
+
+            document
+                .querySelectorAll('[data-en][data-ar]')
+                .forEach(function (element) {
+
+                    element.textContent =
+                        element.getAttribute(
+                            'data-' + lang
+                        );
+
+                });
+
+
+            document.getElementById('loaderText').textContent =
+                lang === 'ar'
+                    ? 'جاري التحميل...'
+                    : 'Loading...';
+
+        }
+
+
+        function toggleLanguage() {
+
+            setLanguage(
+                currentLanguage === 'en'
+                    ? 'ar'
+                    : 'en'
+            );
+
+        }
+
+
+        /* =========================================================
+           MENU
+           ========================================================= */
+
+        function toggleMenu() {
+
+            const navLinks =
+                document.getElementById('navLinks');
+
+            navLinks.classList.toggle('active');
+
+        }
+
+
+        /* =========================================================
+           GET LOGGED USER
+           ========================================================= */
+
+        function getLoggedInUser() {
+
+            try {
+
+                const user =
+                    localStorage.getItem(
+                        'loggedInUser'
+                    );
+
+                if (!user) {
+                    return null;
+                }
+
+                return JSON.parse(user);
+
+            }
+
+            catch (error) {
+
+                console.warn(
+                    'Could not read loggedInUser:',
+                    error
+                );
+
+                return null;
+
+            }
+
+        }
+
+
+        /* =========================================================
+           TOAST
+           ========================================================= */
+
+        function showToast(message, type = 'success') {
+
+            const container =
+                document.getElementById(
+                    'toastContainer'
+                );
+
+            if (!container) {
+                return;
+            }
+
+
+            const toast =
+                document.createElement('div');
+
+            toast.className =
+                'toast toast-' + type;
+
+            toast.textContent =
+                message;
+
+
+            container.appendChild(toast);
+
+
+            setTimeout(function () {
+
+                toast.remove();
+
+            }, 3500);
+
+        }
+
+
+        /* =========================================================
+           ALERT
+           ========================================================= */
+
+        function showAlert(message, type = 'error') {
+
+            const alertEl =
+                document.getElementById(
+                    'regAlert'
+                );
+
+
+            alertEl.innerHTML = `
+
+                <div class="alert alert-${type}">
+
+                    <i class="fas ${
+                        type === 'success'
+                            ? 'fa-check-circle'
+                            : 'fa-exclamation-circle'
+                    }"></i>
+
+                    <span>${message}</span>
+
+                </div>
+
+            `;
+
+
+            alertEl.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center'
+            });
+
+        }
+
+
+        /* =========================================================
+           PAGE INITIALIZATION
+           ========================================================= */
+
+        document.addEventListener(
+            'DOMContentLoaded',
+            function () {
+
+                /* Check login */
+
+                const user =
+                    getLoggedInUser();
+
+
+                if (user) {
+
+                    window.location.href =
+                        'profile.html';
+
+                    return;
+
+                }
+
+
+                /* Language */
+
+                document
+                    .getElementById('langToggle')
+                    .addEventListener(
+                        'click',
+                        toggleLanguage
+                    );
+
+
+                /* Menu */
+
+                document
+                    .getElementById('menuToggle')
+                    .addEventListener(
+                        'click',
+                        toggleMenu
+                    );
+
+
+                /* Student Code */
+
+                const codeInput =
+                    document.getElementById(
+                        'studentCode'
+                    );
+
+
+                codeInput.addEventListener(
+                    'input',
+                    function () {
+
+                        this.value =
+                            this.value.replace(
+                                /\D/g,
+                                ''
+                            );
+
+
+                        if (
+                            this.value.length > 5
+                        ) {
+
+                            this.value =
+                                this.value.substring(
+                                    0,
+                                    5
+                                );
+
+                        }
+
+                    }
+                );
+
+
+                /* Scanner */
+
+                document
+                    .getElementById(
+                        'startScanBtn'
+                    )
+                    .addEventListener(
+                        'click',
+                        startScanner
+                    );
+
+
+                document
+                    .getElementById(
+                        'stopScanBtn'
+                    )
+                    .addEventListener(
+                        'click',
+                        stopScanner
+                    );
+
+
+                /* Form */
+
+                document
+                    .getElementById(
+                        'registerForm'
+                    )
+                    .addEventListener(
+                        'submit',
+                        handleRegistration
+                    );
+
+
+                /* Default language */
+
+                setLanguage('en');
+
+            }
+        );
+
+
+        /* =========================================================
+           BARCODE SCANNER
+           ========================================================= */
+
+        function startScanner() {
+
+            const scannerEl =
+                document.getElementById(
+                    'scannerArea'
+                );
+
+            const startBtn =
+                document.getElementById(
+                    'startScanBtn'
+                );
+
+            const stopBtn =
+                document.getElementById(
+                    'stopScanBtn'
+                );
+
+
+            if (!scannerEl) {
+
+                console.error(
+                    'scannerArea not found'
+                );
+
+                return;
+
+            }
+
+
+            if (
+                typeof Quagga ===
+                'undefined'
+            ) {
+
+                showToast(
+                    'Scanner library not loaded',
+                    'error'
+                );
+
+                return;
+
+            }
+
+
+            /* Stop existing scanner */
+
+            if (scannerRunning) {
+
+                stopScanner();
+
+            }
+
+
+            scannerEl.style.display =
+                'block';
+
+            startBtn.style.display =
+                'none';
+
+            stopBtn.style.display =
+                'inline-flex';
+
+
+            scannerEl.innerHTML = `
+                <div class="scanner-overlay"></div>
+            `;
+
+
+            /* Remove old handler */
+
+            try {
+
+                if (
+                    typeof Quagga.offDetected ===
+                    'function'
+                ) {
+
+                    Quagga.offDetected();
+
+                }
+
+            } catch (error) {
+
+                console.warn(error);
+
+            }
+
+
+            /* Detection */
+
+            Quagga.onDetected(
+                function (result) {
+
+                    try {
+
+                        if (
+                            !result ||
+                            !result.codeResult
+                        ) {
+                            return;
+                        }
+
+
+                        const code =
+                            result.codeResult.code;
+
+
+                        if (!code) {
+                            return;
+                        }
+
+
+                        console.log(
+                            'Barcode detected:',
+                            code
+                        );
+
+
+                        /*
+                         * Convert to string
+                         */
+
+                        const cleanCode =
+                            String(code)
+                                .replace(
+                                    /\D/g,
+                                    ''
+                                );
+
+
+                        /*
+                         * Must be exactly 5 digits
+                         */
+
+                        if (
+                            !/^\d{5}$/.test(
+                                cleanCode
+                            )
+                        ) {
+
+                            return;
+
+                        }
+
+
+                        /*
+                         * Range 30000 - 32000
+                         */
+
+                        const numericCode =
+                            parseInt(
+                                cleanCode,
+                                10
+                            );
+
+
+                        if (
+                            numericCode < 30000 ||
+                            numericCode > 32000
+                        ) {
+
+                            showToast(
+                                'كود غير صالح',
+                                'error'
+                            );
+
+                            return;
+
+                        }
+
+
+                        /*
+                         * Put code in input
+                         */
+
+                        const codeInput =
+                            document.getElementById(
+                                'studentCode'
+                            );
+
+
+                        if (codeInput) {
+
+                            codeInput.value =
+                                cleanCode;
+
+                        }
+
+
+                        /*
+                         * Stop scanner
+                         */
+
+                        stopScanner();
+
+
+                        showToast(
+                            'تم مسح الكود: ' +
+                            cleanCode,
+                            'success'
+                        );
+
+
+                    }
+
+                    catch (error) {
+
+                        console.error(
+                            'Detection error:',
+                            error
+                        );
+
+                    }
+
+                }
+            );
+
+
+            /* Quagga configuration */
+
+            const config = {
+
+                inputStream: {
+
+                    name: 'Live',
+
+                    type: 'LiveStream',
+
+                    target: scannerEl,
+
+                    constraints: {
+
+                        facingMode: {
+                            ideal: 'environment'
+                        },
+
+                        width: {
+                            ideal: 1280,
+                            min: 640
+                        },
+
+                        height: {
+                            ideal: 720,
+                            min: 480
+                        },
+
+                        aspectRatio: {
+                            ideal: 1.7777778
+                        }
+
+                    }
+
+                },
+
+
+                locator: {
+
+                    patchSize: 'medium',
+
+                    halfSample: true
+
+                },
+
+
+                numOfWorkers:
+                    Math.min(
+                        navigator.hardwareConcurrency ||
+                        2,
+                        4
+                    ),
+
+
+                frequency: 10,
+
+
+                decoder: {
+
+                    readers: [
+
+                        'code_128_reader',
+
+                        'ean_reader',
+
+                        'ean_8_reader',
+
+                        'code_39_reader',
+
+                        'upc_reader',
+
+                        'upc_e_reader',
+
+                        'i2of5_reader'
+
+                    ]
+
+                },
+
+
+                locate: true
+
+            };
+
+
+            /* Initialize */
+
+            Quagga.init(
+                config,
+                function (err) {
+
+                    if (err) {
+
+                        console.error(
+                            'Quagga initialization error:',
+                            err
+                        );
+
+
+                        showToast(
+                            'تعذر تشغيل الكاميرا. تأكد من السماح باستخدام الكاميرا.',
+                            'error'
+                        );
+
+
+                        stopScanner();
+
+                        return;
+
+                    }
+
+
+                    console.log(
+                        'Quagga initialized'
+                    );
+
+
+                    try {
+
+                        Quagga.start();
+
+                        scannerRunning =
+                            true;
+
+
+                        console.log(
+                            'Scanner started'
+                        );
+
+                    }
+
+                    catch (error) {
+
+                        console.error(
+                            'Quagga start error:',
+                            error
+                        );
+
+
+                        showToast(
+                            'تعذر تشغيل الماسح',
+                            'error'
+                        );
+
+
+                        stopScanner();
+
+                    }
+
+                }
+            );
+
+        }
+
+
+        /* =========================================================
+           STOP SCANNER
+           ========================================================= */
+
+        function stopScanner() {
+
+            try {
+
+                if (
+                    typeof Quagga !==
+                    'undefined'
+                ) {
+
+                    if (scannerRunning) {
+
+                        Quagga.stop();
+
+                    }
+
+
+                    if (
+                        typeof Quagga.offDetected ===
+                        'function'
+                    ) {
+
+                        Quagga.offDetected();
+
+                    }
+
+                }
+
+            }
+
+            catch (error) {
+
+                console.warn(
+                    'Scanner stop error:',
+                    error
+                );
+
+            }
+
+
+            scannerRunning = false;
+
+
+            const scannerEl =
+                document.getElementById(
+                    'scannerArea'
+                );
+
+            const startBtn =
+                document.getElementById(
+                    'startScanBtn'
+                );
+
+            const stopBtn =
+                document.getElementById(
+                    'stopScanBtn'
+                );
+
+
+            if (scannerEl) {
+
+                scannerEl.style.display =
+                    'none';
+
+                scannerEl.innerHTML =
+                    '<div class="scanner-overlay"></div>';
+
+            }
+
+
+            if (startBtn) {
+
+                startBtn.style.display =
+                    'inline-flex';
+
+            }
+
+
+            if (stopBtn) {
+
+                stopBtn.style.display =
+                    'none';
+
+            }
+
+        }
+
+
+        /* =========================================================
+           ARABIC NAME VALIDATION
+           ========================================================= */
+
+        function isArabicName(name) {
+
+            return /^[\u0600-\u06FF\u0750-\u077F\uFB50-\uFDFF\uFE70-\uFEFF\s]+$/
+                .test(name);
+
+        }
+
+
+        function validateFullName(name) {
+
+            const parts =
+                name
+                    .trim()
+                    .split(/\s+/)
+                    .filter(
+                        function (p) {
+                            return p.length > 0;
+                        }
+                    );
+
+
+            if (parts.length < 4) {
+
+                return {
+                    valid: false,
+                    reason: 'short'
+                };
+
+            }
+
+
+            if (!isArabicName(name)) {
+
+                return {
+                    valid: false,
+                    reason: 'notArabic'
+                };
+
+            }
+
+
+            if (
+                parts.some(
+                    function (p) {
+                        return p.length < 2;
+                    }
+                )
+            ) {
+
+                return {
+                    valid: false,
+                    reason: 'partTooShort'
+                };
+
+            }
+
+
+            return {
+                valid: true
+            };
+
+        }
+
+
+        /* =========================================================
+           PHONE VALIDATION
+           ========================================================= */
+
+        function validatePhone(phone) {
+
+            const s =
+                String(phone || '')
+                    .replace(/\D/g, '');
+
+
+            /*
+             * Accept:
+             *
+             * 01XXXXXXXXX
+             * 201XXXXXXXXX
+             * +201XXXXXXXXX
+             */
+
+            let local = s;
+
+
+            if (
+                local.startsWith('20')
+            ) {
+
+                local =
+                    local.substring(2);
+
+            }
+
+
+            local =
+                local.replace(
+                    /^0/,
+                    ''
+                );
+
+
+            return /^1[0-9]{9}$/.test(
+                local
+            );
+
+        }
+
+
+        /* =========================================================
+           FORMAT PHONE
+           ========================================================= */
+
+        function formatToPlus20(phone) {
+
+            let s =
+                String(phone || '')
+                    .replace(
+                        /\D/g,
+                        ''
+                    );
+
+
+            if (
+                s.startsWith('20')
+            ) {
+
+                s =
+                    s.substring(2);
+
+            }
+
+
+            s =
+                s.replace(
+                    /^0+/,
+                    ''
+                );
+
+
+            return '+20' + s;
+
+        }
+
+
+        /* =========================================================
+           REGISTRATION
+           ========================================================= */
+
+        async function handleRegistration(e) {
+
+            e.preventDefault();
+
+
+            const alertEl =
+                document.getElementById(
+                    'regAlert'
+                );
+
+
+            const submitBtn =
+                document.getElementById(
+                    'submitBtn'
+                );
+
+
+            /*
+             * Get values
+             */
+
+            const studentCode =
+                document
+                    .getElementById(
+                        'studentCode'
+                    )
+                    .value
+                    .trim();
+
+
+            const studentName =
+                document
+                    .getElementById(
+                        'studentName'
+                    )
+                    .value
+                    .trim();
+
+
+            const studentPhone =
+                document
+                    .getElementById(
+                        'studentPhone'
+                    )
+                    .value
+                    .trim();
+
+
+            const parentPhone =
+                document
+                    .getElementById(
+                        'parentPhone'
+                    )
+                    .value
+                    .trim();
+
+
+            const center =
+                document
+                    .getElementById(
+                        'center'
+                    )
+                    .value;
+
+
+            const password =
+                document
+                    .getElementById(
+                        'password'
+                    )
+                    .value;
+
+
+            const confirmPassword =
+                document
+                    .getElementById(
+                        'confirmPassword'
+                    )
+                    .value;
+
+
+            alertEl.innerHTML = '';
+
+
+            /* =====================================================
+               STUDENT CODE
+               ===================================================== */
+
+            if (!studentCode) {
+
+                showAlert(
+                    currentLanguage === 'ar'
+                        ? 'يرجى كتابة أو مسح الباركود أولاً'
+                        : 'Please enter or scan your barcode first'
+                );
+
+                return;
+
+            }
+
+
+            if (
+                !/^\d{5}$/.test(
+                    studentCode
+                )
+            ) {
+
+                showAlert(
+                    currentLanguage === 'ar'
+                        ? 'كود الطالب يجب أن يكون 5 أرقام بالضبط'
+                        : 'Student code must be exactly 5 digits'
+                );
+
+                document
+                    .getElementById(
+                        'studentCode'
+                    )
+                    .focus();
+
+                return;
+
+            }
+
+
+            const numericCode =
+                parseInt(
+                    studentCode,
+                    10
+                );
+
+
+            if (
+                numericCode < 30000 ||
+                numericCode > 32000
+            ) {
+
+                showAlert(
+                    currentLanguage === 'ar'
+                        ? 'كود الطالب يجب أن يكون من 30000 إلى 32000'
+                        : 'Student code must be between 30000 and 32000'
+                );
+
+                document
+                    .getElementById(
+                        'studentCode'
+                    )
+                    .focus();
+
+                return;
+
+            }
+
+
+            /* =====================================================
+               NAME
+               ===================================================== */
+
+            const nameCheck =
+                validateFullName(
+                    studentName
+                );
+
+
+            if (!nameCheck.valid) {
+
+                let message;
+
+
+                if (
+                    nameCheck.reason ===
+                    'notArabic'
+                ) {
+
+                    message =
+                        currentLanguage === 'ar'
+                            ? 'الاسم يجب أن يكون بالعربي فقط'
+                            : 'Name must be in Arabic only';
+
+                }
+
+                else if (
+                    nameCheck.reason ===
+                    'short'
+                ) {
+
+                    message =
+                        currentLanguage === 'ar'
+                            ? 'أدخل اسمك الرباعي (4 أجزاء على الأقل)'
+                            : 'Enter your full 4-part name';
+
+                }
+
+                else {
+
+                    message =
+                        currentLanguage === 'ar'
+                            ? 'كل جزء من الاسم يجب أن يكون حرفين على الأقل'
+                            : 'Each name part must be at least 2 letters';
+
+                }
+
+
+                showAlert(message);
+
+
+                document
+                    .getElementById(
+                        'studentName'
+                    )
+                    .focus();
+
+                return;
+
+            }
+
+
+            /* =====================================================
+               REQUIRED FIELDS
+               ===================================================== */
+
+            if (
+                !studentName ||
+                !studentPhone ||
+                !parentPhone ||
+                !center ||
+                !password ||
+                !confirmPassword
+            ) {
+
+                showAlert(
+                    currentLanguage === 'ar'
+                        ? 'يرجى ملء جميع الحقول'
+                        : 'Please fill all fields'
+                );
+
+                return;
+
+            }
+
+
+            /* =====================================================
+               STUDENT PHONE
+               ===================================================== */
+
+            if (
+                !validatePhone(
+                    studentPhone
+                )
+            ) {
+
+                showAlert(
+                    currentLanguage === 'ar'
+                        ? 'رقم الطالب غير صحيح (01XXXXXXXXX)'
+                        : 'Invalid student phone (01XXXXXXXXX)'
+                );
+
+                return;
+
+            }
+
+
+            /* =====================================================
+               PARENT PHONE
+               ===================================================== */
+
+            if (
+                !validatePhone(
+                    parentPhone
+                )
+            ) {
+
+                showAlert(
+                    currentLanguage === 'ar'
+                        ? 'رقم ولي الأمر غير صحيح (01XXXXXXXXX)'
+                        : 'Invalid parent phone (01XXXXXXXXX)'
+                );
+
+                return;
+
+            }
+
+
+            /* =====================================================
+               FORMAT PHONES
+               ===================================================== */
+
+            const formattedStudentPhone =
+                formatToPlus20(
+                    studentPhone
+                );
+
+
+            const formattedParentPhone =
+                formatToPlus20(
+                    parentPhone
+                );
+
+
+            /* =====================================================
+               PHONE DIFFERENCE
+               ===================================================== */
+
+            if (
+                formattedStudentPhone ===
+                formattedParentPhone
+            ) {
+
+                showAlert(
+                    currentLanguage === 'ar'
+                        ? 'رقم الطالب ورقم ولي الأمر يجب أن يكونا مختلفين'
+                        : 'Student phone and parent phone must be different'
+                );
+
+                return;
+
+            }
+
+
+            /* =====================================================
+               PASSWORD
+               ===================================================== */
+
+            if (
+                password.length < 6
+            ) {
+
+                showAlert(
+                    currentLanguage === 'ar'
+                        ? 'كلمة المرور يجب أن تكون 6 أحرف على الأقل'
+                        : 'Password must be at least 6 characters'
+                );
+
+                return;
+
+            }
+
+
+            if (
+                password !==
+                confirmPassword
+            ) {
+
+                showAlert(
+                    currentLanguage === 'ar'
+                        ? 'كلمتا المرور غير متطابقتين'
+                        : 'Passwords do not match'
+                );
+
+                return;
+
+            }
+
+
+            /* =====================================================
+               BUTTON LOADING
+               ===================================================== */
+
+            submitBtn.disabled =
+                true;
+
+
+            submitBtn.innerHTML = `
+
+                <i class="fas fa-spinner fa-spin"></i>
+
+                <span>
+                    ${
+                        currentLanguage === 'ar'
+                            ? 'جاري التسجيل...'
+                            : 'Registering...'
+                    }
+                </span>
+
+            `;
+
+
+            /* =====================================================
+               FORM DATA
+               ===================================================== */
+
+            const formData =
+                new FormData();
+
+
+            formData.append(
+                'studentCode',
+                studentCode
+            );
+
+
+            formData.append(
+                'studentName',
+                studentName
+            );
+
+
+            formData.append(
+                'phone',
+                formattedStudentPhone
+            );
+
+
+            formData.append(
+                'parentPhone',
+                formattedParentPhone
+            );
+
+
+            formData.append(
+                'center',
+                center
+            );
+
+
+            formData.append(
+                'password',
+                password
+            );
+
+
+            /* =====================================================
+               SEND TO GOOGLE APPS SCRIPT
+               ===================================================== */
+
+            try {
+
+                const response =
+                    await fetch(
+                        REGISTER_API,
+                        {
+                            method: 'POST',
+                            body: formData,
+                            credentials: 'omit',
+                            redirect: 'follow'
+                        }
+                    );
+
+
+                let data;
+
+
+                /* =================================================
+                   READ RESPONSE
+                   ================================================= */
+
+                try {
+
+                    data =
+                        await response.json();
+
+                }
+
+                catch (parseError) {
+
+                    console.warn(
+                        'POST response was not JSON:',
+                        parseError
+                    );
+
+
+                    /*
+                     * Verify using login
+                     */
+
+                    try {
+
+                        const verifyResponse =
+                            await fetch(
+                                REGISTER_API +
+                                '?action=login' +
+                                '&code=' +
+                                encodeURIComponent(
+                                    studentCode
+                                ) +
+                                '&password=' +
+                                encodeURIComponent(
+                                    password
+                                )
+                            );
+
+
+                        const verifyData =
+                            await verifyResponse.json();
+
+
+                        if (
+                            verifyData.status ===
+                            'success'
+                        ) {
+
+                            data = {
+                                status:
+                                    'success'
+                            };
+
+                        }
+
+                        else {
+
+                            data = {
+
+                                status:
+                                    'error',
+
+                                message:
+                                    currentLanguage === 'ar'
+                                        ? 'حدث خطأ أثناء التسجيل. حاول مرة أخرى.'
+                                        : 'Registration error. Please try again.'
+
+                            };
+
+                        }
+
+                    }
+
+                    catch (verifyError) {
+
+                        console.error(
+                            'Verification error:',
+                            verifyError
+                        );
+
+
+                        data = {
+
+                            status:
+                                'error',
+
+                            message:
+                                currentLanguage === 'ar'
+                                    ? 'حدث خطأ أثناء التسجيل. حاول مرة أخرى.'
+                                    : 'Registration error. Please try again.'
+
+                        };
+
+                    }
+
+                }
+
+
+                /* =================================================
+                   FAILED
+                   ================================================= */
+
+                if (
+                    !data ||
+                    data.status ===
+                    'error'
+                ) {
+
+                    showAlert(
+                        data &&
+                        data.message
+                            ? data.message
+                            : (
+                                currentLanguage === 'ar'
+                                    ? 'فشل التسجيل'
+                                    : 'Registration failed'
+                            )
+                    );
+
+                    return;
+
+                }
+
+
+                /* =================================================
+                   SUCCESS
+                   ================================================= */
+
+                showAlert(
+                    currentLanguage === 'ar'
+                        ? 'تم التسجيل بنجاح!'
+                        : 'Registration successful!',
+                    'success'
+                );
+
+
+                showToast(
+                    currentLanguage === 'ar'
+                        ? 'تم التسجيل بنجاح!'
+                        : 'Registration successful!',
+                    'success'
+                );
+
+
+                /* =================================================
+                   AUTO LOGIN
+                   ================================================= */
+
+                try {
+
+                    const loginResponse =
+                        await fetch(
+                            REGISTER_API +
+                            '?action=login' +
+                            '&code=' +
+                            encodeURIComponent(
+                                studentCode
+                            ) +
+                            '&password=' +
+                            encodeURIComponent(
+                                password
+                            )
+                        );
+
+
+                    const loginData =
+                        await loginResponse.json();
+
+
+                    if (
+                        loginData.status ===
+                        'success' &&
+                        loginData.data
+                    ) {
+
+                        localStorage.setItem(
+                            'loggedInUser',
+                            JSON.stringify(
+                                loginData.data
+                            )
+                        );
+
+                    }
+
+                }
+
+                catch (loginError) {
+
+                    console.warn(
+                        'Auto-login failed:',
+                        loginError
+                    );
+
+                }
+
+
+                /* =================================================
+                   REDIRECT
+                   ================================================= */
+
+                setTimeout(
+                    function () {
+
+                        window.location.href =
+                            'profile.html';
+
+                    },
+                    1500
+                );
+
+            }
+
+
+            catch (error) {
+
+                console.error(
+                    'Registration error:',
+                    error
+                );
+
+
+                showAlert(
+                    currentLanguage === 'ar'
+                        ? 'فشل التسجيل. تحقق من الاتصال وحاول مرة أخرى.'
+                        : 'Registration failed. Check your connection and try again.'
+                );
+
+            }
+
+
+            finally {
+
+                submitBtn.disabled =
+                    false;
+
+
+                submitBtn.innerHTML = `
+
+                    <i class="fas fa-user-plus"></i>
+
+                    <span
+                        data-en="Register"
+                        data-ar="تسجيل"
+                    >
+                        ${
+                            currentLanguage === 'ar'
+                                ? 'تسجيل'
+                                : 'Register'
+                        }
+                    </span>
+
+                `;
+
+            }
+
+        }
+
+    </script>
 
 </body>
 
 </html>
-
-<script
-/* =========================================================
-   Registration Page JS
-   ========================================================= */
-
-const REGISTER_API =
-  'https://script.google.com/macros/s/AKfycbyc1ARUyRvini8qeLxYDi1uSZlq3fDR_mQCecq50PJcuZZLvZ337pLPGgS7Qgw3cBQjrA/exec';
-
-
-let scannerRunning = false;
-
-
-/* =========================================================
-   Page Initialization
-   ========================================================= */
-
-document.addEventListener('DOMContentLoaded', () => {
-
-  /* -----------------------------------------
-     If already logged in → profile
-     ----------------------------------------- */
-
-  const user = getLoggedInUser();
-
-  if (user) {
-    window.location.href = 'profile.html';
-    return;
-  }
-
-
-  /* -----------------------------------------
-     Student Code Input
-     ----------------------------------------- */
-
-  const codeInput =
-    document.getElementById('studentCode');
-
-
-  if (codeInput) {
-
-    codeInput.addEventListener('input', function () {
-
-      /*
-       * Allow numbers only
-       */
-
-      this.value =
-        this.value.replace(/\D/g, '');
-
-
-      /*
-       * Maximum 5 digits
-       */
-
-      if (this.value.length > 5) {
-
-        this.value =
-          this.value.substring(0, 5);
-
-      }
-
-    });
-
-  }
-
-
-  /* -----------------------------------------
-     Scanner Buttons
-     ----------------------------------------- */
-
-  const startBtn =
-    document.getElementById('startScanBtn');
-
-  const stopBtn =
-    document.getElementById('stopScanBtn');
-
-
-  if (startBtn) {
-
-    startBtn.addEventListener(
-      'click',
-      startScanner
-    );
-
-  }
-
-
-  if (stopBtn) {
-
-    stopBtn.addEventListener(
-      'click',
-      stopScanner
-    );
-
-  }
-
-
-  /* -----------------------------------------
-     Registration Form
-     ----------------------------------------- */
-
-  const form =
-    document.getElementById('registerForm');
-
-
-  if (form) {
-
-    form.addEventListener(
-      'submit',
-      handleRegistration
-    );
-
-  }
-
-});
-
-
-
-/* =========================================================
-   Barcode Scanner
-   ========================================================= */
-
-function startScanner() {
-
-  const scannerEl =
-    document.getElementById('scannerArea');
-
-  const startBtn =
-    document.getElementById('startScanBtn');
-
-  const stopBtn =
-    document.getElementById('stopScanBtn');
-
-
-  if (
-    !scannerEl ||
-    !startBtn ||
-    !stopBtn
-  ) {
-
-    console.error(
-      'Scanner elements not found'
-    );
-
-    return;
-
-  }
-
-
-  /* -----------------------------------------
-     Check Quagga
-     ----------------------------------------- */
-
-  if (typeof Quagga === 'undefined') {
-
-    console.error(
-      'Quagga is not loaded'
-    );
-
-    showToast(
-      'Scanner library not loaded',
-      'error'
-    );
-
-    return;
-
-  }
-
-
-  /* -----------------------------------------
-     Show scanner
-     ----------------------------------------- */
-
-  scannerEl.style.display = 'block';
-
-  startBtn.style.display = 'none';
-
-  stopBtn.style.display = 'inline-flex';
-
-
-  /* -----------------------------------------
-     Stop previous scanner
-     ----------------------------------------- */
-
-  try {
-
-    if (scannerRunning) {
-
-      Quagga.stop();
-
-      scannerRunning = false;
-
-    }
-
-  } catch (error) {
-
-    console.warn(
-      'Could not stop previous scanner:',
-      error
-    );
-
-  }
-
-
-  /* -----------------------------------------
-     Remove old detection handler
-     ----------------------------------------- */
-
-  try {
-
-    if (
-      typeof Quagga.offDetected ===
-      'function'
-    ) {
-
-      Quagga.offDetected();
-
-    }
-
-  } catch (error) {
-
-    console.warn(
-      'Could not remove old handler:',
-      error
-    );
-
-  }
-
-
-  /* -----------------------------------------
-     Barcode Detection
-     ----------------------------------------- */
-
-  const onDetectedHandler =
-    (result) => {
-
-      try {
-
-        if (
-          !result ||
-          !result.codeResult
-        ) {
-
-          return;
-
-        }
-
-
-        const code =
-          result.codeResult.code;
-
-
-        if (!code) {
-
-          return;
-
-        }
-
-
-        console.log(
-          'Barcode detected:',
-          code
-        );
-
-
-        /* -----------------------------------------
-           Numbers only
-           ----------------------------------------- */
-
-        if (!/^\d+$/.test(code)) {
-
-          showToast(
-            'كود غير صالح',
-            'error'
-          );
-
-          return;
-
-        }
-
-
-        /* -----------------------------------------
-           Exactly 5 digits
-           ----------------------------------------- */
-
-        if (!/^\d{5}$/.test(code)) {
-
-          showToast(
-            'كود غير صالح - يجب أن يكون 5 أرقام',
-            'error'
-          );
-
-          return;
-
-        }
-
-
-        const numericCode =
-          parseInt(code, 10);
-
-
-        /* -----------------------------------------
-           Accept only 30000 - 32000
-           ----------------------------------------- */
-
-        if (
-          numericCode < 30000 ||
-          numericCode > 32000
-        ) {
-
-          showToast(
-            'كود غير صالح',
-            'error'
-          );
-
-          return;
-
-        }
-
-
-        /* -----------------------------------------
-           Put code into input
-           ----------------------------------------- */
-
-        const codeInput =
-          document.getElementById(
-            'studentCode'
-          );
-
-
-        if (codeInput) {
-
-          codeInput.value = code;
-
-        }
-
-
-        /* -----------------------------------------
-           Stop scanner
-           ----------------------------------------- */
-
-        stopScanner();
-
-
-        showToast(
-          'تم مسح الكود: ' + code,
-          'success'
-        );
-
-
-        console.log(
-          'Valid barcode:',
-          code
-        );
-
-      } catch (error) {
-
-        console.error(
-          'Barcode detection error:',
-          error
-        );
-
-      }
-
-    };
-
-
-  /* -----------------------------------------
-     Register detection handler
-     ----------------------------------------- */
-
-  Quagga.onDetected(
-    onDetectedHandler
-  );
-
-
-  /* -----------------------------------------
-     Quagga Configuration
-     ----------------------------------------- */
-
-  const config = {
-
-    inputStream: {
-
-      name: 'Live',
-
-      type: 'LiveStream',
-
-      target: scannerEl,
-
-      constraints: {
-
-        facingMode: 'environment',
-
-        width: {
-          ideal: 640
-        },
-
-        height: {
-          ideal: 480
-        }
-
-      }
-
-    },
-
-
-    locator: {
-
-      patchSize: 'medium',
-
-      halfSample: true
-
-    },
-
-
-    numOfWorkers:
-      Math.min(
-        navigator.hardwareConcurrency || 2,
-        4
-      ),
-
-
-    decoder: {
-
-      readers: [
-
-        'code_128_reader',
-
-        'ean_reader',
-
-        'ean_8_reader',
-
-        'code_39_reader',
-
-        'upc_reader',
-
-        'i2of5_reader'
-
-      ]
-
-    },
-
-
-    locate: true
-
-  };
-
-
-  /* -----------------------------------------
-     Initialize Quagga
-     ----------------------------------------- */
-
-  Quagga.init(
-    config,
-    function (err) {
-
-      if (err) {
-
-        console.error(
-          'Quagga initialization error:',
-          err
-        );
-
-
-        showToast(
-          'تعذر تشغيل الكاميرا: ' +
-          (err.message || 'Camera error'),
-          'error'
-        );
-
-
-        stopScanner();
-
-        return;
-
-      }
-
-
-      console.log(
-        'Quagga initialized successfully'
-      );
-
-
-      try {
-
-        Quagga.start();
-
-        scannerRunning = true;
-
-
-        console.log(
-          'Scanner started'
-        );
-
-      } catch (error) {
-
-        console.error(
-          'Quagga start error:',
-          error
-        );
-
-
-        showToast(
-          'تعذر تشغيل الماسح',
-          'error'
-        );
-
-
-        stopScanner();
-
-      }
-
-    }
-  );
-
-}
-
-
-
-/* =========================================================
-   Stop Scanner
-   ========================================================= */
-
-function stopScanner() {
-
-  if (
-    typeof Quagga !==
-    'undefined'
-  ) {
-
-    try {
-
-      if (scannerRunning) {
-
-        Quagga.stop();
-
-      }
-
-
-      if (
-        typeof Quagga.offDetected ===
-        'function'
-      ) {
-
-        Quagga.offDetected();
-
-      }
-
-    } catch (error) {
-
-      console.warn(
-        'Error stopping scanner:',
-        error
-      );
-
-    }
-
-  }
-
-
-  scannerRunning = false;
-
-
-  const scannerEl =
-    document.getElementById(
-      'scannerArea'
-    );
-
-  const startBtn =
-    document.getElementById(
-      'startScanBtn'
-    );
-
-  const stopBtn =
-    document.getElementById(
-      'stopScanBtn'
-    );
-
-
-  if (scannerEl) {
-
-    scannerEl.style.display = 'none';
-
-    scannerEl.innerHTML = '';
-
-  }
-
-
-  if (startBtn) {
-
-    startBtn.style.display =
-      'inline-flex';
-
-  }
-
-
-  if (stopBtn) {
-
-    stopBtn.style.display = 'none';
-
-  }
-
-}
-
-
-
-/* =========================================================
-   Arabic Name Validation
-   ========================================================= */
-
-function isArabicName(name) {
-
-  return /^[\u0600-\u06FF\u0750-\u077F\uFB50-\uFDFF\uFE70-\uFEFF\s]+$/
-    .test(name);
-
-}
-
-
-
-function validateFullName(name) {
-
-  const parts =
-    name
-      .trim()
-      .split(/\s+/)
-      .filter(
-        p => p.length > 0
-      );
-
-
-  /* At least 4 parts */
-
-  if (parts.length < 4) {
-
-    return {
-      valid: false,
-      reason: 'short'
-    };
-
-  }
-
-
-  /* Arabic only */
-
-  if (!isArabicName(name)) {
-
-    return {
-      valid: false,
-      reason: 'notArabic'
-    };
-
-  }
-
-
-  /* Each part at least 2 chars */
-
-  if (
-    parts.some(
-      p => p.length < 2
-    )
-  ) {
-
-    return {
-      valid: false,
-      reason: 'partTooShort'
-    };
-
-  }
-
-
-  return {
-    valid: true
-  };
-
-}
-
-
-
-/* =========================================================
-   Phone Validation
-   ========================================================= */
-
-function validatePhone(phone) {
-
-  const s =
-    String(phone || '')
-      .replace(/\D/g, '');
-
-
-  /*
-   * Remove country code 20
-   */
-
-  const local =
-    s
-      .replace(/^20/, '')
-      .replace(/^0+/, '');
-
-
-  /*
-   * Egyptian mobile:
-   * 1XXXXXXXXX
-   */
-
-  return /^1[0-9]{9}$/.test(
-    local
-  );
-
-}
-
-
-
-/* =========================================================
-   Format Phone to +20
-   ========================================================= */
-
-function formatToPlus20(phone) {
-
-  let s =
-    String(phone || '')
-      .replace(/\D/g, '');
-
-
-  /*
-   * Remove leading zeros
-   */
-
-  s = s.replace(/^0+/, '');
-
-
-  /*
-   * Remove country code
-   * if already provided
-   */
-
-  s = s.replace(/^20/, '');
-
-
-  return '+20' + s;
-
-}
-
-
-
-/* =========================================================
-   Registration Handler
-   ========================================================= */
-
-async function handleRegistration(e) {
-
-  e.preventDefault();
-
-
-  const form = e.target;
-
-
-  const alertEl =
-    document.getElementById(
-      'regAlert'
-    );
-
-
-  const submitBtn =
-    document.getElementById(
-      'submitBtn'
-    );
-
-
-  /* -----------------------------------------
-     Get Values
-     ----------------------------------------- */
-
-  const studentCode =
-    document
-      .getElementById('studentCode')
-      .value
-      .trim();
-
-
-  const studentName =
-    document
-      .getElementById('studentName')
-      .value
-      .trim();
-
-
-  const studentPhone =
-    document
-      .getElementById('studentPhone')
-      .value
-      .trim();
-
-
-  const parentPhone =
-    document
-      .getElementById('parentPhone')
-      .value
-      .trim();
-
-
-  const center =
-    document
-      .getElementById('center')
-      .value;
-
-
-  const password =
-    document
-      .getElementById('password')
-      .value;
-
-
-  const confirmPassword =
-    document
-      .getElementById('confirmPassword')
-      .value;
-
-
-
-  /* -----------------------------------------
-     Clear previous errors
-     ----------------------------------------- */
-
-  alertEl.innerHTML = '';
-
-
-
-  /* =====================================================
-     Validate Student Code
-     ===================================================== */
-
-
-  /*
-   * Code is required
-   */
-
-  if (!studentCode) {
-
-    alertEl.innerHTML = `
-
-      <div class="alert alert-error">
-
-        <i class="fas fa-exclamation-circle"></i>
-
-        <span
-          data-en="Please enter or scan your barcode first"
-          data-ar="يرجى كتابة أو مسح الباركود أولاً"
-        >
-          Please enter or scan your barcode first
-        </span>
-
-      </div>
-
-    `;
-
-    return;
-
-  }
-
-
-
-  /*
-   * Exactly 5 numbers
-   */
-
-  if (!/^\d{5}$/.test(studentCode)) {
-
-    alertEl.innerHTML = `
-
-      <div class="alert alert-error">
-
-        <i class="fas fa-exclamation-circle"></i>
-
-        <span
-          data-en="Student code must be exactly 5 digits"
-          data-ar="كود الطالب يجب أن يكون 5 أرقام بالضبط"
-        >
-          Student code must be exactly 5 digits
-        </span>
-
-      </div>
-
-    `;
-
-
-    document
-      .getElementById('studentCode')
-      .focus();
-
-
-    return;
-
-  }
-
-
-
-  /*
-   * Code range
-   * 30000 - 32000
-   */
-
-  const numericCode =
-    parseInt(
-      studentCode,
-      10
-    );
-
-
-  if (
-    numericCode < 30000 ||
-    numericCode > 32000
-  ) {
-
-    alertEl.innerHTML = `
-
-      <div class="alert alert-error">
-
-        <i class="fas fa-exclamation-circle"></i>
-
-        <span
-          data-en="Invalid student code. Code must be between 30000 and 32000."
-          data-ar="كود الطالب غير صالح. يجب أن يكون الكود من 30000 إلى 32000."
-        >
-          Invalid student code.
-        </span>
-
-      </div>
-
-    `;
-
-
-    document
-      .getElementById('studentCode')
-      .value = '';
-
-
-    document
-      .getElementById('studentCode')
-      .focus();
-
-
-    return;
-
-  }
-
-
-
-  /* =====================================================
-     Validate Name
-     ===================================================== */
-
-  const nameCheck =
-    validateFullName(
-      studentName
-    );
-
-
-  if (!nameCheck.valid) {
-
-    let msg = '';
-
-
-    if (
-      nameCheck.reason ===
-      'notArabic'
-    ) {
-
-      msg = `
-
-        <span
-          data-en="Name must be in Arabic only"
-          data-ar="الاسم يجب أن يكون بالعربي فقط"
-        >
-          الاسم يجب أن يكون بالعربي فقط
-        </span>
-
-      `;
-
-    }
-
-    else if (
-      nameCheck.reason ===
-      'short'
-    ) {
-
-      msg = `
-
-        <span
-          data-en="Enter your full 4-part name"
-          data-ar="أدخل اسمك الرباعي (4 أجزاء على الأقل)"
-        >
-          أدخل اسمك الرباعي (4 أجزاء على الأقل)
-        </span>
-
-      `;
-
-    }
-
-    else {
-
-      msg = `
-
-        <span
-          data-en="Each name part must be at least 2 letters"
-          data-ar="كل جزء من الاسم يجب أن يكون حرفين على الأقل"
-        >
-          كل جزء من الاسم يجب أن يكون حرفين على الأقل
-        </span>
-
-      `;
-
-    }
-
-
-    alertEl.innerHTML = `
-
-      <div class="alert alert-error">
-
-        <i class="fas fa-exclamation-circle"></i>
-
-        ${msg}
-
-      </div>
-
-    `;
-
-
-    document
-      .getElementById('studentName')
-      .focus();
-
-
-    return;
-
-  }
-
-
-
-  /* =====================================================
-     Validate Required Fields
-     ===================================================== */
-
-  if (
-    !studentName ||
-    !studentPhone ||
-    !parentPhone ||
-    !center ||
-    !password
-  ) {
-
-    alertEl.innerHTML = `
-
-      <div class="alert alert-error">
-
-        <i class="fas fa-exclamation-circle"></i>
-
-        <span
-          data-en="Please fill all fields"
-          data-ar="يرجى ملء جميع الحقول"
-        >
-          Please fill all fields
-        </span>
-
-      </div>
-
-    `;
-
-    return;
-
-  }
-
-
-
-  /* =====================================================
-     Validate Student Phone
-     ===================================================== */
-
-  if (!validatePhone(studentPhone)) {
-
-    alertEl.innerHTML = `
-
-      <div class="alert alert-error">
-
-        <i class="fas fa-exclamation-circle"></i>
-
-        <span
-          data-en="Invalid student phone (01XXXXXXXXX)"
-          data-ar="رقم الطالب غير صحيح (01XXXXXXXXX)"
-        >
-          Invalid student phone
-        </span>
-
-      </div>
-
-    `;
-
-    return;
-
-  }
-
-
-
-  /* =====================================================
-     Validate Parent Phone
-     ===================================================== */
-
-  if (!validatePhone(parentPhone)) {
-
-    alertEl.innerHTML = `
-
-      <div class="alert alert-error">
-
-        <i class="fas fa-exclamation-circle"></i>
-
-        <span
-          data-en="Invalid parent phone (01XXXXXXXXX)"
-          data-ar="رقم ولي الأمر غير صحيح (01XXXXXXXXX)"
-        >
-          Invalid parent phone
-        </span>
-
-      </div>
-
-    `;
-
-    return;
-
-  }
-
-
-
-  /* =====================================================
-     Format Phones
-     ===================================================== */
-
-  const formattedStudentPhone =
-    formatToPlus20(
-      studentPhone
-    );
-
-
-  const formattedParentPhone =
-    formatToPlus20(
-      parentPhone
-    );
-
-
-
-  /* =====================================================
-     Student / Parent Phone Difference
-     ===================================================== */
-
-  if (
-    formattedStudentPhone ===
-    formattedParentPhone
-  ) {
-
-    alertEl.innerHTML = `
-
-      <div class="alert alert-error">
-
-        <i class="fas fa-exclamation-circle"></i>
-
-        <span
-          data-en="Student phone and parent phone must be different"
-          data-ar="رقم الطالب ورقم ولي الأمر يجب أن يكونا مختلفين"
-        >
-          Student phone and parent phone must be different
-        </span>
-
-      </div>
-
-    `;
-
-    return;
-
-  }
-
-
-
-  /* =====================================================
-     Password Validation
-     ===================================================== */
-
-  if (password.length < 6) {
-
-    alertEl.innerHTML = `
-
-      <div class="alert alert-error">
-
-        <i class="fas fa-exclamation-circle"></i>
-
-        <span
-          data-en="Password must be at least 6 characters"
-          data-ar="كلمة المرور يجب أن تكون 6 أحرف على الأقل"
-        >
-          Password must be at least 6 characters
-        </span>
-
-      </div>
-
-    `;
-
-    return;
-
-  }
-
-
-
-  if (
-    password !==
-    confirmPassword
-  ) {
-
-    alertEl.innerHTML = `
-
-      <div class="alert alert-error">
-
-        <i class="fas fa-exclamation-circle"></i>
-
-        <span
-          data-en="Passwords do not match"
-          data-ar="كلمتا المرور غير متطابقتين"
-        >
-          Passwords do not match
-        </span>
-
-      </div>
-
-    `;
-
-    return;
-
-  }
-
-
-
-  /* =====================================================
-     Submit
-     ===================================================== */
-
-  submitBtn.disabled = true;
-
-
-  submitBtn.innerHTML = `
-
-    <i class="fas fa-spinner fa-spin"></i>
-
-    <span
-      data-en="Registering..."
-      data-ar="جاري التسجيل..."
-    >
-      Registering...
-    </span>
-
-  `;
-
-
-
-  /* =====================================================
-     Form Data
-     ===================================================== */
-
-  const formData =
-    new FormData();
-
-
-  formData.append(
-    'studentCode',
-    studentCode
-  );
-
-
-  formData.append(
-    'studentName',
-    studentName
-  );
-
-
-  formData.append(
-    'phone',
-    formattedStudentPhone
-  );
-
-
-  formData.append(
-    'parentPhone',
-    formattedParentPhone
-  );
-
-
-  formData.append(
-    'center',
-    center
-  );
-
-
-  formData.append(
-    'password',
-    password
-  );
-
-
-
-  /* =====================================================
-     Send Registration
-     ===================================================== */
-
-  try {
-
-    const response =
-      await fetch(
-        REGISTER_API,
-        {
-          method: 'POST',
-          body: formData,
-          credentials: 'omit',
-          redirect: 'follow'
-        }
-      );
-
-
-
-    /* -----------------------------------------
-       Read response
-       ----------------------------------------- */
-
-    let data;
-
-
-    try {
-
-      data =
-        await response.json();
-
-    }
-
-    catch (parseErr) {
-
-      /*
-       * If POST response cannot be parsed,
-       * verify registration using login.
-       */
-
-      try {
-
-        const verifyResp =
-          await fetch(
-            `${REGISTER_API}?action=login&code=${encodeURIComponent(studentCode)}&password=${encodeURIComponent(password)}`
-          );
-
-
-        const verifyData =
-          await verifyResp.json();
-
-
-        if (
-          verifyData.status ===
-          'success'
-        ) {
-
-          data = {
-            status: 'success'
-          };
-
-        }
-
-        else {
-
-          data = {
-
-            status: 'error',
-
-            message:
-              'حدث خطأ أثناء التسجيل. حاول مرة أخرى / Registration error. Please try again.'
-
-          };
-
-        }
-
-      }
-
-      catch (verifyErr) {
-
-        data = {
-
-          status: 'error',
-
-          message:
-            'حدث خطأ أثناء التسجيل. حاول مرة أخرى / Registration error. Please try again.'
-
-        };
-
-      }
-
-    }
-
-
-
-    /* =================================================
-       Registration Failed
-       ================================================= */
-
-    if (
-      data.status ===
-      'error'
-    ) {
-
-      alertEl.innerHTML = `
-
-        <div class="alert alert-error">
-
-          <i class="fas fa-exclamation-circle"></i>
-
-          ${
-            data.message ||
-            'Registration failed'
-          }
-
-        </div>
-
-      `;
-
-
-      alertEl.scrollIntoView({
-        behavior: 'smooth',
-        block: 'center'
-      });
-
-
-      return;
-
-    }
-
-
-
-    /* =================================================
-       Registration Successful
-       ================================================= */
-
-    alertEl.innerHTML = `
-
-      <div class="alert alert-success">
-
-        <i class="fas fa-check-circle"></i>
-
-        <span
-          data-en="Registration successful!"
-          data-ar="تم التسجيل بنجاح!"
-        >
-          Registration successful!
-        </span>
-
-      </div>
-
-    `;
-
-
-    showToast(
-      'تم التسجيل بنجاح!',
-      'success'
-    );
-
-
-
-    /* =================================================
-       Auto Login
-       ================================================= */
-
-    try {
-
-      const loginResp =
-        await fetch(
-          `${REGISTER_API}?action=login&code=${encodeURIComponent(studentCode)}&password=${encodeURIComponent(password)}`
-        );
-
-
-      const loginData =
-        await loginResp.json();
-
-
-      if (
-        loginData.status ===
-          'success' &&
-        loginData.data
-      ) {
-
-        localStorage.setItem(
-          'loggedInUser',
-          JSON.stringify(
-            loginData.data
-          )
-        );
-
-      }
-
-    }
-
-    catch (loginError) {
-
-      console.warn(
-        'Auto-login failed:',
-        loginError
-      );
-
-    }
-
-
-
-    /* =================================================
-       Redirect to Profile
-       ================================================= */
-
-    setTimeout(() => {
-
-      window.location.href =
-        'profile.html';
-
-    }, 1500);
-
-
-  }
-
-  catch (err) {
-
-    console.error(
-      'Registration error:',
-      err
-    );
-
-
-    alertEl.innerHTML = `
-
-      <div class="alert alert-error">
-
-        <i class="fas fa-exclamation-circle"></i>
-
-        <span
-          data-en="Registration failed. Please try again."
-          data-ar="فشل التسجيل. حاول مرة أخرى."
-        >
-          فشل التسجيل. حاول مرة أخرى.
-        </span>
-
-      </div>
-
-    `;
-
-
-    alertEl.scrollIntoView({
-      behavior: 'smooth',
-      block: 'center'
-    });
-
-  }
-
-  finally {
-
-    submitBtn.disabled = false;
-
-
-    submitBtn.innerHTML = `
-
-      <i class="fas fa-user-plus"></i>
-
-      <span
-        data-en="Register"
-        data-ar="تسجيل"
-      >
-        Register
-      </span>
-
-    `;
-
-  }
-
-}
-    ></script>
+```
